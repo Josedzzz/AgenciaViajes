@@ -1,8 +1,6 @@
 package co.edu.uniquindio.agencia.model;
 
-import co.edu.uniquindio.agencia.exceptions.CampoObligatorioDestinoException;
-import co.edu.uniquindio.agencia.exceptions.DestinoNoRegistradoException;
-import co.edu.uniquindio.agencia.exceptions.DestinoYaExistenteException;
+import co.edu.uniquindio.agencia.exceptions.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,7 +33,7 @@ public class AgenciaViajes {
 
     //FUNCIONES --------------------------------------------------------------------------------------
 
-    //CRUD DEL DESTINO -------------------------------------------------------------------------------
+    //CRUD DESTINO -------------------------------------------------------------------------------
 
     /**
      * Llama a la funcion actualizarDestino del administrador
@@ -78,5 +76,54 @@ public class AgenciaViajes {
     public void crearDestino(AgenciaViajes agenciaViajes, Administrador adminActual, String nombre, String ciudad, String descripcion, ArrayList<String> listaImagenes, TipoClima tipoClima) throws CampoObligatorioDestinoException, DestinoYaExistenteException {
         adminActual.crearDestino(agenciaViajes, nombre, ciudad, descripcion, listaImagenes, tipoClima);
     }
+
+    //CRUD PAQUETE TURISTICO -----------------------------------------------------------------------
+
+    /**
+     * Llama a la funcion actualizarPaqueteTuristico del administrador
+     * @param agenciaViajes clase principal
+     * @param adminiActual admin que inicio sesion
+     * @param nombre nombre del paquete turistico
+     * @param fechaInicial fecha inicial del paquete turistico
+     * @param fechaFinal fecha final del paquete turistico
+     * @param precio precio del paquete turistico
+     * @param cupoMaximo cupo maximo del paquete turistico
+     * @throws PaqueteTutisticoNoRegistradoException
+     */
+    public void actualizarPaqueteTuristico(AgenciaViajes agenciaViajes, Administrador adminiActual, String nombre, String fechaInicial, String fechaFinal, double precio, int cupoMaximo) throws PaqueteTutisticoNoRegistradoException {
+        adminiActual.actualizarPaqueteTuristico(agenciaViajes, nombre, fechaInicial, fechaFinal, precio, cupoMaximo);
+    }
+
+    /**
+     * Llama a la funcion eliminarPaqueteTuristico del administrador
+     * @param agenciaViajes clase principal
+     * @param adminActual admin que inicio sesion
+     * @param nombre nombre del paquete turistico
+     * @param fechaInicial fecha inicial del paquete turistico
+     * @param fechaFinal fecha final del paquete turistico
+     * @throws PaqueteTutisticoNoRegistradoException
+     */
+    public void eliminarPaqueteTuristico(AgenciaViajes agenciaViajes, Administrador adminActual, String nombre, String fechaInicial, String fechaFinal) throws PaqueteTutisticoNoRegistradoException {
+        adminActual.eliminarPaqueteTuristico(agenciaViajes, nombre, fechaInicial, fechaFinal);
+    }
+
+    /**
+     * Llama a la funcion crearPaqueteTuristico de administrador
+     * @param agenciaViajes clase principal
+     * @param adminActual administrador que inicio sesion
+     * @param nombre nombre del paquete turistico
+     * @param fechaInicial fecha inicial del paquete turistico
+     * @param fechaFinal fechia final del paquete turistico
+     * @param precio precio del paquete turistico
+     * @param cupoMaximo cupo maximo del paquete turistico
+     * @param listaServiciosAdicionales servicios adicionales del paquete turistico
+     * @param listaDestinos destinos del paquete turistico
+     * @throws PaqueteTuristicoYaExistenteException
+     * @throws CampoObligatorioPaqueteTuristicoException
+     */
+    public void crearPaqueteTuristico(AgenciaViajes agenciaViajes, Administrador adminActual, String nombre, String fechaInicial, String fechaFinal, double precio, int cupoMaximo, ArrayList<ServicioAdicional> listaServiciosAdicionales, ArrayList<Destino> listaDestinos) throws PaqueteTuristicoYaExistenteException, CampoObligatorioPaqueteTuristicoException {
+        adminActual.crearPaqueteTuristico(agenciaViajes, nombre, fechaInicial, fechaFinal, precio, cupoMaximo, listaServiciosAdicionales, listaDestinos);
+    }
+
 
 }

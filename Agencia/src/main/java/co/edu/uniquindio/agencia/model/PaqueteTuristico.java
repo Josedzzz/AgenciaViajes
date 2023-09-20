@@ -1,5 +1,6 @@
 package co.edu.uniquindio.agencia.model;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 
 @Getter
 @Setter
+@EqualsAndHashCode(of = {"nombre", "fechaInicial", "fechaFinal"})
 public class PaqueteTuristico {
 
     private String nombre;
