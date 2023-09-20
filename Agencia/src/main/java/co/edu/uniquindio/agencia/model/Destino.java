@@ -1,5 +1,6 @@
 package co.edu.uniquindio.agencia.model;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 
 @Getter
 @Setter
+@EqualsAndHashCode(of = {"nombre", "ciudad"})
 public class Destino {
 
     private String nombre;
@@ -15,11 +17,11 @@ public class Destino {
     private ArrayList<String> listaImagenes;
     private TipoClima tipoClima;
 
-    public Destino(String nombre, String ciudad, String descripcion, TipoClima tipoClima) {
+    public Destino(String nombre, String ciudad, String descripcion, ArrayList<String> listaImagenes, TipoClima tipoClima) {
         this.nombre = nombre;
         this.ciudad = ciudad;
         this.descripcion = descripcion;
-        this.listaImagenes = new ArrayList<String>();
+        this.listaImagenes = listaImagenes;
         this.tipoClima = tipoClima;
     }
 
