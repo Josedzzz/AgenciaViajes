@@ -12,15 +12,15 @@ public class Reserva {
     private EstadoReserva estadoReserva;
     private Cliente clienteInvolucrado;
     private PaqueteTuristico paqueteTuristicoSeleccionado;
-    private GuiaTuristico guiaTuristico;
+    private Guia guia;
 
-    public Reserva(String fechaSolicitud, int cantidadPersonas, EstadoReserva estadoReserva, Cliente clienteInvolucrado, PaqueteTuristico paqueteTuristicoSeleccionado, GuiaTuristico guiaTuristico) {
+    public Reserva(String fechaSolicitud, int cantidadPersonas, EstadoReserva estadoReserva, Cliente clienteInvolucrado, PaqueteTuristico paqueteTuristicoSeleccionado, Guia guiaTuristico) {
         this.fechaSolicitud = fechaSolicitud;
         this.cantidadPersonas = cantidadPersonas;
         this.estadoReserva = estadoReserva;
         this.clienteInvolucrado = clienteInvolucrado;
         this.paqueteTuristicoSeleccionado = paqueteTuristicoSeleccionado;
-        this.guiaTuristico = guiaTuristico;
+        this.guia = guia;
     }
 
     public Reserva() {

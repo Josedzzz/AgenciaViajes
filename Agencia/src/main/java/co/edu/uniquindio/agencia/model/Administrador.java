@@ -221,4 +221,114 @@ public class Administrador extends Persona {
         }
     }
 
+    //CRUD DE GUIAS -------------------------------------------------------------------------------------
+
+    /**
+     * Obtiene el guia dado el id de este
+     * @param listaGuias lista de guias de la agencia de viajes
+     * @param id id del guia
+     * @param i index que inicia en 0
+     * @return
+     */
+    public Guia obtenerGuia(ArrayList<Guia> listaGuias, String id, int i) {
+        if (i >= listaGuias.size()) {
+            return null;
+        } else {
+            Guia guia = listaGuias.get(i);
+            if (guia.getId().equals(id)) {
+                return guia;
+            } else {
+                return obtenerGuia(listaGuias, id, i + 1);
+            }
+        }
+    }
+
+    /**
+     * Actualiza un guia
+     * @param agenciaViajes clase principal
+     * @param id id del guia
+     * @param nombre nombre del guia
+     * @param correo correo del guia
+     * @param telefono telefono del guia
+     * @param residencia residencia del guia
+     * @param contrasenia contrasenia del guia
+     * @param aniosExperiencia experiencia del guia
+     * @param listaLenguajes lenguajes del guia
+     * @throws GuiaNoRegistradoException
+     */
+    public void actualizarGuia(AgenciaViajes agenciaViajes, String id, String nombre, String correo, String telefono, String residencia, String contrasenia, int aniosExperiencia, ArrayList<Lenguajes> listaLenguajes) throws GuiaNoRegistradoException {
+        Guia guiaEcontrado = obtenerGuia(agenciaViajes.getListaGuiasTuristicos(), id, 0);
+        if (guiaEcontrado == null) {
+            throw new GuiaNoRegistradoException("El guía que buscas actualizar no está registrado");
+        } else {
+            guiaEcontrado.setNombre(nombre);
+            guiaEcontrado.setCorreo(correo);
+            guiaEcontrado.setTelefono(telefono);
+            guiaEcontrado.setResidencia(residencia);
+            guiaEcontrado.setContrasenia(contrasenia);
+            guiaEcontrado.setAniosExperiencia(aniosExperiencia);
+            guiaEcontrado.setListaLenguajes(listaLenguajes);
+        }
+    }
+
+    /**
+     * Elimina el guia de la lista de guias turisticos propia de la agencia de viajes
+     * @param agenciaViajes clase principal
+     * @param id id del guia
+     * @throws GuiaNoRegistradoException
+     */
+    public void eliminarGuia(AgenciaViajes agenciaViajes, String id) throws GuiaNoRegistradoException {
+        Guia guiaEncontrado = obtenerGuia(agenciaViajes.getListaGuiasTuristicos(), id, 0);
+        if (guiaEncontrado == null) {
+            throw new GuiaNoRegistradoException("El guía turistico no está registrado");
+        } else {
+            agenciaViajes.getListaGuiasTuristicos().remove(guiaEncontrado);
+        }
+    }
+
+    /**
+     * Crea un guia y lo agrega a la lista de guias de la agencia
+     * @param agenciaViajes clase principal
+     * @param id id del guia
+     * @param nombre nombre del guia
+     * @param correo correo del guia
+     * @param telefono telefono del guia
+     * @param residencia residencia del guia
+     * @param contrasenia contrasenia del guia
+     * @param aniosExperiencia experiencia del guia
+     * @param listaLenguajes lenguajes del guia
+     * @throws GuiaYaExistenteException
+     * @throws CampoObligatorioGuiaException
+     */
+    public void crearGuia(AgenciaViajes agenciaViajes, String id, String nombre, String correo, String telefono, String residencia, String contrasenia, int aniosExperiencia, ArrayList<Lenguajes> listaLenguajes) throws GuiaYaExistenteException, CampoObligatorioGuiaException {
+        Guia guiaEncontrado = obtenerGuia(agenciaViajes.getListaGuiasTuristicos(), id, 0);
+        if (guiaEncontrado != null) {
+            throw new GuiaYaExistenteException("El guía que seas registrar ya existe");
+        } else {
+            if (id == null || id.isEmpty()) {
+                throw new CampoObligatorioGuiaException("El id del guía es obligatorio");
+            }
+            if (nombre == null || nombre.isEmpty()) {
+                throw new CampoObligatorioGuiaException("El nombre del guía es obligatorio");
+            }
+            if (correo == null || correo.isEmpty()) {
+                throw new CampoObligatorioGuiaException("El correo del guía es obligatorio");
+            }
+            if (telefono == null || telefono.isEmpty()) {
+                throw new CampoObligatorioGuiaException("El teléfono del guía es obligatorio");
+            }
+            if (residencia == null || residencia.isEmpty()) {
+                throw new CampoObligatorioGuiaException("La residencia del guía es obligatoria");
+            }
+            if (contrasenia == null || contrasenia.isEmpty()) {
+                throw new CampoObligatorioGuiaException("La contraseña del guía es obligatoria");
+            }
+            if (listaLenguajes == null || listaLenguajes.isEmpty()) {
+                throw new CampoObligatorioGuiaException("El / los lenguajes del guía son obligatorios");
+            }
+            Guia guia = new Guia(id, nombre, correo, telefono, residencia, contrasenia, aniosExperiencia, listaLenguajes);
+            agenciaViajes.getListaGuiasTuristicos().add(guia);
+        }
+    }
+
 }

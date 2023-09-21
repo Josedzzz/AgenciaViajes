@@ -13,7 +13,7 @@ public class AgenciaViajes {
     private ArrayList<Destino> listaDestinos;
     private ArrayList<PaqueteTuristico> listaPaquetesTuristicos;
     private ArrayList<Reserva> listaReservas;
-    private ArrayList<GuiaTuristico> listaGuiasTuristicos;
+    private ArrayList<Guia> listaGuiasTuristicos;
     private ArrayList<Cliente> listaClientes;
     private ArrayList<Administrador> listaAdministradores;
 
@@ -22,7 +22,7 @@ public class AgenciaViajes {
         this.listaDestinos = new ArrayList<Destino>();
         this.listaPaquetesTuristicos = new ArrayList<PaqueteTuristico>();
         this.listaReservas = new ArrayList<Reserva>();
-        this.listaGuiasTuristicos = new ArrayList<GuiaTuristico>();
+        this.listaGuiasTuristicos = new ArrayList<Guia>();
         this.listaClientes = new ArrayList<Cliente>();
         this.listaAdministradores = new ArrayList<Administrador>();
     }
@@ -125,5 +125,54 @@ public class AgenciaViajes {
         adminActual.crearPaqueteTuristico(agenciaViajes, nombre, fechaInicial, fechaFinal, precio, cupoMaximo, listaServiciosAdicionales, listaDestinos);
     }
 
+    //CRUD DE GUIAS --------------------------------------------------------------------------------------
+
+    /**
+     * LLama la funcion actualizarGuia del administrador
+     * @param agenciaViajes clase principal
+     * @param adminActual admin que inicio sesion
+     * @param id id del guia
+     * @param nombre nombre del guia
+     * @param correo correo del guia
+     * @param telefono telefono del guia
+     * @param residencia residencia del guia
+     * @param contrasenia contrasenia del guia
+     * @param aniosExperiencia experiencia del guia
+     * @param listaLenguajes lenguajes del guia
+     * @throws GuiaNoRegistradoException
+     */
+    public void actulizarGuia(AgenciaViajes agenciaViajes, Administrador adminActual, String id, String nombre, String correo, String telefono, String residencia, String contrasenia, int aniosExperiencia, ArrayList<Lenguajes> listaLenguajes) throws GuiaNoRegistradoException {
+        adminActual.actualizarGuia(agenciaViajes, id, nombre, correo, telefono, residencia, contrasenia, aniosExperiencia, listaLenguajes);
+    }
+
+    /**
+     * Llama la función eliminarGuia del administrador
+     * @param agenciaViajes clase principal
+     * @param adminActual admin que inicio sesion
+     * @param id id del guia
+     * @throws GuiaNoRegistradoException
+     */
+    public void eliminarGuia(AgenciaViajes agenciaViajes, Administrador adminActual, String id) throws GuiaNoRegistradoException {
+        adminActual.eliminarGuia(agenciaViajes, id);
+    }
+
+    /**
+     * Llama la funcion crearGuia del administrador
+     * @param agenciaViajes clase principal
+     * @param adminActual admin que inicio sesion
+     * @param id id del guia
+     * @param nombre nombre del guia
+     * @param correo correo del guia
+     * @param telefono telefono del guia
+     * @param residencia residencia del guia
+     * @param contrasenia contrasenia del guia
+     * @param aniosExperiencia experiencia del guia
+     * @param listaLenguajes lenguajes del guia
+     * @throws GuiaYaExistenteException
+     * @throws CampoObligatorioGuiaException
+     */
+    public void crearGuia(AgenciaViajes agenciaViajes, Administrador adminActual, String id, String nombre, String correo, String telefono, String residencia, String contrasenia, int aniosExperiencia, ArrayList<Lenguajes> listaLenguajes) throws GuiaYaExistenteException, CampoObligatorioGuiaException {
+        adminActual.crearGuia(agenciaViajes, id, nombre, correo, telefono, residencia, contrasenia, aniosExperiencia, listaLenguajes);
+    }
 
 }
