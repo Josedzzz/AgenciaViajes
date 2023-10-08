@@ -16,6 +16,7 @@ public class Destino {
     private String descripcion;
     private ArrayList<String> listaImagenes;
     private TipoClima tipoClima;
+    private ArrayList<CalificacionDestino> calificaciones;
 
     public Destino(String nombre, String ciudad, String descripcion, ArrayList<String> listaImagenes, TipoClima tipoClima) {
         this.nombre = nombre;

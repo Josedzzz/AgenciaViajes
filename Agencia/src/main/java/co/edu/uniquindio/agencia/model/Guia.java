@@ -13,6 +13,7 @@ public class Guia extends Persona {
 
     private int aniosExperiencia;
     private ArrayList<Lenguajes> listaLenguajes;
+    private ArrayList<CalificacionGuia> calificaciones;
 
     public Guia(String id, String nombre, String correo, String telefono, String residencia, String contrasenia, int aniosExperiencia, ArrayList<Lenguajes> listaLenguajes) {
         super(id, nombre, correo, telefono, residencia, contrasenia);
