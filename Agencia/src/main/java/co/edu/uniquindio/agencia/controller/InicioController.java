@@ -3,7 +3,7 @@ package co.edu.uniquindio.agencia.controller;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 
-public class VentanaPrincipalController {
+public class InicioController {
 
     public void mostrarMensaje(ActionEvent e){
 
