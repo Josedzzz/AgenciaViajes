@@ -1,14 +1,15 @@
 package co.edu.uniquindio.agencia.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"nombre", "ciudad"})
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Destino {
 
     private String nombre;
