@@ -18,5 +18,5 @@ public class Reserva {
     private Cliente clienteInvolucrado;
     private PaqueteTuristico paqueteTuristicoSeleccionado;
     private Guia guia;
-    
+
 }

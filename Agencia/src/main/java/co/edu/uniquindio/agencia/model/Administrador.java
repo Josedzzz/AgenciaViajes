@@ -1,22 +1,18 @@
 package co.edu.uniquindio.agencia.model;
 
 import co.edu.uniquindio.agencia.exceptions.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Administrador extends Persona {
 
-    public Administrador(String id, String nombre, String correo, String telefono, String residencia, String contrasenia) {
-        super(id, nombre, correo, telefono, residencia, contrasenia);
-    }
 
-    public Administrador() {
-
-    }
 
     //FUNCIONES DEL ADMINISTRADOR
 
@@ -111,8 +107,8 @@ public class Administrador extends Persona {
             if (tipoClima == null) {
                 throw new CampoObligatorioDestinoException("El clima del destino es obligatorio");
             }
-            Destino destino = new Destino(nombre, ciudad, descripcion, listaImagenes, tipoClima);
-            agenciaViajes.getListaDestinos().add(destino);
+            //Destino destino = new Destino(nombre, ciudad, descripcion, listaImagenes, tipoClima);
+            //agenciaViajes.getListaDestinos().add(destino);
         }
     }
 
@@ -216,8 +212,8 @@ public class Administrador extends Persona {
             if (listaDestinos == null || listaDestinos.isEmpty()) {
                 throw new CampoObligatorioPaqueteTuristicoException("Los destinos del paquete turístico son obligatorios");
             }
-            PaqueteTuristico paqueteTuristico = new PaqueteTuristico(nombre, fechaInicial, fechaFinal, precio, cupoMaximo, listaServiciosAdicionales, listaDestinos);
-            agenciaViajes.getListaPaquetesTuristicos().add(paqueteTuristico);
+            //PaqueteTuristico paqueteTuristico = new PaqueteTuristico(nombre, fechaInicial, fechaFinal, precio, cupoMaximo, listaServiciosAdicionales, listaDestinos);
+            //agenciaViajes.getListaPaquetesTuristicos().add(paqueteTuristico);
         }
     }
 
@@ -326,8 +322,8 @@ public class Administrador extends Persona {
             if (listaLenguajes == null || listaLenguajes.isEmpty()) {
                 throw new CampoObligatorioGuiaException("El / los lenguajes del guía son obligatorios");
             }
-            Guia guia = new Guia(id, nombre, correo, telefono, residencia, contrasenia, aniosExperiencia, listaLenguajes);
-            agenciaViajes.getListaGuiasTuristicos().add(guia);
+            //Guia guia = new Guia(id, nombre, correo, telefono, residencia, contrasenia, aniosExperiencia, listaLenguajes);
+            //agenciaViajes.getListaGuiasTuristicos().add(guia);
         }
     }
 

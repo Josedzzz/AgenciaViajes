@@ -578,7 +578,6 @@ public class AgenciaViajes {
      * @param id
      * @throws ClienteNoRegistradoException
      */
-
     public void eliminarCliente(String id)throws ClienteNoRegistradoException {
         Cliente clientePorEliminar = obtenerCliente(listaClientes,id,0);
         if(clientePorEliminar != null){
