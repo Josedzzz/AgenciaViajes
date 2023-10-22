@@ -1,14 +1,15 @@
 package co.edu.uniquindio.agencia.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"nombre", "ciudad"})
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Destino {
 
     private String nombre;
@@ -18,15 +19,4 @@ public class Destino {
     private TipoClima tipoClima;
     private ArrayList<CalificacionDestino> calificaciones;
 
-    public Destino(String nombre, String ciudad, String descripcion, ArrayList<String> listaImagenes, TipoClima tipoClima) {
-        this.nombre = nombre;
-        this.ciudad = ciudad;
-        this.descripcion = descripcion;
-        this.listaImagenes = listaImagenes;
-        this.tipoClima = tipoClima;
-    }
-
-    public Destino() {
-
-    }
 }
