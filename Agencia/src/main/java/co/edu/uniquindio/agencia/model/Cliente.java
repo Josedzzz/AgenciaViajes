@@ -1,12 +1,13 @@
 package co.edu.uniquindio.agencia.model;
 
-import lombok.*;
+
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Builder(builderMethodName = "clienteBuilder")
 public class Cliente extends Persona {
 
     private String id;

@@ -1,15 +1,16 @@
 package co.edu.uniquindio.agencia.model;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"id"})
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Builder(builderMethodName = "guiaBuilder")
 public class Guia extends Persona {
 
     private int aniosExperiencia;

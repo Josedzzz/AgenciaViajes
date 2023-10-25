@@ -101,7 +101,7 @@ public class AgenciaViajes {
         }
         String clienteSt = clientesString.get(i);
         String[] partesCliente = clienteSt.split(";");
-        Cliente cliente = Cliente.builder()
+        Cliente cliente = Cliente.clienteBuilder()
                 .id(partesCliente[0])
                 .nombre(partesCliente[1])
                 .correo(partesCliente[2])
@@ -487,7 +487,7 @@ public class AgenciaViajes {
             throw new ClienteYaExistenteException("El cliente no se encuentra registrado");
         }
 
-        Cliente clienteNuevo = Cliente.builder()
+        Cliente clienteNuevo = Cliente.clienteBuilder()
                 .id(id)
                 .nombre(nombre)
                 .correo(correo)
