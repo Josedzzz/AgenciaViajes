@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.agencia.controller.GestionarAgenciaController">
    <center>
       <SplitPane dividerPositions="0.4" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <items>
@@ -31,7 +31,7 @@
                         <Font name="Ubuntu" size="18.0" />
                      </font>
                   </Label>
-                  <Button layoutX="125.0" layoutY="377.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="190.0" style="-fx-background-color: #5258cb;" text="Destinos" textFill="#eef2f4">
+                  <Button fx:id="btnDestinos" layoutX="125.0" layoutY="377.0" mnemonicParsing="false" onAction="#gestionarDestinos" prefHeight="0.0" prefWidth="190.0" style="-fx-background-color: #5258cb;" text="Destinos" textFill="#eef2f4">
                      <font>
                         <Font name="Ubuntu" size="14.0" />
                      </font>
@@ -39,7 +39,7 @@
                         <Cursor fx:constant="OPEN_HAND" />
                      </cursor>
                   </Button>
-                  <Button layoutX="126.0" layoutY="430.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="190.0" style="-fx-background-color: #5258cb;" text="Paquetes" textFill="#eef2f4">
+                  <Button fx:id="btnPaquetes" layoutX="126.0" layoutY="430.0" mnemonicParsing="false" onAction="#gestionarPaquetes" prefHeight="0.0" prefWidth="190.0" style="-fx-background-color: #5258cb;" text="Paquetes" textFill="#eef2f4">
                      <font>
                         <Font name="Ubuntu" size="14.0" />
                      </font>
@@ -47,7 +47,7 @@
                         <Cursor fx:constant="OPEN_HAND" />
                      </cursor>
                   </Button>
-                  <Button layoutX="14.0" layoutY="551.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="172.0" style="-fx-background-color: #eef2f4;" text="Ver estadísticas" textFill="#5258cb">
+                  <Button fx:id="btnVerEstadisticas" layoutX="14.0" layoutY="551.0" mnemonicParsing="false" onAction="#verEstadisticas" prefHeight="33.0" prefWidth="172.0" style="-fx-background-color: #eef2f4;" text="Ver estadísticas" textFill="#5258cb">
                      <font>
                         <Font name="Ubuntu" size="18.0" />
                      </font>
@@ -55,7 +55,7 @@
                         <Cursor fx:constant="OPEN_HAND" />
                      </cursor>
                   </Button>
-                  <Button layoutX="125.0" layoutY="482.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="190.0" style="-fx-background-color: #5258cb;" text="Guías" textFill="#eef2f4">
+                  <Button fx:id="btnGuias" layoutX="125.0" layoutY="482.0" mnemonicParsing="false" onAction="#gestionarGuias" prefHeight="0.0" prefWidth="190.0" style="-fx-background-color: #5258cb;" text="Guías" textFill="#eef2f4">
                      <font>
                         <Font name="Ubuntu" size="14.0" />
                      </font>
@@ -63,7 +63,7 @@
                         <Cursor fx:constant="OPEN_HAND" />
                      </cursor>
                   </Button>
-                  <Button layoutX="286.0" layoutY="551.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="136.0" style="-fx-background-color: #eef2f4;" text="Cerrar Sesión" textFill="#5258cb">
+                  <Button fx:id="btnCerrarSesion" layoutX="286.0" layoutY="551.0" mnemonicParsing="false" onAction="#cerrarSesion" prefHeight="33.0" prefWidth="136.0" style="-fx-background-color: #eef2f4;" text="Cerrar Sesión" textFill="#5258cb">
                      <font>
                         <Font name="Ubuntu" size="18.0" />
                      </font>

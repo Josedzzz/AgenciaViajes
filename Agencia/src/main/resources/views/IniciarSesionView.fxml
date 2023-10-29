@@ -12,8 +12,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.agencia.controller.IniciarSesionController">
    <center>
       <SplitPane dividerPositions="0.65" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
@@ -43,7 +42,7 @@
                         <Font name="Ubuntu" size="18.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="105.0" layoutY="324.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
+                  <TextField fx:id="txtCedula" layoutX="105.0" layoutY="324.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
                      <font>
                         <Font name="Ubuntu" size="14.0" />
                      </font>
@@ -53,12 +52,12 @@
                         <Font name="Ubuntu" size="18.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="104.0" layoutY="411.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
+                  <TextField fx:id="txtContraseña" layoutX="104.0" layoutY="411.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
                      <font>
                         <Font name="Ubuntu" size="14.0" />
                      </font>
                   </TextField>
-                  <Button layoutX="115.0" layoutY="536.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="154.0" style="-fx-background-color: #5258cb;" text="Iniciar Sesión" textFill="#eef2f4">
+                  <Button fx:id="btnIniciarSesion" layoutX="115.0" layoutY="536.0" mnemonicParsing="false" onAction="#iniciarSesion" prefHeight="26.0" prefWidth="154.0" style="-fx-background-color: #5258cb;" text="Iniciar Sesión" textFill="#eef2f4">
                      <font>
                         <Font name="Ubuntu" size="14.0" />
                      </font>
@@ -66,17 +65,17 @@
                         <Cursor fx:constant="OPEN_HAND" />
                      </cursor>
                   </Button>
-                  <RadioButton layoutX="244.0" layoutY="478.0" mnemonicParsing="false" text="Cliente" textFill="#5258cb">
+                  <RadioButton fx:id="radioButtonCliente" layoutX="244.0" layoutY="478.0" mnemonicParsing="false" text="Cliente" textFill="#5258cb">
                      <font>
                         <Font name="Ubuntu" size="16.0" />
                      </font>
                   </RadioButton>
-                  <RadioButton layoutX="58.0" layoutY="478.0" mnemonicParsing="false" text="Administrador" textFill="#5258cb">
+                  <RadioButton fx:id="radioButtonAdministrador" layoutX="58.0" layoutY="478.0" mnemonicParsing="false" text="Administrador" textFill="#5258cb">
                      <font>
                         <Font name="Ubuntu" size="16.0" />
                      </font>
                   </RadioButton>
-                  <Button layoutX="257.0" layoutY="4.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="136.0" style="-fx-background-color: #eef2f4;" text="Regresar" textFill="#5258cb">
+                  <Button fx:id="btnRegresar" layoutX="257.0" layoutY="4.0" mnemonicParsing="false" onAction="#regresar" prefHeight="33.0" prefWidth="136.0" style="-fx-background-color: #eef2f4;" text="Regresar" textFill="#5258cb">
                      <font>
                         <Font name="Ubuntu" size="18.0" />
                      </font>

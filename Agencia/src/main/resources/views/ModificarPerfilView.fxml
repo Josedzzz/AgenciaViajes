@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.agencia.controller.ModificarPerfilController">
    <center>
       <SplitPane dividerPositions="0.65" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <items>
@@ -27,7 +27,7 @@
                         <Image url="@../Images/LogoPortada.png" />
                      </image>
                   </ImageView>
-                  <Button layoutX="575.0" layoutY="6.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="136.0" style="-fx-background-color: #eef2f4;" text="Regresar" textFill="#5258cb">
+                  <Button fx:id="btnRegresar" layoutX="575.0" layoutY="6.0" mnemonicParsing="false" onAction="#regresar" prefHeight="33.0" prefWidth="136.0" style="-fx-background-color: #eef2f4;" text="Regresar" textFill="#5258cb">
                      <font>
                         <Font name="Ubuntu" size="18.0" />
                      </font>
@@ -40,7 +40,7 @@
                         <Font name="Ubuntu" size="18.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="140.0" layoutY="244.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
+                  <TextField fx:id="txtCedula" layoutX="140.0" layoutY="244.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
                      <font>
                         <Font name="Ubuntu" size="14.0" />
                      </font>
@@ -50,7 +50,7 @@
                         <Font name="Ubuntu" size="18.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="470.0" layoutY="244.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
+                  <TextField fx:id="txtNombre" layoutX="470.0" layoutY="244.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
                      <font>
                         <Font name="Ubuntu" size="14.0" />
                      </font>
@@ -75,27 +75,27 @@
                         <Font name="Ubuntu" size="18.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="140.0" layoutY="319.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
+                  <TextField fx:id="txtCorreo" layoutX="140.0" layoutY="319.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
                      <font>
                         <Font name="Ubuntu" size="14.0" />
                      </font>
                   </TextField>
-                  <TextField layoutX="476.0" layoutY="319.0" prefHeight="28.0" prefWidth="167.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
+                  <TextField fx:id="txtTelefono" layoutX="476.0" layoutY="319.0" prefHeight="28.0" prefWidth="167.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
                      <font>
                         <Font name="Ubuntu" size="14.0" />
                      </font>
                   </TextField>
-                  <TextField layoutX="177.0" layoutY="389.0" prefHeight="28.0" prefWidth="136.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
+                  <TextField fx:id="txtContrasenia" layoutX="177.0" layoutY="389.0" prefHeight="28.0" prefWidth="136.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
                      <font>
                         <Font name="Ubuntu" size="14.0" />
                      </font>
                   </TextField>
-                  <TextField layoutX="489.0" layoutY="389.0" prefHeight="28.0" prefWidth="152.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
+                  <TextField fx:id="txtResidencia" layoutX="489.0" layoutY="389.0" prefHeight="28.0" prefWidth="152.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
                      <font>
                         <Font name="Ubuntu" size="14.0" />
                      </font>
                   </TextField>
-                  <Button layoutX="261.0" layoutY="493.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="190.0" style="-fx-background-color: #5258cb;" text="Actualizar" textFill="#eef2f4">
+                  <Button fx:id="btnActualizar" layoutX="261.0" layoutY="493.0" mnemonicParsing="false" onAction="#actualizar" prefHeight="0.0" prefWidth="190.0" style="-fx-background-color: #5258cb;" text="Actualizar" textFill="#eef2f4">
                      <font>
                         <Font name="Ubuntu" size="14.0" />
                      </font>

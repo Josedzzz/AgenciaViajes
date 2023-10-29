@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.agencia.controller.CalificarGuiasController">
    <center>
       <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <items>
@@ -55,7 +55,7 @@
                         <Font name="Ubuntu" size="18.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="203.0" layoutY="338.0" prefHeight="28.0" prefWidth="142.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
+                  <TextField fx:id="txtCalificacion" layoutX="203.0" layoutY="338.0" prefHeight="28.0" prefWidth="142.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
                      <font>
                         <Font name="Ubuntu" size="14.0" />
                      </font>
@@ -65,8 +65,8 @@
                         <Font name="Ubuntu" size="18.0" />
                      </font>
                   </Label>
-                  <TextArea layoutX="25.0" layoutY="440.0" prefHeight="88.0" prefWidth="485.0" />
-                  <Button layoutX="173.0" layoutY="550.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="190.0" style="-fx-background-color: #5258cb;" text="Enviar calificación" textFill="#eef2f4">
+                  <TextArea fx:id="textAreaComentario" layoutX="25.0" layoutY="440.0" prefHeight="88.0" prefWidth="485.0" />
+                  <Button fx:id="btnEnviarCalificacion" layoutX="173.0" layoutY="550.0" mnemonicParsing="false" onAction="#enviarCalificacion" prefHeight="26.0" prefWidth="190.0" style="-fx-background-color: #5258cb;" text="Enviar calificación" textFill="#eef2f4">
                      <font>
                         <Font name="Ubuntu" size="14.0" />
                      </font>
@@ -85,7 +85,7 @@
                               <Font name="Ubuntu" size="28.0" />
                            </font>
                         </Label>
-                        <Button layoutX="410.0" layoutY="19.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="136.0" style="-fx-background-color: #5258cb;" text="Regresar" textFill="#eef2f4">
+                        <Button fx:id="btnRegresar" layoutX="410.0" layoutY="19.0" mnemonicParsing="false" onAction="#regresar" prefHeight="33.0" prefWidth="136.0" style="-fx-background-color: #5258cb;" text="Regresar" textFill="#eef2f4">
                            <font>
                               <Font name="Ubuntu" size="18.0" />
                            </font>
@@ -95,15 +95,15 @@
                         </Button>
                      </children>
                   </Pane>
-                  <TableView layoutX="-1.0" layoutY="70.0" prefHeight="468.0" prefWidth="546.0">
+                  <TableView fx:id="tableViewGuias" layoutX="-1.0" layoutY="70.0" prefHeight="468.0" prefWidth="546.0">
                      <columns>
-                        <TableColumn prefWidth="137.0" text="Nombre" />
-                        <TableColumn prefWidth="134.0" text="Correo" />
-                        <TableColumn prefWidth="118.0" text="Télefono" />
-                        <TableColumn prefWidth="156.0" text="Años de experiencia" />
+                        <TableColumn fx:id="columnNombre" prefWidth="137.0" text="Nombre" />
+                        <TableColumn fx:id="columnCorreo" prefWidth="134.0" text="Correo" />
+                        <TableColumn fx:id="columnTelefono" prefWidth="118.0" text="Télefono" />
+                        <TableColumn fx:id="columnAniosExperiencia" prefWidth="156.0" text="Años de experiencia" />
                      </columns>
                   </TableView>
-                  <Button layoutX="178.0" layoutY="551.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="190.0" style="-fx-background-color: #5258cb;" text="Ver este guía" textFill="#eef2f4">
+                  <Button fx:id="btnVerGuia" layoutX="178.0" layoutY="551.0" mnemonicParsing="false" onAction="#verGuia" prefHeight="26.0" prefWidth="190.0" style="-fx-background-color: #5258cb;" text="Ver este guía" textFill="#eef2f4">
                      <font>
                         <Font name="Ubuntu" size="14.0" />
                      </font>

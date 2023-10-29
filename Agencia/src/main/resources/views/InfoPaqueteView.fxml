@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.agencia.controller.InfoPaqueteController">
    <center>
       <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <items>
@@ -39,13 +39,13 @@
                         <Font name="Ubuntu" size="18.0" />
                      </font>
                   </Label>
-                  <DatePicker layoutX="123.0" layoutY="179.0" prefHeight="24.0" prefWidth="130.0" style="-fx-background-color: #5258cb;" />
+                  <DatePicker fx:id="dpFechaInicial" layoutX="123.0" layoutY="179.0" prefHeight="24.0" prefWidth="130.0" style="-fx-background-color: #5258cb;" />
                   <Label layoutX="285.0" layoutY="181.0" text="Fecha final:" textFill="#5258cb">
                      <font>
                         <Font name="Ubuntu" size="18.0" />
                      </font>
                   </Label>
-                  <DatePicker layoutX="389.0" layoutY="179.0" prefHeight="24.0" prefWidth="130.0" style="-fx-background-color: #5258cb;" />
+                  <DatePicker fx:id="dpFechaFinal" layoutX="389.0" layoutY="179.0" prefHeight="24.0" prefWidth="130.0" style="-fx-background-color: #5258cb;" />
                   <Label layoutX="14.0" layoutY="253.0" textFill="#5258cb">
                      <font>
                         <Font name="Ubuntu" size="18.0" />
@@ -61,7 +61,7 @@
                         <Font name="Ubuntu" size="18.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="176.0" layoutY="250.0" prefHeight="28.0" prefWidth="109.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
+                  <TextField fx:id="txtCupos" layoutX="176.0" layoutY="250.0" prefHeight="28.0" prefWidth="109.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
                      <font>
                         <Font name="Ubuntu" size="14.0" />
                      </font>
@@ -73,32 +73,32 @@
                               <Font name="Ubuntu" size="18.0" />
                            </font>
                         </Label>
-                        <CheckBox layoutX="184.0" layoutY="101.0" mnemonicParsing="false" text="Alimentos" textFill="#eef2f4">
+                        <CheckBox fx:id="checkBoxAlimentos" layoutX="184.0" layoutY="101.0" mnemonicParsing="false" text="Alimentos" textFill="#eef2f4">
                            <font>
                               <Font name="Ubuntu" size="16.0" />
                            </font>
                         </CheckBox>
-                        <CheckBox layoutX="53.0" layoutY="101.0" mnemonicParsing="false" text="Tranporte" textFill="#eef2f4">
+                        <CheckBox fx:id="checkBoxTransporte" layoutX="53.0" layoutY="101.0" mnemonicParsing="false" text="Tranporte" textFill="#eef2f4">
                            <font>
                               <Font name="Ubuntu" size="16.0" />
                            </font>
                         </CheckBox>
-                        <CheckBox layoutX="327.0" layoutY="101.0" mnemonicParsing="false" text="Recreación" textFill="#eef2f4">
+                        <CheckBox fx:id="checkBoxRecreacion" layoutX="327.0" layoutY="101.0" mnemonicParsing="false" text="Recreación" textFill="#eef2f4">
                            <font>
                               <Font name="Ubuntu" size="16.0" />
                            </font>
                         </CheckBox>
-                        <CheckBox layoutX="184.0" layoutY="173.0" mnemonicParsing="false" text="Seguros" textFill="#eef2f4">
+                        <CheckBox fx:id="checkBoxSeguros" layoutX="184.0" layoutY="173.0" mnemonicParsing="false" text="Seguros" textFill="#eef2f4">
                            <font>
                               <Font name="Ubuntu" size="16.0" />
                            </font>
                         </CheckBox>
-                        <CheckBox layoutX="53.0" layoutY="173.0" mnemonicParsing="false" text="Bar" textFill="#eef2f4">
+                        <CheckBox fx:id="checkBoxBar" layoutX="53.0" layoutY="173.0" mnemonicParsing="false" text="Bar" textFill="#eef2f4">
                            <font>
                               <Font name="Ubuntu" size="16.0" />
                            </font>
                         </CheckBox>
-                        <Button layoutX="179.0" layoutY="238.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="190.0" style="-fx-background-color: #eef2f4;" text="Reservar este paquete" textFill="#5258cb">
+                        <Button fx:id="btnReservarPaquete" layoutX="179.0" layoutY="238.0" mnemonicParsing="false" onAction="#reservarPaquete" prefHeight="26.0" prefWidth="190.0" style="-fx-background-color: #eef2f4;" text="Reservar este paquete" textFill="#5258cb">
                            <font>
                               <Font name="Ubuntu" size="14.0" />
                            </font>
@@ -108,12 +108,12 @@
                         </Button>
                      </children>
                   </Pane>
-                  <TextField layoutX="363.0" layoutY="250.0" prefHeight="28.0" prefWidth="125.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
+                  <TextField fx:id="txtPrecio" layoutX="363.0" layoutY="250.0" prefHeight="28.0" prefWidth="125.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
                      <font>
                         <Font name="Ubuntu" size="14.0" />
                      </font>
                   </TextField>
-                  <TextField layoutX="193.0" layoutY="99.0" prefHeight="28.0" prefWidth="114.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
+                  <TextField fx:id="txtNombrePaquete" layoutX="193.0" layoutY="99.0" prefHeight="28.0" prefWidth="114.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
                      <font>
                         <Font name="Ubuntu" size="14.0" />
                      </font>
@@ -129,7 +129,7 @@
                               <Font name="Ubuntu" size="36.0" />
                            </font>
                         </Label>
-                        <Button layoutX="410.0" layoutY="19.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="136.0" style="-fx-background-color: #5258cb;" text="Regresar" textFill="#eef2f4">
+                        <Button fx:id="btnRegresar" layoutX="410.0" layoutY="19.0" mnemonicParsing="false" onAction="#regresar" prefHeight="33.0" prefWidth="136.0" style="-fx-background-color: #5258cb;" text="Regresar" textFill="#eef2f4">
                            <font>
                               <Font name="Ubuntu" size="18.0" />
                            </font>
@@ -139,7 +139,7 @@
                         </Button>
                      </children>
                   </Pane>
-                  <Button layoutX="178.0" layoutY="551.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="190.0" style="-fx-background-color: #5258cb;" text="Ver este destino" textFill="#eef2f4">
+                  <Button fx:id="btnVerDestino" layoutX="178.0" layoutY="551.0" mnemonicParsing="false" onAction="#verDestino" prefHeight="26.0" prefWidth="190.0" style="-fx-background-color: #5258cb;" text="Ver este destino" textFill="#eef2f4">
                      <font>
                         <Font name="Ubuntu" size="14.0" />
                      </font>
@@ -147,12 +147,12 @@
                         <Cursor fx:constant="OPEN_HAND" />
                      </cursor>
                   </Button>
-                  <TableView layoutY="70.0" prefHeight="468.0" prefWidth="546.0">
+                  <TableView fx:id="tableViewDestinos" layoutY="70.0" prefHeight="468.0" prefWidth="546.0">
                      <columns>
-                        <TableColumn prefWidth="89.0" text="Nombre" />
-                        <TableColumn prefWidth="109.0" text="Cuidad" />
-                        <TableColumn prefWidth="103.0" text="Clima" />
-                        <TableColumn prefWidth="244.0" text="Descripción" />
+                        <TableColumn fx:id="columnNombre" prefWidth="89.0" text="Nombre" />
+                        <TableColumn fx:id="columnCiudad" prefWidth="109.0" text="Cuidad" />
+                        <TableColumn fx:id="columnClima" prefWidth="103.0" text="Clima" />
+                        <TableColumn fx:id="columnDescripcion" prefWidth="244.0" text="Descripción" />
                      </columns>
                   </TableView>
                </children>
