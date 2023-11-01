@@ -1,5 +1,8 @@
 package co.edu.uniquindio.agencia.controller;
 
+import co.edu.uniquindio.agencia.app.AgenciaApp;
+import co.edu.uniquindio.agencia.model.Administrador;
+import co.edu.uniquindio.agencia.model.AgenciaViajes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -8,6 +11,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class GestionarDestinoController {
 
@@ -59,6 +63,25 @@ public class GestionarDestinoController {
     @FXML
     private TextField txtNombre;
 
+    //Declaro variables auxiliares
+    private Stage stage;
+    private AgenciaApp agenciaApp;
+    private GestionarAgenciaController gestionarAgenciaController;
+    private Administrador administradorSesion;
+
+    //Uso de singleton
+    private final AgenciaViajes agenciaViajes = AgenciaViajes.getInstance();
+
+    public void setAgenciaApp(AgenciaApp agenciaApp) {
+        this.agenciaApp = agenciaApp;
+    }
+
+    public void init(Stage stage, GestionarAgenciaController gestionarAgenciaController, Administrador administradorSesion) {
+        this.stage = stage;
+        this.gestionarAgenciaController = gestionarAgenciaController;
+        this.administradorSesion = administradorSesion;
+    }
+
     @FXML
     void actualizarDestino(ActionEvent event) {
 
@@ -79,9 +102,14 @@ public class GestionarDestinoController {
 
     }
 
+    /**
+     * Regresa a la ventana gestionar agencia
+     * @param event
+     */
     @FXML
     void regresar(ActionEvent event) {
-
+        this.stage.close();
+        gestionarAgenciaController.show();
     }
 
     @FXML

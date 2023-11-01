@@ -68,6 +68,18 @@ public class IniciarSesionController implements Initializable {
     }
 
     /**
+     * Muestra la ventana para iniciar sesion
+     */
+    public void show() {
+        stage.show();
+        //Limpio los campos de la ventana
+        txtCedula.setText("");
+        txtContrasenia.setText("");
+        radioButtonCliente.setSelected(false);
+        radioButtonAdministrador.setSelected(false);
+    }
+
+    /**
      * Login de la aplicacion dependiendo del radioButtom.
      * Puede loggear clientes y admins
      * @param event
