@@ -11,7 +11,12 @@ import java.util.ArrayList;
 @Builder(builderMethodName = "administradorBuilder")
 public class Administrador extends Persona {
 
-
+    private String id;
+    private String nombre;
+    private String correo;
+    private String telefono;
+    private String residencia;
+    private String contrasenia;
 
     //FUNCIONES DEL ADMINISTRADOR
 

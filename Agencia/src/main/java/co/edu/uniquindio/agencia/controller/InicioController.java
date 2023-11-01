@@ -59,6 +59,13 @@ public class InicioController {
         this.stage = stage;
     }
 
+    /**
+     * Muestra la ventana de inicio
+     */
+    public void show() {
+        stage.show();
+    }
+
     @FXML
     void calificarDestinos(ActionEvent event) {
 

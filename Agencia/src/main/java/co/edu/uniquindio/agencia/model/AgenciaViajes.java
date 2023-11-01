@@ -50,6 +50,17 @@ public class AgenciaViajes {
         this.listaGuiasTuristicos = new ArrayList<Guia>();
         this.listaClientes = new ArrayList<Cliente>();
         this.listaAdministradores = new ArrayList<Administrador>();
+        //Quemo los datos de los administradores
+        Administrador administrador = Administrador.administradorBuilder()
+                .id("123")
+                .nombre("Jose")
+                .correo("Jose@")
+                .telefono("123")
+                .residencia("Quimbaya")
+                .contrasenia("123")
+                .build();
+        listaAdministradores.add(administrador);
+
     }
 
     /**
@@ -520,4 +531,43 @@ public class AgenciaViajes {
 
     //FUNCIONES APARTE AL CRUD PARA EL MANEJO DE LA AGENCIA ----------------------------------
 
+    /**
+     * Valida que los campos no esten vacios
+     * @param cedula del cliente o del administrador
+     * @param contrasenia del cliente o del administrador
+     * @param admin radioButton de admin
+     * @param cliente radioButton de cliente
+     * @throws AtributosVaciosException
+     */
+    public void validarDatosInicioSesion(String cedula, String contrasenia, boolean admin, boolean cliente) throws AtributosVaciosException {
+        if (cedula == null || cedula.isBlank()) {
+            throw new AtributosVaciosException("Por favor ingrese la cédula");
+        }
+        if (contrasenia == null || contrasenia.isBlank()) {
+            throw new AtributosVaciosException("Por favor ingrese la contraseña");
+        }
+        if (admin == false && cliente == false) {
+            throw new AtributosVaciosException("Por favor seleccione con que tipo de usuario desea ingresar");
+        }
+    }
+
+    /**
+     * Busca el administrador al que le corresponde la cedula y la contrasenia
+     * @param cedula del administrador
+     * @param contrasenia del administrador
+     * @param i index en el cual se empieza a buscar el admin
+     * @return Administrador al que le corresponden los datos
+     * @throws AdminNoEncontradoException
+     */
+    public Administrador iniciarSesionAdmin(String cedula, String contrasenia, int i) throws AdminNoEncontradoException {
+        if (i >= listaAdministradores.size()) {
+            throw new AdminNoEncontradoException("Los datos ingresados no pertenecen a ningún administrador");
+        }
+        Administrador administrador = listaAdministradores.get(i);
+        if (administrador.getId().equals(cedula) && administrador.getContrasenia().equals(contrasenia)) {
+            return administrador;
+        } else {
+            return iniciarSesionAdmin(cedula, contrasenia, i + 1);
+        }
+    }
 }

@@ -52,7 +52,7 @@
                         <Font name="Ubuntu" size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtContraseña" layoutX="104.0" layoutY="411.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
+                  <TextField fx:id="txtContrasenia" layoutX="104.0" layoutY="411.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
                      <font>
                         <Font name="Ubuntu" size="14.0" />
                      </font>
