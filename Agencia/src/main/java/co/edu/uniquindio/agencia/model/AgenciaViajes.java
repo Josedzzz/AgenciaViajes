@@ -50,70 +50,7 @@ public class AgenciaViajes {
         this.listaGuiasTuristicos = new ArrayList<Guia>();
         this.listaClientes = new ArrayList<Cliente>();
         this.listaAdministradores = new ArrayList<Administrador>();
-        //Se lee el archivo de texto plano para los clientes
-        try {
-            listaClientes = convertirStringACliente(ArchivoUtils.leerArchivoBufferedReader("src/main/resources/info/clientesData.txt"));
-            LOGGER.log(Level.INFO, "Se carga la lista de clientes leyendo un texto plano");
-        } catch (Exception e) {
-            LOGGER.log(Level.WARNING, "No se pudo cargar la lista de clientes leyendo un texto plano: " + e.getMessage());
-        }
     }
-
-    //METODOS PARA PERSISTENCIA DE LOS CLIENTES
-
-    /**
-     * Para escribir clientes en texto plano
-     * @param clientes
-     * @return
-     */
-    private static ArrayList<String> convertirClienteAString(ArrayList<Cliente> clientes) {
-        ArrayList<String> clientesEnString = new ArrayList<>();
-        convertirClienteAString(clientes, 0, clientesEnString);
-        return clientesEnString;
-    }
-
-    private static void convertirClienteAString(ArrayList<Cliente> clientes, int i, ArrayList<String> clientesEnString) {
-
-        if (i >= clientes.size()) {
-            return;
-        }
-        Cliente cliente = clientes.get(i);
-        String clienteString = cliente.getId() + ";" + cliente.getNombre() + ";" + cliente.getCorreo() + ";" + cliente.getTelefono() + ";" + cliente.getResidencia() + ";" + cliente.getContrasenia();
-        clientesEnString.add(clienteString);
-        convertirClienteAString(clientes, i + 1, clientesEnString);
-    }
-
-    /**
-     * Convierte la lista de String de clientes a objetos cliente
-     * @param clientesString
-     * @return
-     */
-    public ArrayList<Cliente> convertirStringACliente(ArrayList<String> clientesString) {
-        ArrayList<Cliente> clientes = new ArrayList<>();
-        convertirStringACliente(clientesString, 0, clientes);
-        return clientes;
-    }
-
-    private void convertirStringACliente(ArrayList<String> clientesString, int i, ArrayList<Cliente> clientes) {
-
-        if (i >= clientesString.size()) {
-            return;
-        }
-        String clienteSt = clientesString.get(i);
-        String[] partesCliente = clienteSt.split(";");
-        Cliente cliente = Cliente.clienteBuilder()
-                .id(partesCliente[0])
-                .nombre(partesCliente[1])
-                .correo(partesCliente[2])
-                .telefono(partesCliente[3])
-                .residencia(partesCliente[4])
-                .contrasenia(partesCliente[5])
-                .build();
-
-        clientes.add(cliente);
-        convertirStringACliente(clientesString, i + 1, clientes);
-    }
-
 
     /**
      * Metodo que se usara en otras clases que requieran la instancia de empresa
@@ -501,12 +438,7 @@ public class AgenciaViajes {
         LOGGER.log(Level.INFO, "Se ha registrado un nuevo cliente con cedula: " + id + "");
 
         //Guardo el objeto cliente con texto plano
-        try {
-            ArchivoUtils.escribirArchivoBufferedWriter("src/main/resources/info/clientesData.txt", convertirClienteAString(listaClientes), false);
-            LOGGER.log(Level.INFO, "Se guarda el nuevo cliente");
-        } catch (IOException e) {
-            LOGGER.log(Level.WARNING, "No se pudo guardar el nuevo cliente: " + e.getMessage());
-        }
+
         return clienteNuevo;
     }
 
@@ -565,12 +497,7 @@ public class AgenciaViajes {
         clienteEncontrado.setResidencia(residencia);
         LOGGER.log(Level.INFO, "Se actualizaron los datos del cliente: " + id);
         //Guardo el objeto cliente con texto plano
-        try {
-            ArchivoUtils.escribirArchivoBufferedWriter("src/main/resources/info/clientesPlanos.txt", convertirClienteAString(listaClientes), false);
-            LOGGER.log(Level.INFO, "Se guardo el cliente con sus datos actualizados");
-        } catch (IOException e) {
-            LOGGER.log(Level.WARNING, "No se pudo guardar el cliente actualizado: " + e.getMessage());
-        }
+
     }
 
     /**
@@ -584,16 +511,13 @@ public class AgenciaViajes {
             listaClientes.remove(clientePorEliminar);
             LOGGER.log(Level.INFO, "Se elimino el cliente");
             //Guardo el objeto cliente con texto plano
-            try {
-                ArchivoUtils.escribirArchivoBufferedWriter("src/main/resources/info/clientesPlanos.txt", convertirClienteAString(listaClientes), false);
-                LOGGER.log(Level.INFO, "Se guardo el cliente eliminado");
-            } catch (IOException e) {
-                LOGGER.log(Level.WARNING, "No se pudo guardar el cliente eliminado: " + e.getMessage());
-            }
+
         }else{
             LOGGER.log(Level.SEVERE, "El id " + id + " no esta registrado" );
             throw new ClienteNoRegistradoException("El cliente no se encuentra registrado");
         }
     }
+
+    //FUNCIONES APARTE AL CRUD PARA EL MANEJO DE LA AGENCIA ----------------------------------
 
 }
