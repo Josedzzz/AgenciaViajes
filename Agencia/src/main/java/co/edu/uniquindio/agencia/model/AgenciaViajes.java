@@ -1,16 +1,12 @@
 package co.edu.uniquindio.agencia.model;
 
 import co.edu.uniquindio.agencia.exceptions.*;
-import co.edu.uniquindio.agencia.utilities.ArchivoUtils;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.awt.image.LookupOp;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.EmptyStackException;
-import java.util.Locale;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -61,6 +57,21 @@ public class AgenciaViajes {
                 .build();
         listaAdministradores.add(administrador);
 
+        //Quemo datos de los guias
+        ArrayList<Lenguaje> lenguajesGuia = new ArrayList<>();
+        lenguajesGuia.add(Lenguaje.ESPANIOL);
+        lenguajesGuia.add(Lenguaje.INGLES);
+        Guia guia = Guia.guiaBuilder()
+                .id("333")
+                .nombre("Camilo")
+                .correo("Camilo@")
+                .telefono("123")
+                .residencia("Quimbaya")
+                .contrasenia("333")
+                .aniosExperiencia(2)
+                .listaLenguajes(lenguajesGuia)
+                .build();
+        listaGuiasTuristicos.add(guia);
     }
 
     /**
@@ -187,7 +198,7 @@ public class AgenciaViajes {
      * @param listaLenguajes lenguajes del guia
      * @throws GuiaNoRegistradoException
      */
-    public void actulizarGuia(AgenciaViajes agenciaViajes, Administrador adminActual, String id, String nombre, String correo, String telefono, String residencia, String contrasenia, int aniosExperiencia, ArrayList<Lenguajes> listaLenguajes) throws GuiaNoRegistradoException {
+    public void actulizarGuia(AgenciaViajes agenciaViajes, Administrador adminActual, String id, String nombre, String correo, String telefono, String residencia, String contrasenia, int aniosExperiencia, ArrayList<Lenguaje> listaLenguajes) throws GuiaNoRegistradoException, CampoObligatorioGuiaException {
         adminActual.actualizarGuia(agenciaViajes, id, nombre, correo, telefono, residencia, contrasenia, aniosExperiencia, listaLenguajes);
     }
 
@@ -217,8 +228,8 @@ public class AgenciaViajes {
      * @throws GuiaYaExistenteException
      * @throws CampoObligatorioGuiaException
      */
-    public void crearGuia(AgenciaViajes agenciaViajes, Administrador adminActual, String id, String nombre, String correo, String telefono, String residencia, String contrasenia, int aniosExperiencia, ArrayList<Lenguajes> listaLenguajes) throws GuiaYaExistenteException, CampoObligatorioGuiaException {
-        adminActual.crearGuia(agenciaViajes, id, nombre, correo, telefono, residencia, contrasenia, aniosExperiencia, listaLenguajes);
+    public void crearGuia(AgenciaViajes agenciaViajes, Administrador adminActual, String id, String nombre, String correo, String telefono, String residencia, String contrasenia, int aniosExperiencia, ArrayList<Lenguaje> listaLenguajes, ArrayList<CalificacionGuia> listaCalificaciones) throws GuiaYaExistenteException, CampoObligatorioGuiaException {
+        adminActual.crearGuia(agenciaViajes, id, nombre, correo, telefono, residencia, contrasenia, aniosExperiencia, listaLenguajes, listaCalificaciones);
     }
 
 
@@ -569,5 +580,45 @@ public class AgenciaViajes {
         } else {
             return iniciarSesionAdmin(cedula, contrasenia, i + 1);
         }
+    }
+
+    /**
+     * Verifica si un guia habla el idioma buscado
+     * @param guia
+     * @param lenguajeBuscado
+     * @param i indice que va a iterar sobre la lista de idiomas que habla el guia
+     * @return
+     */
+    public boolean hablaIdiomaGuia(Guia guia, Lenguaje lenguajeBuscado, int i) {
+        if (i >= guia.getListaLenguajes().size()) {
+            return false;
+        }
+        Lenguaje lenguaje = guia.getListaLenguajes().get(i);
+        if (lenguaje.equals(lenguajeBuscado)) {
+            return true;
+        } else {
+            return hablaIdiomaGuia(guia, lenguajeBuscado, i + 1);
+        }
+    }
+
+    /**
+     * Crea el arraylist de los lenguajes que habla un guia
+     * @param espaniol valor booleano de si habla espaniol o no
+     * @param ingles valor booleano de si habla ingles o no
+     * @param frances valor booleano de si habla frances o no
+     * @return
+     */
+    public ArrayList<Lenguaje> obtenerArrayIdiomasGuia(boolean espaniol, boolean ingles, boolean frances) {
+        ArrayList<Lenguaje> lenguajes = new ArrayList<>();
+        if (espaniol) {
+            lenguajes.add(Lenguaje.ESPANIOL);
+        }
+        if (ingles) {
+            lenguajes.add(Lenguaje.INGLES);
+        }
+        if (frances) {
+            lenguajes.add(Lenguaje.FRANCES);
+        }
+        return lenguajes;
     }
 }

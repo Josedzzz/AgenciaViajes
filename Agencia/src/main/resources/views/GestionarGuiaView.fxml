@@ -94,7 +94,7 @@
                         <Font name="Ubuntu" size="14.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="txtContraseña" layoutX="143.0" layoutY="296.0" prefHeight="28.0" prefWidth="118.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
+                  <TextField fx:id="txtContrasenia" layoutX="143.0" layoutY="296.0" prefHeight="28.0" prefWidth="118.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
                      <font>
                         <Font name="Ubuntu" size="14.0" />
                      </font>
@@ -109,7 +109,7 @@
                         <Font name="Ubuntu" size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtAñosExperiencia" layoutX="191.0" layoutY="385.0" prefHeight="28.0" prefWidth="93.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
+                  <TextField fx:id="txtAniosExperiencia" layoutX="191.0" layoutY="385.0" prefHeight="28.0" prefWidth="93.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
                      <font>
                         <Font name="Ubuntu" size="14.0" />
                      </font>
@@ -165,7 +165,7 @@
                   </Pane>
                   <TableView fx:id="tableViewGuia" layoutY="70.0" prefHeight="464.0" prefWidth="546.0">
                      <columns>
-                        <TableColumn fx:id="columnNmbre" prefWidth="137.0" text="Nombre" />
+                        <TableColumn fx:id="columnNombre" prefWidth="137.0" text="Nombre" />
                         <TableColumn fx:id="columnCorreo" prefWidth="134.0" text="Correo" />
                         <TableColumn fx:id="columnTelefono" prefWidth="118.0" text="Télefono" />
                         <TableColumn fx:id="columnAniosExperiencia" prefWidth="156.0" text="Años de experiencia" />

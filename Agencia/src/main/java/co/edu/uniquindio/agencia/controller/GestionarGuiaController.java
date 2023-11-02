@@ -1,18 +1,26 @@
 package co.edu.uniquindio.agencia.controller;
 
 import co.edu.uniquindio.agencia.app.AgenciaApp;
-import co.edu.uniquindio.agencia.model.Administrador;
-import co.edu.uniquindio.agencia.model.AgenciaViajes;
+import co.edu.uniquindio.agencia.exceptions.AtributosVaciosException;
+import co.edu.uniquindio.agencia.exceptions.CampoObligatorioGuiaException;
+import co.edu.uniquindio.agencia.exceptions.GuiaNoRegistradoException;
+import co.edu.uniquindio.agencia.exceptions.GuiaYaExistenteException;
+import co.edu.uniquindio.agencia.model.*;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
 
-public class GestionarGuiaController {
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+
+public class GestionarGuiaController implements Initializable {
 
     @FXML
     private Button btnActualizarGuia;
@@ -39,28 +47,28 @@ public class GestionarGuiaController {
     private CheckBox checkBoxIngles;
 
     @FXML
-    private TableColumn<?, ?> columnAniosExperiencia;
+    private TableColumn<Guia, String> columnAniosExperiencia;
 
     @FXML
-    private TableColumn<?, ?> columnCorreo;
+    private TableColumn<Guia, String> columnCorreo;
 
     @FXML
-    private TableColumn<?, ?> columnNmbre;
+    private TableColumn<Guia, String> columnNombre;
 
     @FXML
-    private TableColumn<?, ?> columnTelefono;
+    private TableColumn<Guia, String> columnTelefono;
 
     @FXML
-    private TableView<?> tableViewGuia;
+    private TableView<Guia> tableViewGuia;
 
     @FXML
-    private TextField txtAñosExperiencia;
+    private TextField txtAniosExperiencia;
 
     @FXML
     private TextField txtCedula;
 
     @FXML
-    private TextField txtContraseña;
+    private TextField txtContrasenia;
 
     @FXML
     private TextField txtCorreo;
@@ -79,12 +87,27 @@ public class GestionarGuiaController {
     private Stage stage;
     private GestionarAgenciaController gestionarAgenciaController;
     private Administrador administradorSesion;
+    private ObservableList<Guia> listadoGuias = FXCollections.observableArrayList();
+    private Guia guiaSeleccion;
 
     //Uso de singleton
     private final AgenciaViajes agenciaViajes = AgenciaViajes.getInstance();
 
     public void setAgenciaApp(AgenciaApp agenciaApp) {
         this.agenciaApp = agenciaApp;
+        //Lista de guias a mostrar
+        tableViewGuia.getItems().clear();
+        tableViewGuia.setItems(getListaGuias());
+    }
+
+    /**
+     * Obtiene la lista de guias
+     * @return la lista de guias como una observableList para la tableView
+     */
+    private ObservableList<Guia> getListaGuias() {
+        listadoGuias.clear();
+        listadoGuias.addAll(agenciaViajes.getListaGuiasTuristicos());
+        return listadoGuias;
     }
 
     public void init(Stage stage, GestionarAgenciaController gestionarAgenciaController, Administrador administradorSesion) {
@@ -93,24 +116,169 @@ public class GestionarGuiaController {
         this.administradorSesion = administradorSesion;
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        //Datos en la tableView de guias
+        this.columnNombre.setCellValueFactory(e -> new ReadOnlyStringWrapper(e.getValue().getNombre()));
+        this.columnCorreo.setCellValueFactory(e -> new ReadOnlyStringWrapper(e.getValue().getCorreo()));
+        this.columnTelefono.setCellValueFactory(e -> new ReadOnlyStringWrapper(e.getValue().getTelefono()));
+        this.columnAniosExperiencia.setCellValueFactory(e -> {
+            int anios = e.getValue().getAniosExperiencia();
+            String aniosString = String.valueOf(anios);
+            return new ReadOnlyStringWrapper(aniosString);
+        });
+        //Seleccion de guias en la tabla
+        tableViewGuia.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                guiaSeleccion = newSelection;
+                guiaSeleccion = tableViewGuia.getSelectionModel().getSelectedItem();
+                //Lleno los campos del guiaSeleccionado en la interfaz y descativo campos
+                txtCedula.setDisable(true);
+                llenarCamposGuia(guiaSeleccion);
+            }
+        });
+        //Para que en el textField de experiencia solo se puedan colocar numeros
+        TextFormatter<Integer> textFormatter = new TextFormatter<>(new IntegerStringConverter(), 0, change -> {
+            String newText = change.getControlNewText();
+            if (newText.matches("\\d*")) {
+                return change;
+            }
+            return null;
+        });
+        txtAniosExperiencia.setTextFormatter(textFormatter);
+    }
+
+    /**
+     * Llena los campos de los texfields con la info del guia pasado como parametro
+     * @param guiaSeleccion
+     */
+    private void llenarCamposGuia(Guia guiaSeleccion) {
+        txtCedula.setText(guiaSeleccion.getId());
+        txtNombre.setText(guiaSeleccion.getNombre());
+        txtCorreo.setText(guiaSeleccion.getCorreo());
+        txtTelefono.setText(guiaSeleccion.getTelefono());
+        txtContrasenia.setText(guiaSeleccion.getContrasenia());
+        txtResidencia.setText(guiaSeleccion.getResidencia());
+        txtAniosExperiencia.setText("" + guiaSeleccion.getAniosExperiencia());
+        //Verifica que idiomas habla el guia para llenar las checkBox
+        checkBoxEspaniol.setSelected(agenciaViajes.hablaIdiomaGuia(guiaSeleccion, Lenguaje.ESPANIOL, 0));
+        checkBoxIngles.setSelected(agenciaViajes.hablaIdiomaGuia(guiaSeleccion, Lenguaje.INGLES, 0));
+        checkBoxFrances.setSelected(agenciaViajes.hablaIdiomaGuia(guiaSeleccion, Lenguaje.FRANCES, 0));
+    }
+
+    /**
+     * Limpia los textFields y checkBox de la interfaz
+     */
+    private void limpiarCamposGuia() {
+        txtCedula.clear();
+        txtNombre.clear();
+        txtCorreo.clear();
+        txtTelefono.clear();
+        txtContrasenia.clear();
+        txtResidencia.clear();
+        txtAniosExperiencia.clear();
+        //Verifica que idiomas habla el guia para llenar las checkBox
+        checkBoxEspaniol.setSelected(false);
+        checkBoxIngles.setSelected(false);
+        checkBoxFrances.setSelected(false);
+    }
+
+    /**
+     * Actualiza los datos de un guia
+     * @param event
+     */
     @FXML
     void actualizarGuia(ActionEvent event) {
-
+        try {
+            agenciaViajes.actulizarGuia(
+                    agenciaViajes,
+                    administradorSesion,
+                    txtCedula.getText(),
+                    txtNombre.getText(),
+                    txtCorreo.getText(),
+                    txtTelefono.getText(),
+                    txtResidencia.getText(),
+                    txtContrasenia.getText(),
+                    Integer.valueOf(txtAniosExperiencia.getText()),
+                    agenciaViajes.obtenerArrayIdiomasGuia(checkBoxEspaniol.isSelected(), checkBoxIngles.isSelected(), checkBoxFrances.isSelected())
+            );
+            limpiarCamposGuia();
+            tableViewGuia.getItems().clear();
+            tableViewGuia.setItems(getListaGuias());
+            mostrarMensaje("Agencia", "Gestionar Guías", "El guía " + txtCedula.getText() + " ha sido actualizado", Alert.AlertType.INFORMATION);
+        } catch (GuiaNoRegistradoException e) {
+            mostrarMensaje("Agencia", "Gestionar Guías", e.getMessage(), Alert.AlertType.WARNING);
+        } catch (CampoObligatorioGuiaException e) {
+            mostrarMensaje("Agencia", "Gestionar Guías", e.getMessage(), Alert.AlertType.WARNING);
+        }
     }
 
+    /**
+     * Crea un guia turistico
+     * @param event
+     */
     @FXML
     void crearGuia(ActionEvent event) {
-
+        ArrayList<CalificacionGuia> calificaciones = new ArrayList<>();
+        try {
+            agenciaViajes.crearGuia(
+                    agenciaViajes,
+                    administradorSesion,
+                    txtCedula.getText(),
+                    txtNombre.getText(),
+                    txtCorreo.getText(),
+                    txtTelefono.getText(),
+                    txtResidencia.getText(),
+                    txtContrasenia.getText(),
+                    Integer.valueOf(txtAniosExperiencia.getText()),
+                    agenciaViajes.obtenerArrayIdiomasGuia(checkBoxEspaniol.isSelected(), checkBoxIngles.isSelected(), checkBoxFrances.isSelected()),
+                    calificaciones
+            );
+            limpiarCamposGuia();
+            //Se añade el guia creado a la tableView
+            tableViewGuia.getItems().clear();
+            tableViewGuia.setItems(getListaGuias());
+            mostrarMensaje("Agencia", "Gestionar Guías", "El guia " + txtNombre.getText() + " ha sido registrado", Alert.AlertType.INFORMATION);
+        } catch (GuiaYaExistenteException e) {
+            mostrarMensaje("Agencia", "Gestionar Guías", e.getMessage(), Alert.AlertType.WARNING);
+        } catch (CampoObligatorioGuiaException e) {
+            mostrarMensaje("Agencia", "Gestionar Guías", e.getMessage(), Alert.AlertType.WARNING);
+        }
     }
 
+    /**
+     * Elimina un guia seleccionado
+     * @param event
+     */
     @FXML
     void eliminarGuia(ActionEvent event) {
-
+        txtCedula.setDisable(false);
+        try {
+            if (guiaSeleccion != null) {
+                String cedula = guiaSeleccion.getId();
+                agenciaViajes.eliminarGuia(agenciaViajes, administradorSesion, cedula);
+                //Elimina el cliente en la tableView
+                //listadoGuias.remove(guiaSeleccion);
+                limpiarCamposGuia();
+                tableViewGuia.getItems().clear();
+                tableViewGuia.setItems(getListaGuias());
+                mostrarMensaje("Agencia", "Gestionar Guías", "El guia con cédula " + cedula + " ha sido eliminado correctamente", Alert.AlertType.INFORMATION);
+            } else {
+                mostrarMensaje("Agencia", "Gestionar Guías", "Por favor seleccione un guía en la tabla", Alert.AlertType.WARNING);
+            }
+        } catch (GuiaNoRegistradoException e) {
+            mostrarMensaje("Agencia", "Gestionar Guías", e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
 
+    /**
+     * Limpia los campos de la interfaz cuando se selecciona el guia
+     * @param event
+     */
     @FXML
     void nuevoGuia(ActionEvent event) {
-
+        limpiarCamposGuia();
+        txtCedula.setDisable(false);
     }
 
     /**
@@ -121,6 +289,23 @@ public class GestionarGuiaController {
     void regresar(ActionEvent event) {
         this.stage.close();
         gestionarAgenciaController.show();
+        //Actualiza la lista de guias en la tabla antes de cerrar la ventana
+        tableViewGuia.getItems().setAll(getListaGuias());
+    }
+
+    /**
+     * Muestra un mensaje dependiendo el tipo de alerta seleccionado
+     * @param title
+     * @param header
+     * @param content
+     * @param alertType
+     */
+    private void mostrarMensaje(String title, String header, String content, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
 }

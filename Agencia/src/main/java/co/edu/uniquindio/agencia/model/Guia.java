@@ -13,8 +13,14 @@ import java.util.ArrayList;
 @Builder(builderMethodName = "guiaBuilder")
 public class Guia extends Persona {
 
+    private String id;
+    private String nombre;
+    private String correo;
+    private String telefono;
+    private String residencia;
+    private String contrasenia;
     private int aniosExperiencia;
-    private ArrayList<Lenguajes> listaLenguajes;
+    private ArrayList<Lenguaje> listaLenguajes;
     private ArrayList<CalificacionGuia> calificaciones;
 
 }

@@ -1,5 +1,5 @@
 package co.edu.uniquindio.agencia.model;
 
-public enum Lenguajes {
+public enum Lenguaje {
     ESPANIOL, INGLES, FRANCES
 }
