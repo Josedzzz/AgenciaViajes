@@ -202,10 +202,10 @@ public class GestionarGuiaController implements Initializable {
                     Integer.valueOf(txtAniosExperiencia.getText()),
                     agenciaViajes.obtenerArrayIdiomasGuia(checkBoxEspaniol.isSelected(), checkBoxIngles.isSelected(), checkBoxFrances.isSelected())
             );
-            limpiarCamposGuia();
             tableViewGuia.getItems().clear();
             tableViewGuia.setItems(getListaGuias());
             mostrarMensaje("Agencia", "Gestionar Guías", "El guía " + txtCedula.getText() + " ha sido actualizado", Alert.AlertType.INFORMATION);
+            limpiarCamposGuia();
         } catch (GuiaNoRegistradoException e) {
             mostrarMensaje("Agencia", "Gestionar Guías", e.getMessage(), Alert.AlertType.WARNING);
         } catch (CampoObligatorioGuiaException e) {
@@ -234,11 +234,11 @@ public class GestionarGuiaController implements Initializable {
                     agenciaViajes.obtenerArrayIdiomasGuia(checkBoxEspaniol.isSelected(), checkBoxIngles.isSelected(), checkBoxFrances.isSelected()),
                     calificaciones
             );
-            limpiarCamposGuia();
             //Se añade el guia creado a la tableView
             tableViewGuia.getItems().clear();
             tableViewGuia.setItems(getListaGuias());
             mostrarMensaje("Agencia", "Gestionar Guías", "El guia " + txtNombre.getText() + " ha sido registrado", Alert.AlertType.INFORMATION);
+            limpiarCamposGuia();
         } catch (GuiaYaExistenteException e) {
             mostrarMensaje("Agencia", "Gestionar Guías", e.getMessage(), Alert.AlertType.WARNING);
         } catch (CampoObligatorioGuiaException e) {
@@ -258,11 +258,10 @@ public class GestionarGuiaController implements Initializable {
                 String cedula = guiaSeleccion.getId();
                 agenciaViajes.eliminarGuia(agenciaViajes, administradorSesion, cedula);
                 //Elimina el cliente en la tableView
-                //listadoGuias.remove(guiaSeleccion);
-                limpiarCamposGuia();
                 tableViewGuia.getItems().clear();
                 tableViewGuia.setItems(getListaGuias());
                 mostrarMensaje("Agencia", "Gestionar Guías", "El guia con cédula " + cedula + " ha sido eliminado correctamente", Alert.AlertType.INFORMATION);
+                limpiarCamposGuia();
             } else {
                 mostrarMensaje("Agencia", "Gestionar Guías", "Por favor seleccione un guía en la tabla", Alert.AlertType.WARNING);
             }

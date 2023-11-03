@@ -72,6 +72,19 @@ public class AgenciaViajes {
                 .listaLenguajes(lenguajesGuia)
                 .build();
         listaGuiasTuristicos.add(guia);
+
+        //Quemo datos de los destinos
+        ArrayList<String> rutaImagenesDestino = new ArrayList<>();
+        rutaImagenesDestino.add("src/main/resources/Images/ParqueDelCafe.jpg");
+        rutaImagenesDestino.add("src/main/resources/Images/ParqueDelCafe2.jpg");
+        Destino destino = Destino.builder()
+                .nombre("Parque del café")
+                .ciudad("Montenegro")
+                .descripcion("El Parque del Café es un parque temático colombiano situado en el corregimiento de Pueblo Tapao, del municipio de Montenegro en Quindío, Colombia.")
+                .listaImagenes(rutaImagenesDestino)
+                .tipoClima(TipoClima.CALIDO)
+                .build();
+        listaDestinos.add(destino);
     }
 
     /**
@@ -100,7 +113,7 @@ public class AgenciaViajes {
      * @param tipoClima clima del destino
      * @throws DestinoNoRegistradoException
      */
-    public void actualizarDestino(AgenciaViajes agenciaViajes, Administrador adminActual, String nombre, String ciudad, String descripcion, TipoClima tipoClima) throws DestinoNoRegistradoException {
+    public void actualizarDestino(AgenciaViajes agenciaViajes, Administrador adminActual, String nombre, String ciudad, String descripcion, TipoClima tipoClima) throws DestinoNoRegistradoException, CampoObligatorioDestinoException {
         adminActual.actualizarDestino(agenciaViajes, nombre, ciudad, descripcion, tipoClima);
     }
 
@@ -128,8 +141,8 @@ public class AgenciaViajes {
      * @throws CampoObligatorioDestinoException
      * @throws DestinoYaExistenteException
      */
-    public void crearDestino(AgenciaViajes agenciaViajes, Administrador adminActual, String nombre, String ciudad, String descripcion, ArrayList<String> listaImagenes, TipoClima tipoClima) throws CampoObligatorioDestinoException, DestinoYaExistenteException {
-        adminActual.crearDestino(agenciaViajes, nombre, ciudad, descripcion, listaImagenes, tipoClima);
+    public void crearDestino(AgenciaViajes agenciaViajes, Administrador adminActual, String nombre, String ciudad, String descripcion, ArrayList<String> listaImagenes, TipoClima tipoClima, ArrayList<CalificacionDestino> listaCalificaciones) throws CampoObligatorioDestinoException, DestinoYaExistenteException {
+        adminActual.crearDestino(agenciaViajes, nombre, ciudad, descripcion, listaImagenes, tipoClima, listaCalificaciones);
     }
 
     //CRUD PAQUETE TURISTICO -----------------------------------------------------------------------
@@ -542,6 +555,7 @@ public class AgenciaViajes {
 
     //FUNCIONES APARTE AL CRUD PARA EL MANEJO DE LA AGENCIA ----------------------------------
 
+    //FUNCIONES PARA EL INICIO DE SESION ----------------------------------------------------
     /**
      * Valida que los campos no esten vacios
      * @param cedula del cliente o del administrador
@@ -582,6 +596,8 @@ public class AgenciaViajes {
         }
     }
 
+    //FUNCIONES PARA LA VIEW DE GESTIONAR GUIAS ------------------------------------------------------
+
     /**
      * Verifica si un guia habla el idioma buscado
      * @param guia
@@ -620,5 +636,90 @@ public class AgenciaViajes {
             lenguajes.add(Lenguaje.FRANCES);
         }
         return lenguajes;
+    }
+
+    //FUNCIONES PARA LA VIEW DE GESTIONAR DESTINOS ------------------------------------------------
+
+    /**
+     * Obtiene la primera imagen de la lista de imagenes de un destino
+     * @param listaImagenes
+     * @return
+     * @throws AtributosVaciosException cuando el arrayList esta vacio
+     */
+    public String obtenerImagenDestino(ArrayList<String> listaImagenes) throws AtributosVaciosException {
+        if (listaImagenes == null || listaImagenes.isEmpty()) {
+            throw new AtributosVaciosException("Por el momento no hay imágenes disponibles para este destino. Por favor ingresale una imagen");
+        } else {
+            return listaImagenes.get(0);
+        }
+    }
+
+    /**
+     * Guarda una imagen en la lista de imagenes de un destino especifico
+     * @param destino
+     * @param rutaImagen
+     */
+    public void subirImagenDestino(Destino destino, String rutaImagen) throws DestinoNoRegistradoException {
+        if (destino == null) {
+            throw new DestinoNoRegistradoException("Por favor selecciona un destino en la tabla");
+        }
+        destino.getListaImagenes().add(rutaImagen);
+    }
+
+    /**
+     * Elimina una imagen de la lista de imagenes de un destino en especifico
+     * @param destino
+     * @param rutaImagen
+     * @throws DestinoNoRegistradoException
+     * @throws AtributosVaciosException
+     */
+    public void eliminarImagenDestino(Destino destino, String rutaImagen) throws DestinoNoRegistradoException, AtributosVaciosException {
+        if (destino == null) {
+            throw new DestinoNoRegistradoException("Por favor seleccione un destino en la tabla");
+        }
+        if (rutaImagen == null || rutaImagen.isBlank()) {
+            throw new AtributosVaciosException("El destino no tiene ninguna imagen para eliminarla");
+        }
+        destino.getListaImagenes().remove(rutaImagen);
+    }
+
+    /**
+     * Indice de la siguiente imagen en el array de las imagenes del destino
+     * Si el indice es el ultimo, se vuelve a 0
+     * @param destino
+     * @param indiceActual
+     * @return
+     * @throws DestinoNoRegistradoException
+     * @throws AtributosVaciosException
+     */
+    public int siguienteImagenDestino(Destino destino, int indiceActual) throws DestinoNoRegistradoException, AtributosVaciosException {
+        if (destino == null) {
+            throw new DestinoNoRegistradoException("Por favor seleccione un destino en la tabla");
+        }
+        if (destino.getListaImagenes() == null || destino.getListaImagenes().isEmpty()) {
+            throw new AtributosVaciosException("Por el momento no hay imágenes disponibles para este destino. Por favor ingresale una imagen");
+        }
+        int siguienteIndice = (indiceActual + 1) % destino.getListaImagenes().size();
+        return siguienteIndice;
+    }
+
+    /**
+     * Indice de la imagen anterior en el array de las imagenes del destino
+     * Si el indice es el 0, se va al ultimo
+     * @param destino
+     * @param indiceActual
+     * @return
+     * @throws DestinoNoRegistradoException
+     * @throws AtributosVaciosException
+     */
+    public int anteriorImagenDestino(Destino destino, int indiceActual) throws DestinoNoRegistradoException, AtributosVaciosException {
+        if (destino == null) {
+            throw new DestinoNoRegistradoException("Por favor seleccione un destino en la tabla");
+        }
+        if (destino.getListaImagenes() == null || destino.getListaImagenes().isEmpty()) {
+            throw new AtributosVaciosException("Por el momento no hay imágenes disponibles para este destino. Por favor ingresale una imagen");
+        }
+        int indiceAnterior = (indiceActual - 1 + destino.getListaImagenes().size()) % destino.getListaImagenes().size();
+        return indiceAnterior;
     }
 }

@@ -52,13 +52,26 @@ public class Administrador extends Persona {
      * @param tipoClima clima del destino
      * @throws DestinoNoRegistradoException
      */
-    public void actualizarDestino(AgenciaViajes agenciaViajes, String nombre, String ciudad, String descripcion, TipoClima tipoClima) throws DestinoNoRegistradoException {
+    public void actualizarDestino(AgenciaViajes agenciaViajes, String nombre, String ciudad, String descripcion, TipoClima tipoClima) throws DestinoNoRegistradoException, CampoObligatorioDestinoException {
         Destino destinoEncontrado = obtenerDestino(agenciaViajes.getListaDestinos(), nombre, ciudad, 0);
         if (destinoEncontrado == null) {
             throw new DestinoNoRegistradoException("El destino que buscas actualizar no está registrado");
         } else {
-            destinoEncontrado.setNombre(nombre);
-            destinoEncontrado.setCiudad(ciudad);
+            if (nombre == null || nombre.isEmpty()) {
+                throw new CampoObligatorioDestinoException("El nombre del destino es obligatorio");
+            }
+            if (ciudad == null || ciudad.isEmpty()) {
+                throw new CampoObligatorioDestinoException("La ciudad del destino es obligatoria");
+            }
+            if (descripcion == null || descripcion.isEmpty()) {
+                throw new CampoObligatorioDestinoException("La descripción del destino es obligatoria");
+            }
+            /*if (listaImagenes == null || listaImagenes.isEmpty()) {
+                throw new CampoObligatorioDestinoException("Ingrese por lo menos una imagén del destino");
+            }*/
+            if (tipoClima == null) {
+                throw new CampoObligatorioDestinoException("El clima del destino es obligatorio");
+            }
             destinoEncontrado.setDescripcion(descripcion);
             destinoEncontrado.setTipoClima(tipoClima);
         }
@@ -91,7 +104,7 @@ public class Administrador extends Persona {
      * @throws DestinoYaExistenteException
      * @throws CampoObligatorioDestinoException
      */
-    public void crearDestino(AgenciaViajes agenciaViajes, String nombre, String ciudad, String descripcion, ArrayList<String> listaImagenes, TipoClima tipoClima) throws DestinoYaExistenteException, CampoObligatorioDestinoException {
+    public void crearDestino(AgenciaViajes agenciaViajes, String nombre, String ciudad, String descripcion, ArrayList<String> listaImagenes, TipoClima tipoClima, ArrayList<CalificacionDestino> listaCalificaciones) throws DestinoYaExistenteException, CampoObligatorioDestinoException {
         Destino destinoEncontrado = obtenerDestino(agenciaViajes.getListaDestinos(), nombre, ciudad, 0);
         if (destinoEncontrado != null) {
             throw new DestinoYaExistenteException("El destino que deseas registrar ya existe");
@@ -105,14 +118,21 @@ public class Administrador extends Persona {
             if (descripcion == null || descripcion.isEmpty()) {
                 throw new CampoObligatorioDestinoException("La descripción del destino es obligatoria");
             }
-            if (listaImagenes == null || listaImagenes.isEmpty()) {
+            /*if (listaImagenes == null || listaImagenes.isEmpty()) {
                 throw new CampoObligatorioDestinoException("Ingrese por lo menos una imagén del destino");
-            }
+            }*/
             if (tipoClima == null) {
                 throw new CampoObligatorioDestinoException("El clima del destino es obligatorio");
             }
-            //Destino destino = new Destino(nombre, ciudad, descripcion, listaImagenes, tipoClima);
-            //agenciaViajes.getListaDestinos().add(destino);
+            Destino destino = Destino.builder()
+                    .nombre(nombre)
+                    .ciudad(ciudad)
+                    .descripcion(descripcion)
+                    .listaImagenes(listaImagenes)
+                    .tipoClima(tipoClima)
+                    .calificaciones(listaCalificaciones)
+                    .build();
+            agenciaViajes.getListaDestinos().add(destino);
         }
     }
 
