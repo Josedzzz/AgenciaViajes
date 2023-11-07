@@ -85,6 +85,33 @@ public class AgenciaViajes {
                 .tipoClima(TipoClima.CALIDO)
                 .build();
         listaDestinos.add(destino);
+        Destino destino1 = Destino.builder()
+                .nombre("Panaca")
+                .ciudad("Quimbaya")
+                .descripcion("Algogooooo")
+                .listaImagenes(rutaImagenesDestino)
+                .tipoClima(TipoClima.CALIDO)
+                .build();
+        listaDestinos.add(destino1);
+
+        //Quemo datos de los paquetes
+        ArrayList<ServicioAdicional> serviciosAdicionalesPaquete = new ArrayList<>();
+        serviciosAdicionalesPaquete.add(ServicioAdicional.ALIMENTOS);
+        serviciosAdicionalesPaquete.add(ServicioAdicional.SEGUROS);
+        ArrayList<Destino> destinosPaquete = new ArrayList<>();
+        destinosPaquete.add(destino);
+        LocalDate fechaInicial = LocalDate.of(2023, 12, 1);
+        LocalDate fechaFinal = LocalDate.of(2023, 12, 2);
+        PaqueteTuristico paqueteTuristico = PaqueteTuristico.builder()
+                .nombre("Quindio Tour")
+                .fechaInicial(fechaInicial)
+                .fechaFinal(fechaFinal)
+                .precio(100000.0)
+                .cupoMaximo(20)
+                .listaServiciosAdicionales(serviciosAdicionalesPaquete)
+                .listaDestinos(destinosPaquete)
+                .build();
+        listaPaquetesTuristicos.add(paqueteTuristico);
     }
 
     /**
@@ -158,8 +185,8 @@ public class AgenciaViajes {
      * @param cupoMaximo cupo maximo del paquete turistico
      * @throws PaqueteTutisticoNoRegistradoException
      */
-    public void actualizarPaqueteTuristico(AgenciaViajes agenciaViajes, Administrador adminiActual, String nombre, String fechaInicial, String fechaFinal, double precio, int cupoMaximo) throws PaqueteTutisticoNoRegistradoException {
-        adminiActual.actualizarPaqueteTuristico(agenciaViajes, nombre, fechaInicial, fechaFinal, precio, cupoMaximo);
+    public void actualizarPaqueteTuristico(AgenciaViajes agenciaViajes, Administrador adminiActual, String nombre, LocalDate fechaInicial, LocalDate fechaFinal, double precio, int cupoMaximo, ArrayList<ServicioAdicional> listaServiciosAdicionales) throws PaqueteTutisticoNoRegistradoException, CampoObligatorioPaqueteTuristicoException, FechaNoPermitidaException {
+        adminiActual.actualizarPaqueteTuristico(agenciaViajes, nombre, fechaInicial, fechaFinal, precio, cupoMaximo, listaServiciosAdicionales);
     }
 
     /**
@@ -171,7 +198,7 @@ public class AgenciaViajes {
      * @param fechaFinal fecha final del paquete turistico
      * @throws PaqueteTutisticoNoRegistradoException
      */
-    public void eliminarPaqueteTuristico(AgenciaViajes agenciaViajes, Administrador adminActual, String nombre, String fechaInicial, String fechaFinal) throws PaqueteTutisticoNoRegistradoException {
+    public void eliminarPaqueteTuristico(AgenciaViajes agenciaViajes, Administrador adminActual, String nombre, LocalDate fechaInicial, LocalDate fechaFinal) throws PaqueteTutisticoNoRegistradoException {
         adminActual.eliminarPaqueteTuristico(agenciaViajes, nombre, fechaInicial, fechaFinal);
     }
 
@@ -189,7 +216,7 @@ public class AgenciaViajes {
      * @throws PaqueteTuristicoYaExistenteException
      * @throws CampoObligatorioPaqueteTuristicoException
      */
-    public void crearPaqueteTuristico(AgenciaViajes agenciaViajes, Administrador adminActual, String nombre, String fechaInicial, String fechaFinal, double precio, int cupoMaximo, ArrayList<ServicioAdicional> listaServiciosAdicionales, ArrayList<Destino> listaDestinos) throws PaqueteTuristicoYaExistenteException, CampoObligatorioPaqueteTuristicoException {
+    public void crearPaqueteTuristico(AgenciaViajes agenciaViajes, Administrador adminActual, String nombre, LocalDate fechaInicial, LocalDate fechaFinal, double precio, int cupoMaximo, ArrayList<ServicioAdicional> listaServiciosAdicionales, ArrayList<Destino> listaDestinos) throws PaqueteTuristicoYaExistenteException, CampoObligatorioPaqueteTuristicoException, FechaNoPermitidaException {
         adminActual.crearPaqueteTuristico(agenciaViajes, nombre, fechaInicial, fechaFinal, precio, cupoMaximo, listaServiciosAdicionales, listaDestinos);
     }
 
@@ -722,4 +749,110 @@ public class AgenciaViajes {
         int indiceAnterior = (indiceActual - 1 + destino.getListaImagenes().size()) % destino.getListaImagenes().size();
         return indiceAnterior;
     }
+
+    //FUNCIONES PARA LA VIEW DE GESTIONAR PAQUETES ----------------------------------------------------
+
+    /**
+     * Obtiene la lista de destinos de un paquete en especifico para validar si esta vacio o no
+     * @param paqueteTuristico
+     * @return
+     * @throws AtributosVaciosException
+     */
+    public ArrayList<Destino> obtenerDestinosPaquete(PaqueteTuristico paqueteTuristico) throws AtributosVaciosException, PaqueteTutisticoNoRegistradoException {
+        if (paqueteTuristico == null) {
+            throw new PaqueteTutisticoNoRegistradoException("Seleccione un paquete turistico en la tabla para poder ver los destinos de este paquete");
+        }
+        if (paqueteTuristico.getListaDestinos() == null || paqueteTuristico.getListaDestinos().isEmpty()) {
+            throw new AtributosVaciosException("Por el momento no hay destinos disponibles para este paquete. Por favor seleccione uno de los destinos desponibles y agregelo al paquete.");
+        } else {
+            return paqueteTuristico.getListaDestinos();
+        }
+    }
+
+    /**
+     * Verifica si un paqueteTuristico tiene el servicio adicional buscado
+     * @param paqueteTuristico
+     * @param servicioAdicionalBuscado
+     * @param i indice que va a iterar sobre la lista de serviciosAdicionales del paquete
+     * @return
+     */
+    public boolean tieneServicioAdicionalPaquete(PaqueteTuristico paqueteTuristico, ServicioAdicional servicioAdicionalBuscado, int i) {
+        if (i >= paqueteTuristico.getListaServiciosAdicionales().size()) {
+            return false;
+        }
+        ServicioAdicional servicioAdicional = paqueteTuristico.getListaServiciosAdicionales().get(i);
+        if (servicioAdicional.equals(servicioAdicionalBuscado)) {
+            return true;
+        } else {
+            return tieneServicioAdicionalPaquete(paqueteTuristico, servicioAdicionalBuscado, i + 1);
+        }
+    }
+
+    /**
+     * Crea un arrayList con los servicios adicionales del paquete
+     * @param transporte
+     * @param alimentos
+     * @param seguros
+     * @param recreacion
+     * @param bar
+     * @return
+     */
+    public ArrayList<ServicioAdicional> obtenerServiciosAdicionalesPaquete(boolean transporte, boolean alimentos, boolean seguros, boolean recreacion, boolean bar) {
+        ArrayList<ServicioAdicional> serviciosAdicionales = new ArrayList<>();
+        if (transporte) {
+            serviciosAdicionales.add(ServicioAdicional.TRANSPORTE);
+        }
+        if (alimentos) {
+            serviciosAdicionales.add(ServicioAdicional.ALIMENTOS);
+        }
+        if (seguros) {
+            serviciosAdicionales.add(ServicioAdicional.SEGUROS);
+        }
+        if (recreacion) {
+            serviciosAdicionales.add(ServicioAdicional.RECREACION);
+        }
+        if (bar) {
+            serviciosAdicionales.add(ServicioAdicional.BAR);
+        }
+        return serviciosAdicionales;
+    }
+
+    /**
+     * Guarda el destino en la lista de destinos del paquete turistico especifico
+     * @param paqueteTuristico
+     * @param destino
+     * @throws PaqueteTutisticoNoRegistradoException
+     */
+    public void agregarDestinoPaquete(PaqueteTuristico paqueteTuristico, Destino destino) throws PaqueteTutisticoNoRegistradoException, DestinoNoRegistradoException, DestinoYaExistenteException {
+        if (paqueteTuristico == null) {
+            throw new PaqueteTutisticoNoRegistradoException("Por favor seleccione un paquete en la tabla");
+        }
+        if (destino == null) {
+            throw new DestinoNoRegistradoException("Por favor seleccione un destino en la tabla");
+        }
+        if (!verificarDestinoEnPaquete(paqueteTuristico, destino, 0)) {
+            paqueteTuristico.getListaDestinos().add(destino);
+        } else {
+            throw new DestinoYaExistenteException("El destino ya se encuentra en el paquete");
+        }
+    }
+
+    /**
+     * Funcion auxiliar que verifica si un destino esta en la lista de destinos de un paquete
+     * @param paqueteTuristico
+     * @param destino
+     * @param indice
+     * @return
+     */
+    private boolean verificarDestinoEnPaquete(PaqueteTuristico paqueteTuristico, Destino destino, int indice) {
+        if (indice >= paqueteTuristico.getListaDestinos().size()) {
+            return false;
+        }
+        if (paqueteTuristico.getListaDestinos().get(indice).getNombre().equals(destino.getNombre()) && paqueteTuristico.getListaDestinos().get(indice).getCiudad().equals(destino.getCiudad())) {
+            return true;
+        } else {
+            return verificarDestinoEnPaquete(paqueteTuristico, destino, indice + 1);
+        }
+    }
+
 }

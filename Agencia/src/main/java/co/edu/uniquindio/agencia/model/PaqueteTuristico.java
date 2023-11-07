@@ -2,6 +2,7 @@ package co.edu.uniquindio.agencia.model;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 @Getter
@@ -13,8 +14,8 @@ import java.util.ArrayList;
 public class PaqueteTuristico {
 
     private String nombre;
-    private String fechaInicial;
-    private String fechaFinal;
+    private LocalDate fechaInicial;
+    private LocalDate fechaFinal;
     private double precio;
     private int cupoMaximo;
     private ArrayList<ServicioAdicional> listaServiciosAdicionales;

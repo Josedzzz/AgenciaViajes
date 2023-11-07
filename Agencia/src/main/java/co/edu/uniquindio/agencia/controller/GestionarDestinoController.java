@@ -234,6 +234,10 @@ public class GestionarDestinoController implements Initializable {
         }
     }
 
+    /**
+     * Elimina el destino seleccionado en la tableView
+     * @param event
+     */
     @FXML
     void eliminarDestino(ActionEvent event) {
         try {

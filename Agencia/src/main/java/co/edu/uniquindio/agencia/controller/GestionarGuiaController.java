@@ -177,7 +177,6 @@ public class GestionarGuiaController implements Initializable {
         txtContrasenia.clear();
         txtResidencia.clear();
         txtAniosExperiencia.clear();
-        //Verifica que idiomas habla el guia para llenar las checkBox
         checkBoxEspaniol.setSelected(false);
         checkBoxIngles.setSelected(false);
         checkBoxFrances.setSelected(false);
@@ -271,7 +270,7 @@ public class GestionarGuiaController implements Initializable {
     }
 
     /**
-     * Limpia los campos de la interfaz cuando se selecciona el guia
+     * Limpia los campos de la interfaz
      * @param event
      */
     @FXML

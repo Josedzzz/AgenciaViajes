@@ -1,9 +1,12 @@
 package co.edu.uniquindio.agencia.model;
 
 import co.edu.uniquindio.agencia.exceptions.*;
+import javafx.scene.control.DatePicker;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 @Getter
@@ -147,7 +150,7 @@ public class Administrador extends Persona {
      * @param i index que inicia en 0
      * @return
      */
-    public PaqueteTuristico obtenerPaqueteTuristico(ArrayList<PaqueteTuristico> listaPaquetesTuristicos, String nombre, String fechaInicial, String fechaFinal, int i) {
+    public PaqueteTuristico obtenerPaqueteTuristico(ArrayList<PaqueteTuristico> listaPaquetesTuristicos, String nombre, LocalDate fechaInicial, LocalDate fechaFinal, int i) {
         if (i >= listaPaquetesTuristicos.size()) {
             return null;
         } else {
@@ -170,16 +173,32 @@ public class Administrador extends Persona {
      * @param cupoMaximo cupo maximo del paquete turistico
      * @throws PaqueteTutisticoNoRegistradoException
      */
-    public void actualizarPaqueteTuristico(AgenciaViajes agenciaViajes, String nombre, String fechaInicial, String fechaFinal, double precio, int cupoMaximo) throws PaqueteTutisticoNoRegistradoException {
+    public void actualizarPaqueteTuristico(AgenciaViajes agenciaViajes, String nombre, LocalDate fechaInicial, LocalDate fechaFinal, double precio, int cupoMaximo, ArrayList<ServicioAdicional> listaServiciosAdicionales) throws PaqueteTutisticoNoRegistradoException, CampoObligatorioPaqueteTuristicoException, FechaNoPermitidaException {
         PaqueteTuristico paqueteTuristicoEncontrado = obtenerPaqueteTuristico(agenciaViajes.getListaPaquetesTuristicos(), nombre, fechaInicial, fechaFinal, 0);
         if (paqueteTuristicoEncontrado == null) {
             throw new PaqueteTutisticoNoRegistradoException("El paquete turístico no está registrado");
         } else {
-            paqueteTuristicoEncontrado.setNombre(nombre);
-            paqueteTuristicoEncontrado.setFechaInicial(fechaInicial);
-            paqueteTuristicoEncontrado.setFechaFinal(fechaFinal);
+            if (nombre == null || nombre.isEmpty()) {
+                throw new CampoObligatorioPaqueteTuristicoException("El nombre del paquete turístico es obligatorio");
+            }
+            if (fechaInicial == null) {
+                throw new CampoObligatorioPaqueteTuristicoException("La fecha inicial del paquete turístico es obligatoria");
+            }
+            if (fechaFinal == null) {
+                throw new CampoObligatorioPaqueteTuristicoException("La fecha final del paquete turístico es obligatoria");
+            }
+            if (fechaInicial.isAfter(fechaFinal)) {
+                throw new FechaNoPermitidaException("La fecha de inicio no puede estar después que la fecha final");
+            }
+            if (Double.isNaN(precio) || precio == 0.0) {
+                throw new CampoObligatorioPaqueteTuristicoException("El precio del paquete turístico es obligatorio");
+            }
+            if (cupoMaximo == 0) {
+                throw new CampoObligatorioPaqueteTuristicoException("El cupo máximo del paquete turístico es obligatorio");
+            }
             paqueteTuristicoEncontrado.setPrecio(precio);
             paqueteTuristicoEncontrado.setCupoMaximo(cupoMaximo);
+            paqueteTuristicoEncontrado.setListaServiciosAdicionales(listaServiciosAdicionales);
         }
     }
 
@@ -191,7 +210,7 @@ public class Administrador extends Persona {
      * @param fechaFinal fecha final del paquete turistico
      * @throws PaqueteTutisticoNoRegistradoException
      */
-    public void eliminarPaqueteTuristico(AgenciaViajes agenciaViajes, String nombre, String fechaInicial, String fechaFinal) throws PaqueteTutisticoNoRegistradoException {
+    public void eliminarPaqueteTuristico(AgenciaViajes agenciaViajes, String nombre, LocalDate fechaInicial, LocalDate fechaFinal) throws PaqueteTutisticoNoRegistradoException {
         PaqueteTuristico paqueteTuristicoEncontrado = obtenerPaqueteTuristico(agenciaViajes.getListaPaquetesTuristicos(), nombre, fechaInicial, fechaFinal, 0);
         if (paqueteTuristicoEncontrado == null) {
             throw new PaqueteTutisticoNoRegistradoException("El paquete turístico no está registrado");
@@ -213,7 +232,7 @@ public class Administrador extends Persona {
      * @throws PaqueteTuristicoYaExistenteException
      * @throws CampoObligatorioPaqueteTuristicoException
      */
-    public void crearPaqueteTuristico(AgenciaViajes agenciaViajes, String nombre, String fechaInicial, String fechaFinal, double precio, int cupoMaximo, ArrayList<ServicioAdicional> listaServiciosAdicionales, ArrayList<Destino> listaDestinos) throws PaqueteTuristicoYaExistenteException, CampoObligatorioPaqueteTuristicoException {
+    public void crearPaqueteTuristico(AgenciaViajes agenciaViajes, String nombre, LocalDate fechaInicial, LocalDate fechaFinal, double precio, int cupoMaximo, ArrayList<ServicioAdicional> listaServiciosAdicionales, ArrayList<Destino> listaDestinos) throws PaqueteTuristicoYaExistenteException, CampoObligatorioPaqueteTuristicoException, FechaNoPermitidaException {
         PaqueteTuristico paqueteTuristicoEncontrado = obtenerPaqueteTuristico(agenciaViajes.getListaPaquetesTuristicos(), nombre, fechaInicial, fechaFinal, 0);
         if (paqueteTuristicoEncontrado != null) {
             throw new PaqueteTuristicoYaExistenteException("El paquete turístico ya existe");
@@ -221,11 +240,14 @@ public class Administrador extends Persona {
             if (nombre == null || nombre.isEmpty()) {
                 throw new CampoObligatorioPaqueteTuristicoException("El nombre del paquete turístico es obligatorio");
             }
-            if (fechaInicial == null || fechaInicial.isEmpty()) {
+            if (fechaInicial == null) {
                 throw new CampoObligatorioPaqueteTuristicoException("La fecha inicial del paquete turístico es obligatoria");
             }
-            if (fechaFinal == null || fechaFinal.isEmpty()) {
+            if (fechaFinal == null) {
                 throw new CampoObligatorioPaqueteTuristicoException("La fecha final del paquete turístico es obligatoria");
+            }
+            if (fechaInicial.isAfter(fechaFinal)) {
+                throw new FechaNoPermitidaException("La fecha de inicio no puede estar después que la fecha final");
             }
             if (Double.isNaN(precio) || precio == 0.0) {
                 throw new CampoObligatorioPaqueteTuristicoException("El precio del paquete turístico es obligatorio");
@@ -233,11 +255,19 @@ public class Administrador extends Persona {
             if (cupoMaximo == 0) {
                 throw new CampoObligatorioPaqueteTuristicoException("El cupo máximo del paquete turístico es obligatorio");
             }
-            if (listaDestinos == null || listaDestinos.isEmpty()) {
+            /*if (listaDestinos == null || listaDestinos.isEmpty()) {
                 throw new CampoObligatorioPaqueteTuristicoException("Los destinos del paquete turístico son obligatorios");
-            }
-            //PaqueteTuristico paqueteTuristico = new PaqueteTuristico(nombre, fechaInicial, fechaFinal, precio, cupoMaximo, listaServiciosAdicionales, listaDestinos);
-            //agenciaViajes.getListaPaquetesTuristicos().add(paqueteTuristico);
+            }*/
+            PaqueteTuristico paqueteTuristico = PaqueteTuristico.builder()
+                    .nombre(nombre)
+                    .fechaInicial(fechaInicial)
+                    .fechaFinal(fechaFinal)
+                    .precio(precio)
+                    .cupoMaximo(cupoMaximo)
+                    .listaServiciosAdicionales(listaServiciosAdicionales)
+                    .listaDestinos(listaDestinos)
+                    .build();
+            agenciaViajes.getListaPaquetesTuristicos().add(paqueteTuristico);
         }
     }
 
