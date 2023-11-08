@@ -103,6 +103,14 @@
                         <Cursor fx:constant="OPEN_HAND" />
                      </cursor>
                   </Button>
+                  <Button fx:id="btnCerrarSesion" layoutX="300.0" layoutY="14.0" mnemonicParsing="false" onAction="#cerrarSesion" prefHeight="33.0" prefWidth="136.0" style="-fx-background-color: #eef2f4;" text="Cerrar Sesión" textFill="#5258cb">
+                     <font>
+                        <Font name="Ubuntu" size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                     </cursor>
+                  </Button>
                </children></AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #eef2f4;">
                <children>

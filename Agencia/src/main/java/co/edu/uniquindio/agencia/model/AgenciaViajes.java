@@ -416,12 +416,11 @@ public class AgenciaViajes {
 
     /**
      * Obtiene el cliente dado el id de este
-     * @param listaClientes lista de clientes de la agencia de viajes
      * @param id id del cliente
      * @param i index que inicia en 0
      * @return
      */
-    public Cliente obtenerCliente(ArrayList<Cliente> listaClientes, String id, int i) {
+    public Cliente obtenerCliente(String id, int i) {
         if (i >= listaClientes.size()) {
             return null;
         } else {
@@ -429,7 +428,7 @@ public class AgenciaViajes {
             if (cliente.getId().equals(id)) {
                 return cliente;
             } else {
-                return obtenerCliente(listaClientes, id, i + 1);
+                return obtenerCliente(id, i + 1);
             }
         }
     }
@@ -446,62 +445,43 @@ public class AgenciaViajes {
      * @throws ClienteYaExistenteException
      * @throws AtributosVaciosException
      */
-
     public Cliente crearCliente(String id, String nombre, String correo, String telefono, String residencia, String contrasenia) throws AtributosVaciosException, ClienteYaExistenteException {
-
-        Cliente clienteEncontrado = obtenerCliente(listaClientes,id,0);
-
-        if(id == null || id.isBlank()){
-            LOGGER.log(Level.WARNING, "El id es obligatoria para el registro" );
-            throw new AtributosVaciosException("El id es obligatoria");
+        Cliente clienteEncontrado = obtenerCliente(id,0);
+        if (clienteEncontrado != null) {
+            throw new ClienteYaExistenteException("");
+        } else {
+            if(id == null || id.isBlank()){
+                throw new AtributosVaciosException("El id es obligatoria");
+            }
+            if(nombre == null || nombre.isBlank()){
+                throw new AtributosVaciosException("El nombre es obligatorio");
+            }
+            if(correo == null || correo.isBlank()){
+                throw new AtributosVaciosException("El correo es obligatorio");
+            }
+            if(telefono == null || telefono.isBlank()){
+                throw new AtributosVaciosException("El telefono es obligatorio");
+            }
+            if(residencia == null || residencia.isBlank()){
+                throw new AtributosVaciosException("La direccion es obligatoria");
+            }
+            if(contrasenia == null || contrasenia.isBlank()){
+                throw new AtributosVaciosException("La contraseña es obligatoria");
+            }
+            if(clienteEncontrado != null){
+                throw new ClienteYaExistenteException("El cliente no se encuentra registrado");
+            }
+            Cliente clienteNuevo = Cliente.clienteBuilder()
+                    .id(id)
+                    .nombre(nombre)
+                    .correo(correo)
+                    .telefono(telefono)
+                    .residencia(residencia)
+                    .contrasenia(contrasenia)
+                    .build();
+            listaClientes.add(clienteNuevo);
+            return clienteNuevo;
         }
-
-        if(nombre == null || nombre.isBlank()){
-            LOGGER.log(Level.WARNING, "El nombre es obligatorio para el registro" );
-            throw new AtributosVaciosException("El nombre es obligatorio");
-        }
-
-        if(correo == null || correo.isBlank()){
-            LOGGER.log(Level.WARNING, "El correo es obligatorio para el registro" );
-            throw new AtributosVaciosException("El correo es obligatorio");
-        }
-
-        if(telefono == null || telefono.isBlank()){
-            LOGGER.log(Level.WARNING, "El telefono es obligatorio para el registro" );
-            throw new AtributosVaciosException("El telefono es obligatorio");
-        }
-
-        if(residencia == null || residencia.isBlank()){
-            LOGGER.log(Level.WARNING, "La direccion es obligatoria para el registro" );
-            throw new AtributosVaciosException("La direccion es obligatoria");
-        }
-
-        if(contrasenia == null || contrasenia.isBlank()){
-            LOGGER.log(Level.WARNING, "La contrasenia es obligatoria para el registro" );
-            throw new AtributosVaciosException("La contrasenia es obligatoria");
-        }
-
-        if(clienteEncontrado != null){
-            LOGGER.log(Level.SEVERE, "El id " + id + " ya esta registrado" );
-            throw new ClienteYaExistenteException("El cliente no se encuentra registrado");
-        }
-
-        Cliente clienteNuevo = Cliente.clienteBuilder()
-                .id(id)
-                .nombre(nombre)
-                .correo(correo)
-                .telefono(telefono)
-                .residencia(residencia)
-                .contrasenia(contrasenia)
-                .build();
-
-
-        listaClientes.add(clienteNuevo);
-        LOGGER.log(Level.INFO, "Se ha registrado un nuevo cliente con cedula: " + id + "");
-
-        //Guardo el objeto cliente con texto plano
-
-        return clienteNuevo;
     }
 
     /**
@@ -516,50 +496,32 @@ public class AgenciaViajes {
      * @throws AtributosVaciosException
      */
     public void actualizarCliente(String id, String nombre, String correo, String telefono, String residencia, String contrasenia)throws ClienteNoRegistradoException , AtributosVaciosException{
-
-        Cliente clienteEncontrado = obtenerCliente(listaClientes,id,0);
-
+        Cliente clienteEncontrado = obtenerCliente(id,0);
         if(id == null || id.isBlank()){
-            LOGGER.log(Level.WARNING, "el id es obligatorio para el registro" );
             throw new AtributosVaciosException("El id es obligatorio");
         }
-
         if(nombre == null || nombre.isBlank()){
-            LOGGER.log(Level.WARNING, "El nombre es obligatorio para el registro" );
             throw new AtributosVaciosException("El nombre es obligatorio");
         }
-
         if(correo == null || correo.isBlank()){
-            LOGGER.log(Level.WARNING, "El correo es obligatorio para el registro" );
             throw new AtributosVaciosException("El correo es obligatorio");
         }
-
         if(telefono == null || telefono.isBlank()){
-            LOGGER.log(Level.WARNING, "El telefono es obligatorio para el registro" );
             throw new AtributosVaciosException("El telefono es obligatorio");
         }
-
         if(residencia == null || residencia.isBlank()){
-            LOGGER.log(Level.WARNING, "La residencia es obligatoria para el registro" );
             throw new AtributosVaciosException("La residencia es obligatoria");
         }
-
         if(contrasenia == null || contrasenia.isBlank()){
-            LOGGER.log(Level.WARNING, "La contrasenia es obligatoria para el registro" );
             throw new AtributosVaciosException("La contrasenia es obligatoria");
         }
-
         if(clienteEncontrado == null){
-            LOGGER.log(Level.SEVERE, "El id " + id + " no esta registrado" );
             throw new ClienteNoRegistradoException("EL cliente no está registrado");
         }
         clienteEncontrado.setNombre(nombre);
         clienteEncontrado.setCorreo(correo);
         clienteEncontrado.setTelefono(telefono);
         clienteEncontrado.setResidencia(residencia);
-        LOGGER.log(Level.INFO, "Se actualizaron los datos del cliente: " + id);
-        //Guardo el objeto cliente con texto plano
-
     }
 
     /**
@@ -568,14 +530,10 @@ public class AgenciaViajes {
      * @throws ClienteNoRegistradoException
      */
     public void eliminarCliente(String id)throws ClienteNoRegistradoException {
-        Cliente clientePorEliminar = obtenerCliente(listaClientes,id,0);
+        Cliente clientePorEliminar = obtenerCliente(id,0);
         if(clientePorEliminar != null){
             listaClientes.remove(clientePorEliminar);
-            LOGGER.log(Level.INFO, "Se elimino el cliente");
-            //Guardo el objeto cliente con texto plano
-
         }else{
-            LOGGER.log(Level.SEVERE, "El id " + id + " no esta registrado" );
             throw new ClienteNoRegistradoException("El cliente no se encuentra registrado");
         }
     }
