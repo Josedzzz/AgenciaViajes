@@ -3,6 +3,7 @@ package co.edu.uniquindio.agencia.controller;
 import co.edu.uniquindio.agencia.app.AgenciaApp;
 import co.edu.uniquindio.agencia.exceptions.AdminNoEncontradoException;
 import co.edu.uniquindio.agencia.exceptions.AtributosVaciosException;
+import co.edu.uniquindio.agencia.exceptions.ClienteNoRegistradoException;
 import co.edu.uniquindio.agencia.model.Administrador;
 import co.edu.uniquindio.agencia.model.AgenciaViajes;
 import co.edu.uniquindio.agencia.model.Cliente;
@@ -135,7 +136,26 @@ public class IniciarSesionController implements Initializable {
      * @param contrasenia del cliente
      */
     private void iniciarSesionCliente(String cedula, String contrasenia) {
-        mostrarMensaje("Agencia", "Iniciar Sesión", "Se está trabajando en esto", Alert.AlertType.WARNING);
+        try {
+            clienteSesion = agenciaViajes.iniciarSesionCliente(cedula, contrasenia, 0);
+            mostrarMensaje("Agencia", "Iniciar Sesión", "El inicio de sesión ha sido realizado de manera exitosa", Alert.AlertType.INFORMATION);
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(AgenciaApp.class.getResource("/views/InicioView.fxml"));
+            BorderPane borderPane = (BorderPane) loader.load();
+            InicioController controller = loader.getController();
+            controller.setAgenciaApp(agenciaApp);
+            Scene scene = new Scene(borderPane);
+            Stage stage = new Stage();
+            stage.setTitle("Agencia");
+            stage.setScene(scene);
+            controller.init(stage, clienteSesion);
+            stage.show();
+            this.stage.close();
+        } catch (ClienteNoRegistradoException e) {
+            mostrarMensaje("Agencia", "Iniciar Sesión", e.getMessage(), Alert.AlertType.WARNING);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

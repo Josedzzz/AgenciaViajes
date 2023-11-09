@@ -73,6 +73,17 @@ public class AgenciaViajes {
                 .build();
         listaGuiasTuristicos.add(guia);
 
+        //Quemo datos de los clientes
+        Cliente cliente = Cliente.clienteBuilder()
+                .id("111")
+                .nombre("Nico")
+                .correo("Nico@")
+                .telefono("111")
+                .residencia("Armenia")
+                .contrasenia("111")
+                .build();
+        listaClientes.add(cliente);
+
         //Quemo datos de los destinos
         ArrayList<String> rutaImagenesDestino = new ArrayList<>();
         rutaImagenesDestino.add("src/main/resources/Images/ParqueDelCafe.jpg");
@@ -578,6 +589,26 @@ public class AgenciaViajes {
             return administrador;
         } else {
             return iniciarSesionAdmin(cedula, contrasenia, i + 1);
+        }
+    }
+
+    /**
+     * Busca el cliente al que le corresponde la cedula y la contrasenia
+     * @param cedula del cliente
+     * @param contrasenia del cliente
+     * @param i index en el cual se empieza a buscar el cliente
+     * @return Cliente al que le corresponden los datos
+     * @throws ClienteNoRegistradoException
+     */
+    public Cliente iniciarSesionCliente(String cedula, String contrasenia, int i) throws ClienteNoRegistradoException {
+        if (i >= listaClientes.size()) {
+            throw new ClienteNoRegistradoException("Los datos ingresados no pertenecen a ningún cliente");
+        }
+        Cliente cliente = listaClientes.get(i);
+        if (cliente.getId().equals(cedula) && cliente.getContrasenia().equals(contrasenia)) {
+            return cliente;
+        } else {
+            return iniciarSesionCliente(cedula, contrasenia, i + 1);
         }
     }
 
