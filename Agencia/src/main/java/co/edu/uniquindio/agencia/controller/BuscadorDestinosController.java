@@ -1,11 +1,14 @@
 package co.edu.uniquindio.agencia.controller;
 
+import co.edu.uniquindio.agencia.app.AgenciaApp;
+import co.edu.uniquindio.agencia.model.Cliente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Stage;
 
 public class BuscadorDestinosController {
 
@@ -48,9 +51,20 @@ public class BuscadorDestinosController {
     @FXML
     private TableView<?> tableViewDestinos;
 
-    @FXML
-    void regresar(ActionEvent event) {
+    //Variables auxiliares
+    private Stage stage;
+    private AgenciaApp agenciaApp;
+    private InicioController inicioController;
+    private Cliente clienteSesion;
 
+    public void setAgenciaApp(AgenciaApp agenciaApp) {
+        this.agenciaApp = agenciaApp;
+    }
+
+    public void init(Stage stage, InicioController inicioController, Cliente clienteSesion) {
+        this.stage = stage;
+        this.inicioController = inicioController;
+        this.clienteSesion = clienteSesion;
     }
 
     @FXML
@@ -68,4 +82,13 @@ public class BuscadorDestinosController {
 
     }
 
+    /**
+     * Regresa a la ventana de inicio
+     * @param event
+     */
+    @FXML
+    void regresar(ActionEvent event) {
+        this.stage.close();
+        inicioController.show();
+    }
 }

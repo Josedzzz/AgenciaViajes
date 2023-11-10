@@ -87,14 +87,6 @@
                         <Cursor fx:constant="OPEN_HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="btnChatConAsesor" layoutX="125.0" layoutY="492.0" mnemonicParsing="false" onAction="#chatConAsesor" prefHeight="0.0" prefWidth="190.0" style="-fx-background-color: #5258cb;" text="Chat con asesor" textFill="#eef2f4">
-                     <font>
-                        <Font name="Ubuntu" size="14.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="OPEN_HAND" />
-                     </cursor>
-                  </Button>
                   <Button fx:id="btnRegistrarse" layoutX="286.0" layoutY="551.0" mnemonicParsing="false" onAction="#registrarse" prefHeight="33.0" prefWidth="136.0" style="-fx-background-color: #eef2f4;" text="Registrarse" textFill="#5258cb">
                      <font>
                         <Font name="Ubuntu" size="18.0" />

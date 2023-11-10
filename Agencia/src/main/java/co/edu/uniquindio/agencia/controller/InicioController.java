@@ -31,9 +31,6 @@ public class InicioController implements Initializable {
     private Button btnCerrarSesion;
 
     @FXML
-    private Button btnChatConAsesor;
-
-    @FXML
     private Button btnConocerDestinos;
 
     @FXML
@@ -76,7 +73,6 @@ public class InicioController implements Initializable {
         btnCalificarGuias.setVisible(true);
         btnVerMisReservas.setVisible(true);
         btnModificarPerfil.setVisible(true);
-        btnChatConAsesor.setVisible(true);
         btnCerrarSesion.setVisible(true);
     }
 
@@ -84,6 +80,7 @@ public class InicioController implements Initializable {
      * Muestra la ventana de inicio
      */
     public void show() {
+        System.out.println(clienteSesion.getNombre());
         stage.show();
     }
 
@@ -94,18 +91,49 @@ public class InicioController implements Initializable {
         btnCalificarGuias.setVisible(false);
         btnVerMisReservas.setVisible(false);
         btnModificarPerfil.setVisible(false);
-        btnChatConAsesor.setVisible(false);
         btnCerrarSesion.setVisible(false);
     }
 
+    /**
+     * Lleva a la ventana para calificar destinos
+     * @param event
+     * @throws IOException
+     */
     @FXML
-    void calificarDestinos(ActionEvent event) {
-
+    void calificarDestinos(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(AgenciaApp.class.getResource("/views/CalificarDestinosView.fxml"));
+        BorderPane borderPane = (BorderPane) loader.load();
+        CalificarDestinosController controller = loader.getController();
+        controller.setAgenciaApp(agenciaApp);
+        Scene scene = new Scene(borderPane);
+        Stage stage = new Stage();
+        stage.setTitle("Calificar destinos");
+        stage.setScene(scene);
+        controller.init(stage, this, clienteSesion);
+        stage.show();
+        this.stage.close();
     }
 
+    /**
+     * Lleva a la ventana para calificar guias
+     * @param event
+     * @throws IOException
+     */
     @FXML
-    void calificarGuias(ActionEvent event) {
-
+    void calificarGuias(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(AgenciaApp.class.getResource("/views/CalificarGuiasView.fxml"));
+        BorderPane borderPane = (BorderPane) loader.load();
+        CalificarGuiasController controller = loader.getController();
+        controller.setAgenciaApp(agenciaApp);
+        Scene scene = new Scene(borderPane);
+        Stage stage = new Stage();
+        stage.setTitle("Calificar Guías");
+        stage.setScene(scene);
+        controller.init(stage, this, clienteSesion);
+        stage.show();
+        this.stage.close();
     }
 
     /**
@@ -119,26 +147,52 @@ public class InicioController implements Initializable {
         btnCalificarGuias.setVisible(false);
         btnVerMisReservas.setVisible(false);
         btnModificarPerfil.setVisible(false);
-        btnChatConAsesor.setVisible(false);
         btnCerrarSesion.setVisible(false);
         btnIniciarSesion.setVisible(true);
         btnRegistrarse.setVisible(true);
         mostrarMensaje("Agencia", "Inicio", "Se ha cerrado la sesión de manera correcta", Alert.AlertType.INFORMATION);
     }
 
+    /**
+     * Lleva a la ventana de buscador de destinos
+     * @param event
+     * @throws IOException
+     */
     @FXML
-    void chatConAsesor(ActionEvent event) {
-
+    void conocerDestinos(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(AgenciaApp.class.getResource("/views/BuscadorDestinosView.fxml"));
+        BorderPane borderPane = (BorderPane) loader.load();
+        BuscadorDestinosController controller = loader.getController();
+        controller.setAgenciaApp(agenciaApp);
+        Scene scene = new Scene(borderPane);
+        Stage stage = new Stage();
+        stage.setTitle("Buscador Destinos");
+        stage.setScene(scene);
+        controller.init(stage, this, clienteSesion);
+        stage.show();
+        this.stage.close();
     }
 
+    /**
+     * Lleva a la ventana de buscador de paquetes
+     * @param event
+     * @throws IOException
+     */
     @FXML
-    void conocerDestinos(ActionEvent event) {
-
-    }
-
-    @FXML
-    void conocerPaquetes(ActionEvent event) {
-
+    void conocerPaquetes(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(AgenciaApp.class.getResource("/views/BuscadorPaquetesView.fxml"));
+        BorderPane borderPane = (BorderPane) loader.load();
+        BuscadorPaquetesController controller = loader.getController();
+        controller.setAgenciaApp(agenciaApp);
+        Scene scene = new Scene(borderPane);
+        Stage stage = new Stage();
+        stage.setTitle("Buscador Paquetes");
+        stage.setScene(scene);
+        controller.init(stage, this, clienteSesion);
+        stage.show();
+        this.stage.close();
     }
 
     /**
@@ -161,9 +215,24 @@ public class InicioController implements Initializable {
         this.stage.close();
     }
 
+    /**
+     * Lleva a la ventana de modificar perfil
+     * @param event
+     */
     @FXML
-    void modificarPerfil(ActionEvent event) {
-
+    void modificarPerfil(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(AgenciaApp.class.getResource("/views/ModificarPerfilView.fxml"));
+        BorderPane borderPane = (BorderPane) loader.load();
+        ModificarPerfilController controller = loader.getController();
+        controller.setAgenciaApp(agenciaApp);
+        Scene scene = new Scene(borderPane);
+        Stage stage = new Stage();
+        stage.setTitle("Iniciar sesión");
+        stage.setScene(scene);
+        controller.init(stage, this, clienteSesion);
+        stage.show();
+        this.stage.close();
     }
 
     /**
@@ -187,9 +256,25 @@ public class InicioController implements Initializable {
         this.stage.close();
     }
 
+    /**
+     * Lleva a la ventana de reservas
+     * @param event
+     * @throws IOException
+     */
     @FXML
-    void verReservas(ActionEvent event) {
-
+    void verReservas(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(AgenciaApp.class.getResource("/views/ReservasView.fxml"));
+        BorderPane borderPane = (BorderPane) loader.load();
+        ReservasController controller = loader.getController();
+        controller.setAgenciaApp(agenciaApp);
+        Scene scene = new Scene(borderPane);
+        Stage stage = new Stage();
+        stage.setTitle("Registrase");
+        stage.setScene(scene);
+        controller.init(stage, this, clienteSesion);
+        stage.show();
+        this.stage.close();
     }
 
     /**
