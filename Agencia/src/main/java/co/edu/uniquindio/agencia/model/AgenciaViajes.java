@@ -693,7 +693,7 @@ public class AgenciaViajes {
     public Cliente crearCliente(String id, String nombre, String correo, String telefono, String residencia, String contrasenia) throws AtributosVaciosException, ClienteYaExistenteException {
         Cliente clienteEncontrado = obtenerCliente(id,0);
         if (clienteEncontrado != null) {
-            throw new ClienteYaExistenteException("");
+            throw new ClienteYaExistenteException("El cliente ya existe");
         } else {
             if(id == null || id.isBlank()){
                 throw new AtributosVaciosException("El id es obligatoria");
@@ -742,31 +742,33 @@ public class AgenciaViajes {
      */
     public void actualizarCliente(String id, String nombre, String correo, String telefono, String residencia, String contrasenia)throws ClienteNoRegistradoException , AtributosVaciosException{
         Cliente clienteEncontrado = obtenerCliente(id,0);
-        if(id == null || id.isBlank()){
-            throw new AtributosVaciosException("El id es obligatorio");
-        }
-        if(nombre == null || nombre.isBlank()){
-            throw new AtributosVaciosException("El nombre es obligatorio");
-        }
-        if(correo == null || correo.isBlank()){
-            throw new AtributosVaciosException("El correo es obligatorio");
-        }
-        if(telefono == null || telefono.isBlank()){
-            throw new AtributosVaciosException("El telefono es obligatorio");
-        }
-        if(residencia == null || residencia.isBlank()){
-            throw new AtributosVaciosException("La residencia es obligatoria");
-        }
-        if(contrasenia == null || contrasenia.isBlank()){
-            throw new AtributosVaciosException("La contrasenia es obligatoria");
-        }
         if(clienteEncontrado == null){
             throw new ClienteNoRegistradoException("EL cliente no está registrado");
+        } else {
+            if (id == null || id.isBlank()) {
+                throw new AtributosVaciosException("El id es obligatorio");
+            }
+            if (nombre == null || nombre.isBlank()) {
+                throw new AtributosVaciosException("El nombre es obligatorio");
+            }
+            if (correo == null || correo.isBlank()) {
+                throw new AtributosVaciosException("El correo es obligatorio");
+            }
+            if (telefono == null || telefono.isBlank()) {
+                throw new AtributosVaciosException("El telefono es obligatorio");
+            }
+            if (residencia == null || residencia.isBlank()) {
+                throw new AtributosVaciosException("La residencia es obligatoria");
+            }
+            if (contrasenia == null || contrasenia.isBlank()) {
+                throw new AtributosVaciosException("La contraseña es obligatoria");
+            }
+            clienteEncontrado.setNombre(nombre);
+            clienteEncontrado.setCorreo(correo);
+            clienteEncontrado.setTelefono(telefono);
+            clienteEncontrado.setResidencia(residencia);
+            clienteEncontrado.setContrasenia(contrasenia);
         }
-        clienteEncontrado.setNombre(nombre);
-        clienteEncontrado.setCorreo(correo);
-        clienteEncontrado.setTelefono(telefono);
-        clienteEncontrado.setResidencia(residencia);
     }
 
     /**
