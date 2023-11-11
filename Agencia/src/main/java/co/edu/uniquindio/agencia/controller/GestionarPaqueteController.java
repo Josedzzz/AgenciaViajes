@@ -271,8 +271,6 @@ public class GestionarPaqueteController implements Initializable {
     void actualizarPaquete(ActionEvent event) {
         try {
             agenciaViajes.actualizarPaqueteTuristico(
-                    agenciaViajes,
-                    administradorSesion,
                     txtNombre.getText(),
                     dtFechaInicial.getValue(),
                     dtFechaFinal.getValue(),
@@ -283,6 +281,7 @@ public class GestionarPaqueteController implements Initializable {
             tableViewPaquetes.getItems().clear();
             tableViewPaquetes.setItems(getListaPaquetes());
             mostrarMensaje("Agencia", "Gestionar Paquetes", "El paquete " + txtNombre.getText() + " ha sido actualizado correctamente", Alert.AlertType.INFORMATION);
+            limpiarCamposPaquete();
         } catch (PaqueteTutisticoNoRegistradoException e) {
             mostrarMensaje("Agencia", "Gestionar Paquetes", e.getMessage(), Alert.AlertType.WARNING);
         } catch (CampoObligatorioPaqueteTuristicoException e) {
@@ -302,6 +301,7 @@ public class GestionarPaqueteController implements Initializable {
             if (destinoSeleccion != null) {
                 agenciaViajes.agregarDestinoPaquete(paqueteSeleccion, destinoSeleccion);
                 mostrarMensaje("Agencia", "Gestionar Paquetes", "Se agrega correctamente el destino " + destinoSeleccion.getNombre() + " al paquete " + paqueteSeleccion.getNombre(), Alert.AlertType.INFORMATION);
+                limpiarCamposPaquete();
             }
         } catch (PaqueteTutisticoNoRegistradoException e) {
             mostrarMensaje("Agencia", "Gestionar Paquetes", e.getMessage(), Alert.AlertType.WARNING);
@@ -322,8 +322,6 @@ public class GestionarPaqueteController implements Initializable {
         ArrayList<Destino> destinosPaquete = new ArrayList<>();
         try {
             agenciaViajes.crearPaqueteTuristico(
-                    agenciaViajes,
-                    administradorSesion,
                     txtNombre.getText(),
                     dtFechaInicial.getValue(),
                     dtFechaFinal.getValue(),
@@ -335,6 +333,7 @@ public class GestionarPaqueteController implements Initializable {
             tableViewPaquetes.getItems().clear();
             tableViewPaquetes.setItems(getListaPaquetes());
             mostrarMensaje("Agencia", "Gestionar Paquetes", "El paquete " + txtNombre.getText() + " ha sido registrado", Alert.AlertType.INFORMATION);
+            limpiarCamposPaquete();
         } catch (PaqueteTuristicoYaExistenteException e) {
             mostrarMensaje("Agencia", "Gestionar Paquetes", e.getMessage(), Alert.AlertType.WARNING);
         } catch (CampoObligatorioPaqueteTuristicoException e) {
@@ -353,7 +352,7 @@ public class GestionarPaqueteController implements Initializable {
         try {
             if (paqueteSeleccion != null) {
                 String nombre = paqueteSeleccion.getNombre();
-                agenciaViajes.eliminarPaqueteTuristico(agenciaViajes, administradorSesion, nombre, paqueteSeleccion.getFechaInicial(), paqueteSeleccion.getFechaFinal());
+                agenciaViajes.eliminarPaqueteTuristico(nombre, paqueteSeleccion.getFechaInicial(), paqueteSeleccion.getFechaFinal());
                 //Elimina el paquete en la tableView
                 tableViewPaquetes.getItems().clear();
                 tableViewPaquetes.setItems(getListaPaquetes());

@@ -142,35 +142,75 @@ public class AgenciaViajes {
     //CRUD DESTINO -------------------------------------------------------------------------------
 
     /**
-     * Llama a la funcion actualizarDestino del administrador
-     * @param agenciaViajes clase principal
-     * @param adminActual admin que inicio sesion
+     * Obtiene el destino dado el nombre y la ciudad
+     * @param nombre nombre del destino
+     * @param ciudad ciudad del destino
+     * @param i index que inicia en 0
+     * @return
+     */
+    public Destino obtenerDestino(String nombre, String ciudad, int i) {
+        if (i >= listaDestinos.size()) {
+            return null;
+        } else {
+            Destino destino = listaDestinos.get(i);
+            if (destino.getNombre().equals(nombre) && destino.getCiudad().equals(ciudad)) {
+                return destino;
+            } else {
+                return obtenerDestino(nombre, ciudad, i + 1);
+            }
+        }
+    }
+
+    /**
+     * Actualiza un los datos de un destino
      * @param nombre nombre del destino
      * @param ciudad ciudad del destino
      * @param descripcion descripcion del destino
      * @param tipoClima clima del destino
      * @throws DestinoNoRegistradoException
      */
-    public void actualizarDestino(AgenciaViajes agenciaViajes, Administrador adminActual, String nombre, String ciudad, String descripcion, TipoClima tipoClima) throws DestinoNoRegistradoException, CampoObligatorioDestinoException {
-        adminActual.actualizarDestino(agenciaViajes, nombre, ciudad, descripcion, tipoClima);
+    public void actualizarDestino(String nombre, String ciudad, String descripcion, TipoClima tipoClima) throws DestinoNoRegistradoException, CampoObligatorioDestinoException {
+        Destino destinoEncontrado = obtenerDestino(nombre, ciudad, 0);
+        if (destinoEncontrado == null) {
+            throw new DestinoNoRegistradoException("El destino que buscas actualizar no está registrado");
+        } else {
+            if (nombre == null || nombre.isEmpty()) {
+                throw new CampoObligatorioDestinoException("El nombre del destino es obligatorio");
+            }
+            if (ciudad == null || ciudad.isEmpty()) {
+                throw new CampoObligatorioDestinoException("La ciudad del destino es obligatoria");
+            }
+            if (descripcion == null || descripcion.isEmpty()) {
+                throw new CampoObligatorioDestinoException("La descripción del destino es obligatoria");
+            }
+            /*if (listaImagenes == null || listaImagenes.isEmpty()) {
+                throw new CampoObligatorioDestinoException("Ingrese por lo menos una imagén del destino");
+            }*/
+            if (tipoClima == null) {
+                throw new CampoObligatorioDestinoException("El clima del destino es obligatorio");
+            }
+            destinoEncontrado.setDescripcion(descripcion);
+            destinoEncontrado.setTipoClima(tipoClima);
+        }
     }
 
     /**
-     * Llama a la funcion eliminarDestino del administrador
-     * @param agenciaViajes clase principal
-     * @param adminActual admin que inicio sesion
+     * Elimina un destino
      * @param nombre nombre del destino
      * @param ciudad ciudad del destino
      * @throws DestinoNoRegistradoException
      */
-    public void eliminarDestino(AgenciaViajes agenciaViajes, Administrador adminActual, String nombre, String ciudad) throws DestinoNoRegistradoException {
-        adminActual.eliminarDestino(agenciaViajes, nombre, ciudad);
+    public void eliminarDestino(String nombre, String ciudad) throws DestinoNoRegistradoException {
+        Destino destinoEncontrado = obtenerDestino(nombre, ciudad, 0);
+        if (destinoEncontrado == null) {
+            throw  new DestinoNoRegistradoException("El destino que buscas eliminar no está registrado");
+        } else {
+            listaDestinos.remove(destinoEncontrado);
+        }
     }
 
     /**
-     * Llama a la funcion crear destino del administrador
-     * @param agenciaViajes clase principal
-     * @param adminActual admin que inicio sesion
+     * Crea un destino
      * @param nombre nombre del destino
      * @param ciudad ciudad del destino
      * @param descripcion descipcion del destino
@@ -179,16 +219,63 @@ public class AgenciaViajes {
      * @throws CampoObligatorioDestinoException
      * @throws DestinoYaExistenteException
      */
-    public void crearDestino(AgenciaViajes agenciaViajes, Administrador adminActual, String nombre, String ciudad, String descripcion, ArrayList<String> listaImagenes, TipoClima tipoClima, ArrayList<CalificacionDestino> listaCalificaciones) throws CampoObligatorioDestinoException, DestinoYaExistenteException {
-        adminActual.crearDestino(agenciaViajes, nombre, ciudad, descripcion, listaImagenes, tipoClima, listaCalificaciones);
+    public void crearDestino(String nombre, String ciudad, String descripcion, ArrayList<String> listaImagenes, TipoClima tipoClima, ArrayList<CalificacionDestino> listaCalificaciones) throws CampoObligatorioDestinoException, DestinoYaExistenteException {
+        Destino destinoEncontrado = obtenerDestino(nombre, ciudad, 0);
+        if (destinoEncontrado != null) {
+            throw new DestinoYaExistenteException("El destino que deseas registrar ya existe");
+        } else {
+            if (nombre == null || nombre.isEmpty()) {
+                throw new CampoObligatorioDestinoException("El nombre del destino es obligatorio");
+            }
+            if (ciudad == null || ciudad.isEmpty()) {
+                throw new CampoObligatorioDestinoException("La ciudad del destino es obligatoria");
+            }
+            if (descripcion == null || descripcion.isEmpty()) {
+                throw new CampoObligatorioDestinoException("La descripción del destino es obligatoria");
+            }
+            /*if (listaImagenes == null || listaImagenes.isEmpty()) {
+                throw new CampoObligatorioDestinoException("Ingrese por lo menos una imagén del destino");
+            }*/
+            if (tipoClima == null) {
+                throw new CampoObligatorioDestinoException("El clima del destino es obligatorio");
+            }
+            Destino destino = Destino.builder()
+                    .nombre(nombre)
+                    .ciudad(ciudad)
+                    .descripcion(descripcion)
+                    .listaImagenes(listaImagenes)
+                    .tipoClima(tipoClima)
+                    .calificaciones(listaCalificaciones)
+                    .build();
+            listaDestinos.add(destino);
+        }
     }
 
     //CRUD PAQUETE TURISTICO -----------------------------------------------------------------------
 
     /**
-     * Llama a la funcion actualizarPaqueteTuristico del administrador
-     * @param agenciaViajes clase principal
-     * @param adminiActual admin que inicio sesion
+     * Obtine el paquete turistico dado el nombre, su fecha inicial y su fecha final
+     * @param nombre nombre del paquete turistico
+     * @param fechaInicial fecha incial del paquete turistico
+     * @param fechaFinal fecha final del paquete turistico
+     * @param i index que inicia en 0
+     * @return
+     */
+    public PaqueteTuristico obtenerPaqueteTuristico(String nombre, LocalDate fechaInicial, LocalDate fechaFinal, int i) {
+        if (i >= listaPaquetesTuristicos.size()) {
+            return null;
+        } else {
+            PaqueteTuristico paqueteTuristico = listaPaquetesTuristicos.get(i);
+            if (paqueteTuristico.getNombre().equals(nombre) && paqueteTuristico.getFechaInicial().equals(fechaInicial) && paqueteTuristico.getFechaFinal().equals(fechaFinal)) {
+                return paqueteTuristico;
+            } else {
+                return obtenerPaqueteTuristico(nombre, fechaInicial, fechaFinal, i + 1);
+            }
+        }
+    }
+
+    /**
+     * Actualiza un paquete turistico
      * @param nombre nombre del paquete turistico
      * @param fechaInicial fecha inicial del paquete turistico
      * @param fechaFinal fecha final del paquete turistico
@@ -196,27 +283,53 @@ public class AgenciaViajes {
      * @param cupoMaximo cupo maximo del paquete turistico
      * @throws PaqueteTutisticoNoRegistradoException
      */
-    public void actualizarPaqueteTuristico(AgenciaViajes agenciaViajes, Administrador adminiActual, String nombre, LocalDate fechaInicial, LocalDate fechaFinal, double precio, int cupoMaximo, ArrayList<ServicioAdicional> listaServiciosAdicionales) throws PaqueteTutisticoNoRegistradoException, CampoObligatorioPaqueteTuristicoException, FechaNoPermitidaException {
-        adminiActual.actualizarPaqueteTuristico(agenciaViajes, nombre, fechaInicial, fechaFinal, precio, cupoMaximo, listaServiciosAdicionales);
+    public void actualizarPaqueteTuristico(String nombre, LocalDate fechaInicial, LocalDate fechaFinal, double precio, int cupoMaximo, ArrayList<ServicioAdicional> listaServiciosAdicionales) throws PaqueteTutisticoNoRegistradoException, CampoObligatorioPaqueteTuristicoException, FechaNoPermitidaException {
+        PaqueteTuristico paqueteTuristicoEncontrado = obtenerPaqueteTuristico(nombre, fechaInicial, fechaFinal, 0);
+        if (paqueteTuristicoEncontrado == null) {
+            throw new PaqueteTutisticoNoRegistradoException("El paquete turístico no está registrado");
+        } else {
+            if (nombre == null || nombre.isEmpty()) {
+                throw new CampoObligatorioPaqueteTuristicoException("El nombre del paquete turístico es obligatorio");
+            }
+            if (fechaInicial == null) {
+                throw new CampoObligatorioPaqueteTuristicoException("La fecha inicial del paquete turístico es obligatoria");
+            }
+            if (fechaFinal == null) {
+                throw new CampoObligatorioPaqueteTuristicoException("La fecha final del paquete turístico es obligatoria");
+            }
+            if (fechaInicial.isAfter(fechaFinal)) {
+                throw new FechaNoPermitidaException("La fecha de inicio no puede estar después que la fecha final");
+            }
+            if (Double.isNaN(precio) || precio == 0.0) {
+                throw new CampoObligatorioPaqueteTuristicoException("El precio del paquete turístico es obligatorio");
+            }
+            if (cupoMaximo == 0) {
+                throw new CampoObligatorioPaqueteTuristicoException("El cupo máximo del paquete turístico es obligatorio");
+            }
+            paqueteTuristicoEncontrado.setPrecio(precio);
+            paqueteTuristicoEncontrado.setCupoMaximo(cupoMaximo);
+            paqueteTuristicoEncontrado.setListaServiciosAdicionales(listaServiciosAdicionales);
+        }
     }
 
     /**
-     * Llama a la funcion eliminarPaqueteTuristico del administrador
-     * @param agenciaViajes clase principal
-     * @param adminActual admin que inicio sesion
+     * Elimina un paquete turistico
      * @param nombre nombre del paquete turistico
      * @param fechaInicial fecha inicial del paquete turistico
      * @param fechaFinal fecha final del paquete turistico
      * @throws PaqueteTutisticoNoRegistradoException
      */
-    public void eliminarPaqueteTuristico(AgenciaViajes agenciaViajes, Administrador adminActual, String nombre, LocalDate fechaInicial, LocalDate fechaFinal) throws PaqueteTutisticoNoRegistradoException {
-        adminActual.eliminarPaqueteTuristico(agenciaViajes, nombre, fechaInicial, fechaFinal);
+    public void eliminarPaqueteTuristico(String nombre, LocalDate fechaInicial, LocalDate fechaFinal) throws PaqueteTutisticoNoRegistradoException {
+        PaqueteTuristico paqueteTuristicoEncontrado = obtenerPaqueteTuristico(nombre, fechaInicial, fechaFinal, 0);
+        if (paqueteTuristicoEncontrado == null) {
+            throw new PaqueteTutisticoNoRegistradoException("El paquete turístico no está registrado");
+        } else {
+            listaPaquetesTuristicos.remove(paqueteTuristicoEncontrado);
+        }
     }
 
     /**
-     * Llama a la funcion crearPaqueteTuristico de administrador
-     * @param agenciaViajes clase principal
-     * @param adminActual administrador que inicio sesion
+     * Crea un paquete turistico
      * @param nombre nombre del paquete turistico
      * @param fechaInicial fecha inicial del paquete turistico
      * @param fechaFinal fechia final del paquete turistico
@@ -227,8 +340,43 @@ public class AgenciaViajes {
      * @throws PaqueteTuristicoYaExistenteException
      * @throws CampoObligatorioPaqueteTuristicoException
      */
-    public void crearPaqueteTuristico(AgenciaViajes agenciaViajes, Administrador adminActual, String nombre, LocalDate fechaInicial, LocalDate fechaFinal, double precio, int cupoMaximo, ArrayList<ServicioAdicional> listaServiciosAdicionales, ArrayList<Destino> listaDestinos) throws PaqueteTuristicoYaExistenteException, CampoObligatorioPaqueteTuristicoException, FechaNoPermitidaException {
-        adminActual.crearPaqueteTuristico(agenciaViajes, nombre, fechaInicial, fechaFinal, precio, cupoMaximo, listaServiciosAdicionales, listaDestinos);
+    public void crearPaqueteTuristico(String nombre, LocalDate fechaInicial, LocalDate fechaFinal, double precio, int cupoMaximo, ArrayList<ServicioAdicional> listaServiciosAdicionales, ArrayList<Destino> listaDestinos) throws PaqueteTuristicoYaExistenteException, CampoObligatorioPaqueteTuristicoException, FechaNoPermitidaException {
+        PaqueteTuristico paqueteTuristicoEncontrado = obtenerPaqueteTuristico(nombre, fechaInicial, fechaFinal, 0);
+        if (paqueteTuristicoEncontrado != null) {
+            throw new PaqueteTuristicoYaExistenteException("El paquete turístico ya existe");
+        } else {
+            if (nombre == null || nombre.isEmpty()) {
+                throw new CampoObligatorioPaqueteTuristicoException("El nombre del paquete turístico es obligatorio");
+            }
+            if (fechaInicial == null) {
+                throw new CampoObligatorioPaqueteTuristicoException("La fecha inicial del paquete turístico es obligatoria");
+            }
+            if (fechaFinal == null) {
+                throw new CampoObligatorioPaqueteTuristicoException("La fecha final del paquete turístico es obligatoria");
+            }
+            if (fechaInicial.isAfter(fechaFinal)) {
+                throw new FechaNoPermitidaException("La fecha de inicio no puede estar después que la fecha final");
+            }
+            if (Double.isNaN(precio) || precio == 0.0) {
+                throw new CampoObligatorioPaqueteTuristicoException("El precio del paquete turístico es obligatorio");
+            }
+            if (cupoMaximo == 0) {
+                throw new CampoObligatorioPaqueteTuristicoException("El cupo máximo del paquete turístico es obligatorio");
+            }
+            /*if (listaDestinos == null || listaDestinos.isEmpty()) {
+                throw new CampoObligatorioPaqueteTuristicoException("Los destinos del paquete turístico son obligatorios");
+            }*/
+            PaqueteTuristico paqueteTuristico = PaqueteTuristico.builder()
+                    .nombre(nombre)
+                    .fechaInicial(fechaInicial)
+                    .fechaFinal(fechaFinal)
+                    .precio(precio)
+                    .cupoMaximo(cupoMaximo)
+                    .listaServiciosAdicionales(listaServiciosAdicionales)
+                    .listaDestinos(listaDestinos)
+                    .build();
+            listaPaquetesTuristicos.add(paqueteTuristico);
+        }
     }
 
 
@@ -236,9 +384,26 @@ public class AgenciaViajes {
     //CRUD DE GUIAS --------------------------------------------------------------------------------------
 
     /**
-     * LLama la funcion actualizarGuia del administrador
-     * @param agenciaViajes clase principal
-     * @param adminActual admin que inicio sesion
+     * Obtiene el guia dado el id de este
+     * @param id id del guia
+     * @param i index que inicia en 0
+     * @return
+     */
+    public Guia obtenerGuia(String id, int i) {
+        if (i >= listaGuiasTuristicos.size()) {
+            return null;
+        } else {
+            Guia guia = listaGuiasTuristicos.get(i);
+            if (guia.getId().equals(id)) {
+                return guia;
+            } else {
+                return obtenerGuia(id, i + 1);
+            }
+        }
+    }
+
+    /**
+     * Actualiza los datos del guia
      * @param id id del guia
      * @param nombre nombre del guia
      * @param correo correo del guia
@@ -249,25 +414,59 @@ public class AgenciaViajes {
      * @param listaLenguajes lenguajes del guia
      * @throws GuiaNoRegistradoException
      */
-    public void actulizarGuia(AgenciaViajes agenciaViajes, Administrador adminActual, String id, String nombre, String correo, String telefono, String residencia, String contrasenia, int aniosExperiencia, ArrayList<Lenguaje> listaLenguajes) throws GuiaNoRegistradoException, CampoObligatorioGuiaException {
-        adminActual.actualizarGuia(agenciaViajes, id, nombre, correo, telefono, residencia, contrasenia, aniosExperiencia, listaLenguajes);
+    public void actulizarGuia(String id, String nombre, String correo, String telefono, String residencia, String contrasenia, int aniosExperiencia, ArrayList<Lenguaje> listaLenguajes) throws GuiaNoRegistradoException, CampoObligatorioGuiaException {
+        Guia guiaEcontrado = obtenerGuia(id, 0);
+        if (guiaEcontrado == null) {
+            throw new GuiaNoRegistradoException("El guía que buscas actualizar no está registrado");
+        } else {
+            if (id == null || id.isEmpty()) {
+                throw new CampoObligatorioGuiaException("El id del guía es obligatorio");
+            }
+            if (nombre == null || nombre.isEmpty()) {
+                throw new CampoObligatorioGuiaException("El nombre del guía es obligatorio");
+            }
+            if (correo == null || correo.isEmpty()) {
+                throw new CampoObligatorioGuiaException("El correo del guía es obligatorio");
+            }
+            if (telefono == null || telefono.isEmpty()) {
+                throw new CampoObligatorioGuiaException("El teléfono del guía es obligatorio");
+            }
+            if (residencia == null || residencia.isEmpty()) {
+                throw new CampoObligatorioGuiaException("La residencia del guía es obligatoria");
+            }
+            if (contrasenia == null || contrasenia.isEmpty()) {
+                throw new CampoObligatorioGuiaException("La contraseña del guía es obligatoria");
+            }
+            if (listaLenguajes == null || listaLenguajes.isEmpty()) {
+                throw new CampoObligatorioGuiaException("El / los lenguajes del guía son obligatorios");
+            }
+            //Actualizo los datos del guia
+            guiaEcontrado.setNombre(nombre);
+            guiaEcontrado.setCorreo(correo);
+            guiaEcontrado.setTelefono(telefono);
+            guiaEcontrado.setResidencia(residencia);
+            guiaEcontrado.setContrasenia(contrasenia);
+            guiaEcontrado.setAniosExperiencia(aniosExperiencia);
+            guiaEcontrado.setListaLenguajes(listaLenguajes);
+        }
     }
 
     /**
-     * Llama la función eliminarGuia del administrador
-     * @param agenciaViajes clase principal
-     * @param adminActual admin que inicio sesion
+     * Elimina un guia turistico
      * @param id id del guia
      * @throws GuiaNoRegistradoException
      */
-    public void eliminarGuia(AgenciaViajes agenciaViajes, Administrador adminActual, String id) throws GuiaNoRegistradoException {
-        adminActual.eliminarGuia(agenciaViajes, id);
+    public void eliminarGuia(String id) throws GuiaNoRegistradoException {
+        Guia guiaEncontrado = obtenerGuia(id, 0);
+        if (guiaEncontrado == null) {
+            throw new GuiaNoRegistradoException("El guía turistico no está registrado");
+        } else {
+            listaGuiasTuristicos.remove(guiaEncontrado);
+        }
     }
 
     /**
-     * Llama la funcion crearGuia del administrador
-     * @param agenciaViajes clase principal
-     * @param adminActual admin que inicio sesion
+     * Crea un guia turistico
      * @param id id del guia
      * @param nombre nombre del guia
      * @param correo correo del guia
@@ -279,11 +478,46 @@ public class AgenciaViajes {
      * @throws GuiaYaExistenteException
      * @throws CampoObligatorioGuiaException
      */
-    public void crearGuia(AgenciaViajes agenciaViajes, Administrador adminActual, String id, String nombre, String correo, String telefono, String residencia, String contrasenia, int aniosExperiencia, ArrayList<Lenguaje> listaLenguajes, ArrayList<CalificacionGuia> listaCalificaciones) throws GuiaYaExistenteException, CampoObligatorioGuiaException {
-        adminActual.crearGuia(agenciaViajes, id, nombre, correo, telefono, residencia, contrasenia, aniosExperiencia, listaLenguajes, listaCalificaciones);
+    public void crearGuia(String id, String nombre, String correo, String telefono, String residencia, String contrasenia, int aniosExperiencia, ArrayList<Lenguaje> listaLenguajes, ArrayList<CalificacionGuia> listaCalificaciones) throws GuiaYaExistenteException, CampoObligatorioGuiaException {
+        Guia guiaEncontrado = obtenerGuia(id, 0);
+        if (guiaEncontrado != null) {
+            throw new GuiaYaExistenteException("El guía que deseas registrar ya existe");
+        } else {
+            if (id == null || id.isEmpty()) {
+                throw new CampoObligatorioGuiaException("El id del guía es obligatorio");
+            }
+            if (nombre == null || nombre.isEmpty()) {
+                throw new CampoObligatorioGuiaException("El nombre del guía es obligatorio");
+            }
+            if (correo == null || correo.isEmpty()) {
+                throw new CampoObligatorioGuiaException("El correo del guía es obligatorio");
+            }
+            if (telefono == null || telefono.isEmpty()) {
+                throw new CampoObligatorioGuiaException("El teléfono del guía es obligatorio");
+            }
+            if (residencia == null || residencia.isEmpty()) {
+                throw new CampoObligatorioGuiaException("La residencia del guía es obligatoria");
+            }
+            if (contrasenia == null || contrasenia.isEmpty()) {
+                throw new CampoObligatorioGuiaException("La contraseña del guía es obligatoria");
+            }
+            if (listaLenguajes == null || listaLenguajes.isEmpty()) {
+                throw new CampoObligatorioGuiaException("El / los lenguajes del guía son obligatorios");
+            }
+            Guia guia = Guia.guiaBuilder()
+                    .id(id)
+                    .nombre(nombre)
+                    .correo(correo)
+                    .telefono(telefono)
+                    .residencia(residencia)
+                    .contrasenia(contrasenia)
+                    .aniosExperiencia(aniosExperiencia)
+                    .listaLenguajes(listaLenguajes)
+                    .calificaciones(listaCalificaciones)
+                    .build();
+            listaGuiasTuristicos.add(guia);
+        }
     }
-
-
 
     //CRUD DE RESERVAS --------------------------------------------------------------------------------------
 

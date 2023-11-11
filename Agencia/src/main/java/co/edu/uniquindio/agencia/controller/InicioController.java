@@ -80,7 +80,6 @@ public class InicioController implements Initializable {
      * Muestra la ventana de inicio
      */
     public void show() {
-        System.out.println(clienteSesion.getNombre());
         stage.show();
     }
 

@@ -185,8 +185,6 @@ public class GestionarDestinoController implements Initializable {
     void actualizarDestino(ActionEvent event) {
         try {
             agenciaViajes.actualizarDestino(
-                    agenciaViajes,
-                    administradorSesion,
                     txtNombre.getText(),
                     txtCiudad.getText(),
                     textAreaDescripcion.getText(),
@@ -213,8 +211,6 @@ public class GestionarDestinoController implements Initializable {
         ArrayList<CalificacionDestino> calificaciones = new ArrayList<>();
         try {
             agenciaViajes.crearDestino(
-                    agenciaViajes,
-                    administradorSesion,
                     txtNombre.getText(),
                     txtCiudad.getText(),
                     textAreaDescripcion.getText(),
@@ -244,11 +240,12 @@ public class GestionarDestinoController implements Initializable {
             if (destinoSeleccion != null) {
                 String nombre = destinoSeleccion.getNombre();
                 String ciudad = destinoSeleccion.getCiudad();
-                agenciaViajes.eliminarDestino(agenciaViajes, administradorSesion, nombre, ciudad);
+                agenciaViajes.eliminarDestino(nombre, ciudad);
                 //Elimina el destino en la tableView
                 tableViewDestinos.getItems().clear();
                 tableViewDestinos.setItems(getListaDestinos());
                 mostrarMensaje("Agencia", "Gestionar Destinos", "El destino " + nombre + " ha sido eliminado correctamente", Alert.AlertType.INFORMATION);
+                limpiarCamposDestino();
             } else {
                 mostrarMensaje("Agencia", "Gestionar Destinos", "Por favor seleccione un destino en la tabla", Alert.AlertType.WARNING);
             }

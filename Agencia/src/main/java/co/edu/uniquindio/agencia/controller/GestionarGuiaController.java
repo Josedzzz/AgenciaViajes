@@ -190,8 +190,6 @@ public class GestionarGuiaController implements Initializable {
     void actualizarGuia(ActionEvent event) {
         try {
             agenciaViajes.actulizarGuia(
-                    agenciaViajes,
-                    administradorSesion,
                     txtCedula.getText(),
                     txtNombre.getText(),
                     txtCorreo.getText(),
@@ -221,8 +219,6 @@ public class GestionarGuiaController implements Initializable {
         ArrayList<CalificacionGuia> calificaciones = new ArrayList<>();
         try {
             agenciaViajes.crearGuia(
-                    agenciaViajes,
-                    administradorSesion,
                     txtCedula.getText(),
                     txtNombre.getText(),
                     txtCorreo.getText(),
@@ -255,7 +251,7 @@ public class GestionarGuiaController implements Initializable {
         try {
             if (guiaSeleccion != null) {
                 String cedula = guiaSeleccion.getId();
-                agenciaViajes.eliminarGuia(agenciaViajes, administradorSesion, cedula);
+                agenciaViajes.eliminarGuia(cedula);
                 //Elimina el cliente en la tableView
                 tableViewGuia.getItems().clear();
                 tableViewGuia.setItems(getListaGuias());
