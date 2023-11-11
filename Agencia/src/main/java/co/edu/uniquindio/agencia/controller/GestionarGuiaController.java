@@ -207,6 +207,8 @@ public class GestionarGuiaController implements Initializable {
             mostrarMensaje("Agencia", "Gestionar Guías", e.getMessage(), Alert.AlertType.WARNING);
         } catch (CampoObligatorioGuiaException e) {
             mostrarMensaje("Agencia", "Gestionar Guías", e.getMessage(), Alert.AlertType.WARNING);
+        } catch (NumberFormatException e) {
+            mostrarMensaje("Agencia", "Gestionar Guías", "Asegurese de ingresar un número en los años de experiencia del guía", Alert.AlertType.WARNING);
         }
     }
 
@@ -238,6 +240,8 @@ public class GestionarGuiaController implements Initializable {
             mostrarMensaje("Agencia", "Gestionar Guías", e.getMessage(), Alert.AlertType.WARNING);
         } catch (CampoObligatorioGuiaException e) {
             mostrarMensaje("Agencia", "Gestionar Guías", e.getMessage(), Alert.AlertType.WARNING);
+        } catch (NumberFormatException e) {
+            mostrarMensaje("Agencia", "Gestionar Guías", "Asegurese de ingresar un número en los años de experiencia del guía", Alert.AlertType.WARNING);
         }
     }
 

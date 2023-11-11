@@ -288,6 +288,8 @@ public class GestionarPaqueteController implements Initializable {
             mostrarMensaje("Agencia", "Gestionar Paquetes", e.getMessage(), Alert.AlertType.WARNING);
         } catch (FechaNoPermitidaException e) {
             mostrarMensaje("Agencia", "Gestionar Paquetes", e.getMessage(), Alert.AlertType.WARNING);
+        } catch (NumberFormatException e) {
+            mostrarMensaje("Agencia", "Gestionar Paquetes", "Asegurese de ingresar un número en el precio y en el cupo maxímo del paquete", Alert.AlertType.WARNING);
         }
     }
 
@@ -340,6 +342,8 @@ public class GestionarPaqueteController implements Initializable {
             mostrarMensaje("Agencia", "Gestionar Paquetes", e.getMessage(), Alert.AlertType.WARNING);
         } catch (FechaNoPermitidaException e) {
             mostrarMensaje("Agencia", "Gestionar Paquetes", e.getMessage(), Alert.AlertType.WARNING);
+        } catch (NumberFormatException e) {
+            mostrarMensaje("Agencia", "Gestionar Paquetes", "Asegurese de ingresar un número en el precio y en el cupo maxímo del paquete", Alert.AlertType.WARNING);
         }
     }
 
