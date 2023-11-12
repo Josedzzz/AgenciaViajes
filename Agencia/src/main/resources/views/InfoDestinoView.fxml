@@ -112,7 +112,7 @@
                         </Button>
                      </children>
                   </Pane>
-                  <ImageView fx:id="ImageViewImagenDestino" fitHeight="367.0" fitWidth="462.0" layoutX="42.0" layoutY="90.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imageViewImagenDestino" fitHeight="367.0" fitWidth="462.0" layoutX="42.0" layoutY="90.0" pickOnBounds="true" preserveRatio="true" />
                   <Button fx:id="btnImagenAnterior" layoutX="72.0" layoutY="529.0" mnemonicParsing="false" onAction="#imagenAnterior" prefHeight="26.0" prefWidth="172.0" style="-fx-background-color: #5258cb;" text="Imagen anterior" textFill="#eef2f4">
                      <font>
                         <Font name="Ubuntu" size="14.0" />

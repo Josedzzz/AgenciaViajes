@@ -88,12 +88,14 @@ public class AgenciaViajes {
         ArrayList<String> rutaImagenesDestino = new ArrayList<>();
         rutaImagenesDestino.add("src/main/resources/Images/ParqueDelCafe.jpg");
         rutaImagenesDestino.add("src/main/resources/Images/ParqueDelCafe2.jpg");
+        ArrayList<CalificacionDestino> calificacionesDestino = new ArrayList<>();
         Destino destino = Destino.builder()
                 .nombre("Parque del café")
                 .ciudad("Montenegro")
                 .descripcion("El Parque del Café es un parque temático colombiano situado en el corregimiento de Pueblo Tapao, del municipio de Montenegro en Quindío, Colombia.")
                 .listaImagenes(rutaImagenesDestino)
                 .tipoClima(TipoClima.CALIDO)
+                .calificaciones(calificacionesDestino)
                 .build();
         listaDestinos.add(destino);
         Destino destino1 = Destino.builder()
@@ -102,6 +104,7 @@ public class AgenciaViajes {
                 .descripcion("Algogooooo")
                 .listaImagenes(rutaImagenesDestino)
                 .tipoClima(TipoClima.CALIDO)
+                .calificaciones(calificacionesDestino)
                 .build();
         listaDestinos.add(destino1);
 
@@ -1077,6 +1080,27 @@ public class AgenciaViajes {
             return true;
         } else {
             return verificarDestinoEnPaquete(paqueteTuristico, destino, indice + 1);
+        }
+    }
+
+    //FUNCIONES PARA LA VIEW DE INFORMACION DEL DESTINO ----------------------------------------------
+
+    /**
+     * Da la las calificaciones obtenidas de un destino dado
+     * @param destinoSeleccion
+     * @param i index para la llamada recursiva
+     * @return
+     * @throws AtributosVaciosException
+     */
+    public ArrayList<CalificacionDestino> obtenerCalificacionesDestino(Destino destinoSeleccion, int i) throws AtributosVaciosException {
+        if (i >= listaDestinos.size()) {
+            throw new AtributosVaciosException("El destino por el momento no cuenta con calificaciones");
+        } else {
+            Destino destino = listaDestinos.get(i);
+            if (destino.getNombre().equals(destinoSeleccion.getNombre()) && destino.getCiudad().equals(destinoSeleccion.getCiudad())) {
+                return destino.getCalificaciones();
+            }
+            return obtenerCalificacionesDestino(destinoSeleccion, i + 1);
         }
     }
 
