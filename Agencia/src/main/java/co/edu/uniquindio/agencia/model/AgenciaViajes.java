@@ -61,6 +61,7 @@ public class AgenciaViajes {
         ArrayList<Lenguaje> lenguajesGuia = new ArrayList<>();
         lenguajesGuia.add(Lenguaje.ESPANIOL);
         lenguajesGuia.add(Lenguaje.INGLES);
+        ArrayList<CalificacionGuia> calificacionesGuia = new ArrayList<>();
         Guia guia = Guia.guiaBuilder()
                 .id("333")
                 .nombre("Camilo")
@@ -70,6 +71,7 @@ public class AgenciaViajes {
                 .contrasenia("333")
                 .aniosExperiencia(2)
                 .listaLenguajes(lenguajesGuia)
+                .calificaciones(calificacionesGuia)
                 .build();
         listaGuiasTuristicos.add(guia);
 
@@ -533,7 +535,7 @@ public class AgenciaViajes {
      * @param i index que inicia en 0
      * @return
      */
-    public Reserva obtenerReserva(ArrayList<Reserva> listaReservas, Cliente clienteInvolucrado, int i) {
+    public Reserva obtenerReserva(Cliente clienteInvolucrado, int i) {
         if (i >= listaReservas.size()) {
             return null;
         } else {
@@ -541,75 +543,57 @@ public class AgenciaViajes {
             if (reserva.getClienteInvolucrado().equals(clienteInvolucrado)) {
                 return reserva;
             } else {
-                return obtenerReserva(listaReservas, clienteInvolucrado, i + 1);
+                return obtenerReserva(clienteInvolucrado, i + 1);
             }
         }
     }
 
     /**
-     * Retorna una reserva creada por un cliente
+     * Se crea una reserva de un paquete turistico
      * @param fechaSolicitud
      * @param fechaReserva
      * @param cantidadPersonas
-     * @param estadoReserva
-     * @param clienteInvolucrado
+     * @param clienteSesion
      * @param paqueteTuristicoSeleccionado
      * @param guiaTuristico
-     * @return
+     * @throws AtributoIncorrectoException
      * @throws AtributosVaciosException
-     * @throws ReservaYaExistenteException
+     * @throws FechaNoPermitidaException
      */
-
-    public Reserva crearReserva(LocalDate fechaSolicitud, LocalDate fechaReserva, int cantidadPersonas, EstadoReserva estadoReserva, Cliente clienteInvolucrado, PaqueteTuristico paqueteTuristicoSeleccionado, Guia guiaTuristico) throws AtributosVaciosException,ReservaYaExistenteException,FechaNoPermitidaException,AtributoIncorrectoException {
-
-        Reserva reservaEncontrada = obtenerReserva(listaReservas,clienteInvolucrado,0);
-
-        if(fechaSolicitud == null){
-            LOGGER.log(Level.WARNING, "La fecha de solicitud es un campo obligatorio");
-            throw new AtributosVaciosException("La fecha de solicitud es obligatoria");
+    public void crearReserva(LocalDate fechaSolicitud, LocalDate fechaReserva, int cantidadPersonas, Cliente clienteSesion, PaqueteTuristico paqueteTuristicoSeleccionado, Guia guiaTuristico) throws AtributoIncorrectoException, AtributosVaciosException, FechaNoPermitidaException {
+        Reserva reservaEncontrada = obtenerReserva(clienteSesion,0);
+        if (fechaSolicitud.equals(null)) {
+            throw new AtributosVaciosException("Ocurrió un error con la fecha de solicitud");
         }
-
-        if(fechaReserva == null){
-            LOGGER.log(Level.WARNING, "La fecha de reserva es un campo obligatorio");
-            throw new AtributosVaciosException("La fecha de reserva es obligatoria");
+        if (fechaReserva.equals(null)) {
+            throw new AtributosVaciosException("Ocurrió un error con la fecha de reserva");
         }
-
-        if(fechaReserva.isBefore(LocalDate.now())){
-            LOGGER.log(Level.WARNING,"La fecha esta antes de la fecha actual");
-            throw new FechaNoPermitidaException("La fecha es invalida");
+        if (fechaSolicitud.isAfter(fechaReserva)) {
+            throw new FechaNoPermitidaException("La fecha de este paquete ya expiró, por favor busca otro paquete");
         }
-
-        if(fechaSolicitud.isBefore(LocalDate.now())){
-            LOGGER.log(Level.WARNING,"La fecha esta antes de la fecha actual");
-            throw new FechaNoPermitidaException("La fecha es invalida");
+        if (cantidadPersonas == 0 || cantidadPersonas < 0 || cantidadPersonas > paqueteTuristicoSeleccionado.getCupoDisponible()){
+            throw new AtributoIncorrectoException("La cantidad de personas es invalida, verifique que el valor ingresado no sea 0 o menor, o también que no sea superior a los cupos disponibles");
         }
-
-        if(cantidadPersonas == 0 || cantidadPersonas < 0){
-            LOGGER.log(Level.WARNING, "La cantidad de personas es incorrecta");
-            throw new AtributoIncorrectoException("La cantidad de personas es invalida");
+        if (clienteSesion == null || clienteSesion.equals("")) {
+            throw new AtributosVaciosException("Por favor inicia sesión para que puedas reservar este paquete");
         }
-
-        if(paqueteTuristicoSeleccionado == null || paqueteTuristicoSeleccionado.equals("")){
-            LOGGER.log(Level.WARNING,"No se selecciono un paquete turistico");
-            throw new AtributosVaciosException("Debe seleccionar un paquete turisico");
+        if (paqueteTuristicoSeleccionado == null || paqueteTuristicoSeleccionado.equals("")){
+            throw new AtributosVaciosException("Ocurrió un error con el paquete turístico");
         }
-
         //Al crear una reserva por defecto esta entra como estado pendiente
-        estadoReserva = EstadoReserva.PENDIENTE;
-
+        EstadoReserva estadoReserva = EstadoReserva.PENDIENTE;
         Reserva reservaNueva = Reserva.builder()
                 .fechaSolicitud(fechaSolicitud)
                 .fechaReserva(fechaReserva)
                 .cantidadPersonas(cantidadPersonas)
                 .estadoReserva(estadoReserva)
+                .clienteInvolucrado(clienteSesion)
                 .paqueteTuristicoSeleccionado(paqueteTuristicoSeleccionado)
                 .guia(guiaTuristico)
                 .build();
-
         listaReservas.add(reservaNueva);
-        LOGGER.log(Level.INFO,"El cliente" + clienteInvolucrado + " ha creado una reserva");
-
-        return reservaNueva;
+        //Le bajo el cupo disponible al paquete turistico
+        paqueteTuristicoSeleccionado.setCupoDisponible(paqueteTuristicoSeleccionado.getCupoDisponible() - cantidadPersonas);
     }
 
 
@@ -1103,6 +1087,23 @@ public class AgenciaViajes {
                 return destino.getCalificaciones();
             }
             return obtenerCalificacionesDestino(destinoSeleccion, i + 1);
+        }
+    }
+
+    //FUNCIONES PARA LA VIEW DE HACER RESERVAS ----------------------------------------------------
+
+    /**
+     * Calcula el precio de la reserva teniendo en cuenta la cantidad de personas y el precio del paquete
+     * @param paqueteSeleccion
+     * @param cantidadPersonas
+     * @return
+     * @throws AtributoIncorrectoException
+     */
+    public double calcularPrecioReserva(PaqueteTuristico paqueteSeleccion, int cantidadPersonas) throws AtributoIncorrectoException {
+        if (cantidadPersonas <= 0) {
+            throw new AtributoIncorrectoException("Por favor ingresa la cantidad de personas para calcular el precio de la reserva");
+        } else {
+            return paqueteSeleccion.getPrecio() * cantidadPersonas;
         }
     }
 

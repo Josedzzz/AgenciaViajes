@@ -36,11 +36,6 @@
                         <Font name="Ubuntu" size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="59.0" layoutY="462.0" text="Hacer reservas" textFill="#5258cb">
-                     <font>
-                        <Font name="Ubuntu" size="48.0" />
-                     </font>
-                  </Label>
                   <Pane prefHeight="70.0" prefWidth="437.0" style="-fx-background-color: #5258cb;">
                      <children>
                         <Button layoutX="510.0" layoutY="19.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="136.0" style="-fx-background-color: #5258cb;" text="Regresar" textFill="#eef2f4">
@@ -102,7 +97,7 @@
                         <Cursor fx:constant="OPEN_HAND" />
                      </cursor>
                   </Button>
-                  <CheckBox fx:id="checkBoxGguia" layoutX="34.0" layoutY="239.0" mnemonicParsing="false" text="Guía turístico" textFill="#5258cb">
+                  <CheckBox fx:id="checkBoxGguia" layoutX="22.0" layoutY="239.0" mnemonicParsing="false" onAction="#aniadirGuiaTuristico" text="Añadir guía turístico" textFill="#5258cb">
                      <font>
                         <Font name="Ubuntu" size="15.0" />
                      </font>
