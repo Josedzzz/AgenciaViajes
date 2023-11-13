@@ -63,6 +63,7 @@ public class InfoDestinoController implements Initializable {
     private Stage stage;
     private AgenciaApp agenciaApp;
     private BuscadorDestinosController buscadorDestinosController;
+    private InfoPaqueteController infoPaqueteController;
     private Cliente clienteSesion;
     private Destino destinoSeleccion;
     private ObservableList<CalificacionDestino> listadoCalificaciones = FXCollections.observableArrayList();
@@ -78,6 +79,14 @@ public class InfoDestinoController implements Initializable {
     public void init(Stage stage, BuscadorDestinosController buscadorDestinosController, Cliente clienteSesion, Destino destinoSeleccion) {
         this.stage = stage;
         this.buscadorDestinosController = buscadorDestinosController;
+        this.clienteSesion = clienteSesion;
+        this.destinoSeleccion = destinoSeleccion;
+        llenarCamposDestino();
+    }
+
+    public void initPaquete(Stage stage, InfoPaqueteController infoPaqueteController, Cliente clienteSesion, Destino destinoSeleccion) {
+        this.stage = stage;
+        this.infoPaqueteController = infoPaqueteController;
         this.clienteSesion = clienteSesion;
         this.destinoSeleccion = destinoSeleccion;
         llenarCamposDestino();
@@ -104,7 +113,6 @@ public class InfoDestinoController implements Initializable {
             mostrarMensaje("Agencia", "Información del Destino", e.getMessage(), Alert.AlertType.INFORMATION);
         }
     }
-
 
     /**
      * Obtiene las calificaciones de un destino
@@ -173,13 +181,17 @@ public class InfoDestinoController implements Initializable {
     }
 
     /**
-     * Regresa a la ventana de buscador de destinos
+     * Regresa a la ventana correspondiente dependiendo del controller anterior
      * @param event
      */
     @FXML
     void regresar(ActionEvent event) {
         this.stage.close();
-        buscadorDestinosController.show();
+        if (buscadorDestinosController == null) {
+            infoPaqueteController.show();
+        } else {
+            buscadorDestinosController.show();
+        }
     }
 
     /**

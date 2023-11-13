@@ -122,6 +122,7 @@ public class AgenciaViajes {
                 .fechaFinal(fechaFinal)
                 .precio(100000.0)
                 .cupoMaximo(20)
+                .cupoDisponible(20)
                 .listaServiciosAdicionales(serviciosAdicionalesPaquete)
                 .listaDestinos(destinosPaquete)
                 .build();
@@ -310,7 +311,7 @@ public class AgenciaViajes {
                 throw new CampoObligatorioPaqueteTuristicoException("El cupo máximo del paquete turístico es obligatorio");
             }
             paqueteTuristicoEncontrado.setPrecio(precio);
-            paqueteTuristicoEncontrado.setCupoMaximo(cupoMaximo);
+            //paqueteTuristicoEncontrado.setCupoMaximo(cupoMaximo);
             paqueteTuristicoEncontrado.setListaServiciosAdicionales(listaServiciosAdicionales);
         }
     }
@@ -375,6 +376,7 @@ public class AgenciaViajes {
                     .fechaFinal(fechaFinal)
                     .precio(precio)
                     .cupoMaximo(cupoMaximo)
+                    .cupoDisponible(cupoMaximo)
                     .listaServiciosAdicionales(listaServiciosAdicionales)
                     .listaDestinos(listaDestinos)
                     .build();

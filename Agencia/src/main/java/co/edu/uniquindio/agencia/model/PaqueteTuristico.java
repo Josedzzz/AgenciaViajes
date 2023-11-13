@@ -18,6 +18,7 @@ public class PaqueteTuristico {
     private LocalDate fechaFinal;
     private double precio;
     private int cupoMaximo;
+    private int cupoDisponible;
     private ArrayList<ServicioAdicional> listaServiciosAdicionales;
     private ArrayList<Destino> listaDestinos;
 
