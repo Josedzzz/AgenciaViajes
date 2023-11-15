@@ -229,6 +229,8 @@ public class HacerReservaController implements Initializable {
             controller.init(stage, this, guiaSeleccion);
             stage.show();
             this.stage.close();
+        } else {
+            mostrarMensaje("Agencia", "Hacer Reserva", "Por favor seleccione un guía", Alert.AlertType.WARNING);
         }
     }
 

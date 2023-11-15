@@ -50,6 +50,7 @@ public class InfoGuiaController implements Initializable {
     private Stage stage;
     private AgenciaApp agenciaApp;
     private HacerReservaController hacerReservaController;
+    private ReservasController reservasController;
     private Guia guiaSeleccion;
     private ObservableList<CalificacionGuia> listadoCalificaciones = FXCollections.observableArrayList();
 
@@ -63,6 +64,16 @@ public class InfoGuiaController implements Initializable {
     public void init(Stage stage, HacerReservaController hacerReservaController, Guia guiaSeleccion) {
         this.stage = stage;
         this.hacerReservaController = hacerReservaController;
+        this.guiaSeleccion = guiaSeleccion;
+        //Lista de calificaciones a mostrar
+        tableViewCalificaciones.getItems().clear();
+        tableViewCalificaciones.setItems(getListaCalificacionesGuia());
+        llenarCamposGuia();
+    }
+
+    public void init(Stage stage, ReservasController reservasController, Guia guiaSeleccion) {
+        this.stage = stage;
+        this.reservasController = reservasController;
         this.guiaSeleccion = guiaSeleccion;
         //Lista de calificaciones a mostrar
         tableViewCalificaciones.getItems().clear();
@@ -108,13 +119,17 @@ public class InfoGuiaController implements Initializable {
     }
 
     /**
-     * Regresa a la ventana de hacer reserva
+     * Regresa a la correspondiente dependiendo del controller anterior
      * @param event
      */
     @FXML
     void regresar(ActionEvent event) {
         this.stage.close();
-        hacerReservaController.show();
+        if (hacerReservaController == null) {
+            reservasController.show();
+        } else {
+            hacerReservaController.show();
+        }
     }
 
 }

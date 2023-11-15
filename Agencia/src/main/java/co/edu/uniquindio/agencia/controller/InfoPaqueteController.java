@@ -78,6 +78,7 @@ public class InfoPaqueteController implements Initializable {
     private Stage stage;
     private AgenciaApp agenciaApp;
     private BuscadorPaquetesController buscadorPaquetesController;
+    private ReservasController reservasController;
     private Cliente clienteSesion;
     private PaqueteTuristico paqueteSeleccion;
     private ObservableList<Destino> listadoDestinos = FXCollections.observableArrayList();
@@ -93,6 +94,17 @@ public class InfoPaqueteController implements Initializable {
     public void init(Stage stage, BuscadorPaquetesController buscadorPaquetesController, Cliente clienteSesion, PaqueteTuristico paqueteSeleccion) {
         this.stage = stage;
         this.buscadorPaquetesController = buscadorPaquetesController;
+        this.clienteSesion = clienteSesion;
+        this.paqueteSeleccion = paqueteSeleccion;
+        llenarCamposPaquete();
+        //Lista de destinos del paquete a mostrar
+        tableViewDestinos.getItems().clear();
+        tableViewDestinos.setItems(getListaDestinosPaquete());
+    }
+
+    public void init(Stage stage, ReservasController reservasController, Cliente clienteSesion, PaqueteTuristico paqueteSeleccion) {
+        this.stage = stage;
+        this.reservasController = reservasController;
         this.clienteSesion = clienteSesion;
         this.paqueteSeleccion = paqueteSeleccion;
         llenarCamposPaquete();
@@ -169,7 +181,11 @@ public class InfoPaqueteController implements Initializable {
     @FXML
     void regresar(ActionEvent event) {
         this.stage.close();
-        buscadorPaquetesController.show();
+        if (buscadorPaquetesController == null) {
+            reservasController.show();
+        } else {
+            buscadorPaquetesController.show();
+        }
     }
 
     /**
@@ -193,7 +209,7 @@ public class InfoPaqueteController implements Initializable {
             stage.show();
             this.stage.close();
         } else {
-            mostrarMensaje("Agencia", "Información del Paquete", "Por favor seleccione un destino en la tabla", Alert.AlertType.WARNING);
+            mostrarMensaje("Agencia", "Información del Paquete", "Ocurrió un error con el paquete", Alert.AlertType.WARNING);
         }
     }
 

@@ -129,6 +129,19 @@ public class AgenciaViajes {
                 .listaDestinos(destinosPaquete)
                 .build();
         listaPaquetesTuristicos.add(paqueteTuristico);
+
+        //Quemo datos de reservas
+        LocalDate fechaSolicitud = LocalDate.of(2023, 3, 4);
+        Reserva reserva = Reserva.builder()
+                .fechaSolicitud(fechaSolicitud)
+                .fechaReserva(paqueteTuristico.getFechaInicial())
+                .cantidadPersonas(2)
+                .estadoReserva(EstadoReserva.PENDIENTE)
+                .clienteInvolucrado(cliente)
+                .paqueteTuristicoSeleccionado(paqueteTuristico)
+                .guia(null)
+                .build();
+        listaReservas.add(reserva);
     }
 
     /**
@@ -596,37 +609,39 @@ public class AgenciaViajes {
         paqueteTuristicoSeleccionado.setCupoDisponible(paqueteTuristicoSeleccionado.getCupoDisponible() - cantidadPersonas);
     }
 
-
     /**
-     * Metodo que cancela la reserva
+     * Cancela una reserva y le devuelve los cupos al paquete
      * @param reserva
-     * @param estadoReserva
+     * @throws EstadoReservaException
      */
-    public void cancelarReserva(EstadoReserva estadoReserva)throws EstadoReservaException {
-        // Verifica si la reserva está pendiente o confirmada antes de cancelar
-        if (estadoReserva == EstadoReserva.PENDIENTE || estadoReserva == EstadoReserva.CONFIRMADA) {
-            estadoReserva = EstadoReserva.CANCELADA;
-            LOGGER.log(Level.INFO,"Se cancala una reserva correctamente");
-            throw new EstadoReservaException("La reserva ha sido cancelada correctamente");
+    public void cancelarReserva(Reserva reserva) throws EstadoReservaException, AtributosVaciosException {
+        if (reserva != null) {
+            if (!reserva.getEstadoReserva().equals(EstadoReserva.CANCELADA)) {
+                PaqueteTuristico paquete = reserva.getPaqueteTuristicoSeleccionado();
+                paquete.setCupoDisponible(paquete.getCupoDisponible() + reserva.getCantidadPersonas());
+                reserva.setEstadoReserva(EstadoReserva.CANCELADA);
+            } else {
+                throw new EstadoReservaException("La reserva que tratas de cancelar ya fue cancelada en el pasado");
+            }
         } else {
-            LOGGER.log(Level.WARNING,"La reserva no se pudo cancelar");
-            throw new EstadoReservaException("No ha sido posible cancelar la reserva");
+            throw new AtributosVaciosException("Por favor selecciona una reserva");
         }
     }
 
     /**
-     * Metodo que confirma la reserva
-     * @param estadoReserva
+     * Confirma una reserva
+     * @param reserva
      * @throws EstadoReservaException
      */
-    public void confirmarReserva(EstadoReserva estadoReserva)throws EstadoReservaException {
-        if (estadoReserva == EstadoReserva.PENDIENTE) {
-            estadoReserva = EstadoReserva.CONFIRMADA;
-            LOGGER.log(Level.INFO,"Se confirma una reserva correctamente");
-            throw new EstadoReservaException("La reserva ha sido confirmada correctamente");
+    public void confirmarReserva(Reserva reserva) throws EstadoReservaException, AtributosVaciosException {
+        if (reserva != null) {
+            if (reserva.getEstadoReserva().equals(EstadoReserva.PENDIENTE)) {
+                reserva.setEstadoReserva(EstadoReserva.CONFIRMADA);
+            } else {
+                throw new EstadoReservaException("La reserva que tratas de confirmar ya fue confirmada o cancelada en el pasado");
+            }
         } else {
-            LOGGER.log(Level.WARNING,"La reserva no se pudo confirmar");
-            throw new EstadoReservaException("No ha sido posible confirmar la reserva");
+            throw new AtributosVaciosException("Por favor selecciona una reserva");
         }
     }
 
@@ -1104,6 +1119,46 @@ public class AgenciaViajes {
             throw new AtributoIncorrectoException("Por favor ingresa la cantidad de personas para calcular el precio de la reserva");
         } else {
             return paqueteSeleccion.getPrecio() * cantidadPersonas;
+        }
+    }
+
+    //FUNCIONES PARA LA VIEW DE RESERVAS ---------------------------------------------------------
+
+    /**
+     * Obtiene las reservas pendientes de un cliente, es decir, las reservas que estan por llegar, no las pasadas
+     * @param clienteSesion
+     * @param fechaActual
+     * @param listaReservasCliente
+     * @param i
+     * @return
+     */
+    public ArrayList<Reserva> obtenerReservasPendientesCliente(Cliente clienteSesion, LocalDate fechaActual, ArrayList<Reserva> listaReservasCliente, int i) {
+        if (i >= listaReservas.size()) {
+            return listaReservasCliente;
+        } else {
+            Reserva reserva = listaReservas.get(i);
+            if (reserva.getClienteInvolucrado().getId().equals(clienteSesion.getId()) && fechaActual.isBefore(reserva.getPaqueteTuristicoSeleccionado().getFechaInicial())) {
+                listaReservasCliente.add(reserva);
+            }
+            return obtenerReservasPendientesCliente(clienteSesion, fechaActual, listaReservasCliente, i + 1);
+        }
+    }
+
+    /**
+     * Revisa si una reserva tiene o no un guia
+     * @param reserva
+     * @return
+     * @throws AtributosVaciosException
+     */
+    public boolean reservaContieneGuia(Reserva reserva) throws AtributosVaciosException {
+        if (reserva != null) {
+            if (reserva.getGuia() != null) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            throw new AtributosVaciosException("Por favor seleccione una reserva para ver el guía de esta misma");
         }
     }
 

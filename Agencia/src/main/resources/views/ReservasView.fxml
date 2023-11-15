@@ -88,14 +88,22 @@
                   <TableView fx:id="tableViewReservas" layoutX="-1.0" layoutY="70.0" prefHeight="457.0" prefWidth="712.0">
                      <columns>
                         <TableColumn fx:id="columnCedula" prefWidth="137.0" text="Cédula" />
-                        <TableColumn fx:id="columnFechaSolicitud" prefWidth="125.0" text="Fecha Solicitud" />
+                        <TableColumn fx:id="columnFechaReserva" prefWidth="125.0" text="Fecha Reserva" />
                         <TableColumn fx:id="columnEstadoReserva" prefWidth="127.0" text="Estado Reserva" />
                         <TableColumn fx:id="columnPaqueteTuristico" prefWidth="140.0" text="Paquete Turístico" />
                         <TableColumn fx:id="columnCupos" prefWidth="65.0" text="Cupos" />
                         <TableColumn fx:id="columnGuia" prefWidth="117.0" text="Guía" />
                      </columns>
                   </TableView>
-                  <Button fx:id="btnCancelarReserva" layoutX="260.0" layoutY="547.0" mnemonicParsing="false" onAction="#cancelarReserva" prefHeight="26.0" prefWidth="190.0" style="-fx-background-color: #5258cb;" text="Cancelar reserva" textFill="#eef2f4">
+                  <Button fx:id="btnCancelarReserva" layoutX="110.0" layoutY="547.0" mnemonicParsing="false" onAction="#cancelarReserva" prefHeight="26.0" prefWidth="190.0" style="-fx-background-color: #5258cb;" text="Cancelar reserva" textFill="#eef2f4">
+                     <font>
+                        <Font name="Ubuntu" size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="btnAceptarReserva" layoutX="402.0" layoutY="547.0" mnemonicParsing="false" onAction="#aceptarReserva" prefHeight="26.0" prefWidth="190.0" style="-fx-background-color: #5258cb;" text="Aceptar reserva" textFill="#eef2f4">
                      <font>
                         <Font name="Ubuntu" size="14.0" />
                      </font>
