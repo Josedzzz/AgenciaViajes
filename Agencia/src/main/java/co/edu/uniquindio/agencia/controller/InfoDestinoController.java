@@ -64,6 +64,7 @@ public class InfoDestinoController implements Initializable {
     private AgenciaApp agenciaApp;
     private BuscadorDestinosController buscadorDestinosController;
     private InfoPaqueteController infoPaqueteController;
+    private CalificarDestinosController calificarDestinosController;
     private Cliente clienteSesion;
     private Destino destinoSeleccion;
     private ObservableList<CalificacionDestino> listadoCalificaciones = FXCollections.observableArrayList();
@@ -87,6 +88,14 @@ public class InfoDestinoController implements Initializable {
     public void initPaquete(Stage stage, InfoPaqueteController infoPaqueteController, Cliente clienteSesion, Destino destinoSeleccion) {
         this.stage = stage;
         this.infoPaqueteController = infoPaqueteController;
+        this.clienteSesion = clienteSesion;
+        this.destinoSeleccion = destinoSeleccion;
+        llenarCamposDestino();
+    }
+
+    public void initCalificacion(Stage stage, CalificarDestinosController calificarDestinosController, Cliente clienteSesion, Destino destinoSeleccion) {
+        this.stage = stage;
+        this.calificarDestinosController = calificarDestinosController;
         this.clienteSesion = clienteSesion;
         this.destinoSeleccion = destinoSeleccion;
         llenarCamposDestino();
@@ -187,10 +196,12 @@ public class InfoDestinoController implements Initializable {
     @FXML
     void regresar(ActionEvent event) {
         this.stage.close();
-        if (buscadorDestinosController == null) {
+        if (infoPaqueteController != null) {
             infoPaqueteController.show();
-        } else {
+        } else if (buscadorDestinosController != null) {
             buscadorDestinosController.show();
+        } else {
+            calificarDestinosController.show();
         }
     }
 

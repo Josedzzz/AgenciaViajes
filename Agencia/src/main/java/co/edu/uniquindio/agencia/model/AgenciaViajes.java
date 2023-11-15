@@ -117,7 +117,7 @@ public class AgenciaViajes {
         ArrayList<Destino> destinosPaquete = new ArrayList<>();
         destinosPaquete.add(destino);
         LocalDate fechaInicial = LocalDate.of(2023, 12, 1);
-        LocalDate fechaFinal = LocalDate.of(2023, 12, 2);
+        LocalDate fechaFinal = LocalDate.of(2023, 10, 2);
         PaqueteTuristico paqueteTuristico = PaqueteTuristico.builder()
                 .nombre("Quindio Tour")
                 .fechaInicial(fechaInicial)
@@ -1159,6 +1159,83 @@ public class AgenciaViajes {
             }
         } else {
             throw new AtributosVaciosException("Por favor seleccione una reserva para ver el guía de esta misma");
+        }
+    }
+
+    //FUNCIONES PARA LA VIEW DE CALIFICAR DESTINOS ----------------------------------------------------
+
+    /**
+     * Obtienen la lista de destinos ya visitados por un cliente
+     * @param clienteSesion
+     * @param fechaActual
+     * @param listaDestinosVisitadosCliente
+     * @param i
+     * @return
+     */
+    public ArrayList<Destino> obtenerDestinosVisitadosCliente(Cliente clienteSesion, LocalDate fechaActual, ArrayList<Destino> listaDestinosVisitadosCliente, int i) {
+        if (i >= listaReservas.size()) {
+            return listaDestinosVisitadosCliente;
+        } else {
+            Reserva reserva = listaReservas.get(i);
+            //Es la fecha de cuando se termina el paquete turistico
+            LocalDate fechaFinalReserva = reserva.getPaqueteTuristicoSeleccionado().getFechaFinal();
+            if (reserva.getClienteInvolucrado().getId().equals(clienteSesion.getId()) && fechaActual.isAfter(fechaFinalReserva)) {
+                listaDestinosVisitadosCliente.addAll(reserva.getPaqueteTuristicoSeleccionado().getListaDestinos());
+            }
+            return obtenerDestinosVisitadosCliente(clienteSesion, fechaActual, listaDestinosVisitadosCliente, i + 1);
+        }
+    }
+
+    /**
+     * Califica un destino siempre y cuando no este calificado
+     * @param clienteSesion
+     * @param destinoSeleccion
+     * @param calificacion
+     * @param comentario
+     * @throws AtributosVaciosException
+     * @throws CalificacionException
+     * @throws AtributoIncorrectoException
+     */
+    public void calificarDestino(Cliente clienteSesion, Destino destinoSeleccion, double calificacion, String comentario) throws AtributosVaciosException, CalificacionException, AtributoIncorrectoException {
+        if (destinoSeleccion != null) {
+            if (!destinoYaCalificado(clienteSesion, destinoSeleccion, 0)) {
+                if (calificacion < 0.0 || calificacion > 5.0) {
+                    throw new AtributoIncorrectoException("Por favor ingrese una calificación entre 0.0 y 5.0");
+                }
+                if (comentario.equals("") || comentario.isBlank()) {
+                    throw new AtributoIncorrectoException("Por favor ingrese un comentario para enviar la calificación");
+                }
+                CalificacionDestino calificacionDestino = CalificacionDestino.builder()
+                        .calificacion(calificacion)
+                        .comentario(comentario)
+                        .clienteAsociado(clienteSesion)
+                        .destinoAsociado(destinoSeleccion)
+                        .build();
+                destinoSeleccion.getCalificaciones().add(calificacionDestino);
+            } else {
+                throw new CalificacionException("El destino que tratas de calificar, ya lo calificaste");
+            }
+        } else {
+            throw new AtributosVaciosException("Por favor seleccione un destino en la tabla");
+        }
+    }
+
+    /**
+     * Verifica si un destino ya fue calificado por un cliente
+     * @param clienteSesion
+     * @param destinoSeleccion
+     * @param i
+     * @return
+     */
+    private boolean destinoYaCalificado(Cliente clienteSesion, Destino destinoSeleccion, int i) {
+        if (i >= destinoSeleccion.getCalificaciones().size()) {
+            return false;
+        } else {
+            Cliente clienteAux = destinoSeleccion.getCalificaciones().get(i).getClienteAsociado();
+            if (clienteAux.getId().equals(clienteSesion.getId())) {
+                return true;
+            }
+            return destinoYaCalificado(clienteSesion, destinoSeleccion, i + 1);
         }
     }
 
