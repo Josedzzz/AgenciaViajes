@@ -139,7 +139,7 @@ public class AgenciaViajes {
                 .estadoReserva(EstadoReserva.PENDIENTE)
                 .clienteInvolucrado(cliente)
                 .paqueteTuristicoSeleccionado(paqueteTuristico)
-                .guia(null)
+                .guia(guia)
                 .build();
         listaReservas.add(reserva);
     }
@@ -1238,5 +1238,86 @@ public class AgenciaViajes {
             return destinoYaCalificado(clienteSesion, destinoSeleccion, i + 1);
         }
     }
+
+    //FUNCIONES PARA VIEW DE CALIFICAR GUIAS -------------------------------------------------------
+
+    /**
+     * Obtiene la lista de guias ya contratados por el cliente
+     * @param clienteSesion
+     * @param fechaActual
+     * @param listaGuiasCliente
+     * @param i
+     * @return
+     */
+    public ArrayList<Guia> obtenerGuiasCliente(Cliente clienteSesion, LocalDate fechaActual, ArrayList<Guia> listaGuiasCliente, int i) {
+        if (i >= listaReservas.size()) {
+            return listaGuiasCliente;
+        } else {
+            Reserva reserva = listaReservas.get(i);
+            //Fecha de cuando se termina el paquete turistico
+            LocalDate fechaFinalReserva = reserva.getPaqueteTuristicoSeleccionado().getFechaFinal();
+            if (reserva.getClienteInvolucrado().getId().equals(clienteSesion.getId()) && fechaActual.isAfter(fechaFinalReserva)) {
+                if (reserva.getGuia() != null) {
+                    listaGuiasCliente.add(reserva.getGuia());
+                }
+            }
+        }
+        return obtenerGuiasCliente(clienteSesion, fechaActual, listaGuiasCliente, i + 1);
+    }
+
+    /**
+     * Califica un guia siempre y cuando no este calificado por el cliente
+     * @param clienteSesion
+     * @param guiaSeleccion
+     * @param calificacion
+     * @param comentario
+     * @throws AtributosVaciosException
+     * @throws CalificacionException
+     * @throws AtributoIncorrectoException
+     */
+    public void calificarGuia(Cliente clienteSesion, Guia guiaSeleccion, double calificacion, String comentario) throws AtributosVaciosException, CalificacionException, AtributoIncorrectoException {
+        if (guiaSeleccion != null) {
+            if (!guiaYaCalificado(clienteSesion, guiaSeleccion, 0)) {
+                if (calificacion < 0.0 || calificacion > 5.0) {
+                    throw new AtributoIncorrectoException("Por favor ingrese una calificación entre 0.0 y 5.0");
+                }
+                if (comentario.equals("") || comentario.isBlank()) {
+                    throw new AtributoIncorrectoException("Por favor ingrese un comentario para enviar la calificación");
+                }
+                CalificacionGuia calificacionGuia = CalificacionGuia.builder()
+                        .calificacion(calificacion)
+                        .comentario(comentario)
+                        .clienteAsociado(clienteSesion)
+                        .guiaAsociado(guiaSeleccion)
+                        .build();
+                guiaSeleccion.getCalificaciones().add(calificacionGuia);
+            } else {
+                throw new CalificacionException("EL guía que tratas de calificar ya lo calificaste en el pasado");
+            }
+        } else {
+            throw new AtributosVaciosException("Por favor seleccione un guía en la tabla");
+        }
+    }
+
+    /**
+     * Verifica si un guia ya fue calificado por un cliente
+     * @param clienteSesion
+     * @param guiaSeleccion
+     * @param i
+     * @return
+     */
+    private boolean guiaYaCalificado(Cliente clienteSesion, Guia guiaSeleccion, int i) {
+        if (i >= guiaSeleccion.getCalificaciones().size()) {
+            return false;
+        } else {
+            Cliente clienteAux = guiaSeleccion.getCalificaciones().get(i).getClienteAsociado();
+            if (clienteAux.getId().equals(clienteSesion.getId())) {
+                return true;
+            }
+            return guiaYaCalificado(clienteSesion, guiaSeleccion, i + 1);
+        }
+    }
+
+
 
 }

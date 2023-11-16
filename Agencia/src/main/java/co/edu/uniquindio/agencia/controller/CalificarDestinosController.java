@@ -178,7 +178,7 @@ public class CalificarDestinosController implements Initializable {
             stage.show();
             this.stage.close();
         } else {
-            mostrarMensaje("Agencia", "Calificar Destinos", "Por favor ingrese un número en la calificación", Alert.AlertType.WARNING);
+            mostrarMensaje("Agencia", "Calificar Destinos", "Por favor seleccione un destino en la tabla", Alert.AlertType.WARNING);
         }
     }
 
