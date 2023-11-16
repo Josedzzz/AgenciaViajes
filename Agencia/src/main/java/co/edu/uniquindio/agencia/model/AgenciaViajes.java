@@ -1,6 +1,7 @@
 package co.edu.uniquindio.agencia.model;
 
 import co.edu.uniquindio.agencia.exceptions.*;
+import co.edu.uniquindio.agencia.utilities.EmailUtils;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -79,7 +80,7 @@ public class AgenciaViajes {
         Cliente cliente = Cliente.clienteBuilder()
                 .id("111")
                 .nombre("Nico")
-                .correo("Nico@")
+                .correo("balinius11@gmail.com")
                 .telefono("111")
                 .residencia("Armenia")
                 .contrasenia("111")
@@ -607,6 +608,13 @@ public class AgenciaViajes {
         listaReservas.add(reservaNueva);
         //Le bajo el cupo disponible al paquete turistico
         paqueteTuristicoSeleccionado.setCupoDisponible(paqueteTuristicoSeleccionado.getCupoDisponible() - cantidadPersonas);
+        //Envio el correo al cliente desde un hilo para no parar la ejecucion de la app
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                EmailUtils.enviarEmail(clienteSesion.getCorreo(), "Hermes Travel Agency. Realizar reserva", "Estimad@ " + clienteSesion.getNombre() + " este correo es para informarle que su reserva fue realizada con éxito para el día " + fechaReserva + " del paquete turístico " + paqueteTuristicoSeleccionado.getNombre() + ".");
+            }
+        }).start();
     }
 
     /**
@@ -620,6 +628,13 @@ public class AgenciaViajes {
                 PaqueteTuristico paquete = reserva.getPaqueteTuristicoSeleccionado();
                 paquete.setCupoDisponible(paquete.getCupoDisponible() + reserva.getCantidadPersonas());
                 reserva.setEstadoReserva(EstadoReserva.CANCELADA);
+                //Envio el correo al cliente desde un hilo para no parar la ejecucion de la app
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        EmailUtils.enviarEmail(reserva.getClienteInvolucrado().getCorreo(), "Hermes Travel Agency. Cancelación de reserva", "Estimad@ " + reserva.getClienteInvolucrado().getNombre() + " este correo es para informarle que su reserva fue cancelada con éxito para el día " + reserva.getFechaReserva() + " del paquete turístico " + reserva.getPaqueteTuristicoSeleccionado().getNombre() + ".");
+                    }
+                }).start();
             } else {
                 throw new EstadoReservaException("La reserva que tratas de cancelar ya fue cancelada en el pasado");
             }
@@ -637,6 +652,13 @@ public class AgenciaViajes {
         if (reserva != null) {
             if (reserva.getEstadoReserva().equals(EstadoReserva.PENDIENTE)) {
                 reserva.setEstadoReserva(EstadoReserva.CONFIRMADA);
+                //Envio el correo al cliente desde un hilo para no parar la ejecucion de la app
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        EmailUtils.enviarEmail(reserva.getClienteInvolucrado().getCorreo(), "Hermes Travel Agency. Confirmación de reserva", "Estimad@ " + reserva.getClienteInvolucrado().getNombre() + " este correo es para informarle que su reserva fue confirmada con éxito para el día " + reserva.getFechaReserva() + " del paquete turístico " + reserva.getPaqueteTuristicoSeleccionado().getNombre() + ".");
+                    }
+                }).start();
             } else {
                 throw new EstadoReservaException("La reserva que tratas de confirmar ya fue confirmada o cancelada en el pasado");
             }
