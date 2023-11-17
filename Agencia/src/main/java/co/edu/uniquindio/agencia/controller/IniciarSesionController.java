@@ -30,6 +30,9 @@ public class IniciarSesionController implements Initializable {
     private Button btnRegresar;
 
     @FXML
+    private Hyperlink hiperlinkOlvidasteContrasenia;
+
+    @FXML
     private RadioButton radioButtonAdministrador;
 
     @FXML
@@ -83,6 +86,7 @@ public class IniciarSesionController implements Initializable {
     /**
      * Login de la aplicacion dependiendo del radioButtom.
      * Puede loggear clientes y admins
+     *
      * @param event
      */
     @FXML
@@ -105,7 +109,8 @@ public class IniciarSesionController implements Initializable {
 
     /**
      * Ingresa sesion como administrador
-     * @param cedula del administrador
+     *
+     * @param cedula      del administrador
      * @param contrasenia del administrador
      */
     private void iniciarSesionAdmin(String cedula, String contrasenia) {
@@ -132,8 +137,8 @@ public class IniciarSesionController implements Initializable {
 
     /**
      * Ingresa la sesion como cliente
-     * @param cedula del cliente
-     * @param contrasenia del cliente
+     * @param cedula
+     * @param contrasenia
      */
     private void iniciarSesionCliente(String cedula, String contrasenia) {
         try {
@@ -160,12 +165,92 @@ public class IniciarSesionController implements Initializable {
 
     /**
      * Regresa a la ventana de inicio
+     *
      * @param event
      */
     @FXML
     void regresar(ActionEvent event) {
         this.stage.close();
         inicioController.show();
+    }
+
+    /**
+     * Recupera la contrasenia de la persona que trata de iniciar sesion
+     * @param event
+     */
+    @FXML
+    void recuperarContrasenia(ActionEvent event) {
+        String cedula = txtCedula.getText();
+        boolean admin = radioButtonAdministrador.isSelected();
+        boolean cliente = radioButtonCliente.isSelected();
+        try {
+            agenciaViajes.validarDatosRecuperarContrasenia(cedula, admin, cliente);
+            if (admin) {
+                recuperarContraseniaAdmin(cedula);
+            } else {
+                recuperarContraseniaCliente(cedula);
+            }
+        } catch (AtributosVaciosException e) {
+            mostrarMensaje("Agencia", "Recuperar Contraseña", e.getMessage(), Alert.AlertType.WARNING);
+        }
+    }
+
+    /**
+     * Lleva al admin a la ventana de recuperar contrasenia mientras le envia a su correo un codigo para este proceso
+     * @param cedula
+     */
+    private void recuperarContraseniaAdmin(String cedula) {
+        try {
+            administradorSesion = agenciaViajes.recuperarContraseniaAdmin(cedula, 0);
+            String codigo = agenciaViajes.generarCodigo(4);
+            agenciaViajes.enviarCorreoContraseniaAdmin(administradorSesion, codigo);
+            mostrarMensaje("Agencia", "Recuperar Contraseña", "Por favor revise su correo, en este se encontrará un código para el cambio de contraseña", Alert.AlertType.INFORMATION);
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(AgenciaApp.class.getResource("/views/RecuperarContraseniaView.fxml"));
+            BorderPane borderPane = (BorderPane) loader.load();
+            RecuperarContraseniaController controller = loader.getController();
+            controller.setAgenciaApp(agenciaApp);
+            Scene scene = new Scene(borderPane);
+            Stage stage = new Stage();
+            stage.setTitle("Recuperar Contraseña");
+            stage.setScene(scene);
+            controller.initAdmin(stage, this, administradorSesion, codigo);
+            stage.show();
+            this.stage.close();
+        } catch (AdminNoEncontradoException e) {
+            mostrarMensaje("Agencia", "Recuperar Contraseña", e.getMessage(), Alert.AlertType.WARNING);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Lleva al cliente a la ventana de recuperar contrasenia mientras le envia a su correo un codigo para este proceso
+     * @param cedula
+     */
+    private void recuperarContraseniaCliente(String cedula) {
+        try {
+            clienteSesion = agenciaViajes.recuperarContraseniaCliente(cedula, 0);
+            String codigo = agenciaViajes.generarCodigo(4);
+            agenciaViajes.enviarCorreoContraseniaCliente(clienteSesion, codigo);
+            mostrarMensaje("Agencia", "Recuperar Contraseña", "Por favor revise su correo, en este se encontrará un código para el cambio de contraseña", Alert.AlertType.INFORMATION);
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(AgenciaApp.class.getResource("/views/RecuperarContraseniaView.fxml"));
+            BorderPane borderPane = (BorderPane) loader.load();
+            RecuperarContraseniaController controller = loader.getController();
+            controller.setAgenciaApp(agenciaApp);
+            Scene scene = new Scene(borderPane);
+            Stage stage = new Stage();
+            stage.setTitle("Recuperar Contraseña");
+            stage.setScene(scene);
+            controller.initCliente(stage, this, clienteSesion, codigo);
+            stage.show();
+            this.stage.close();
+        } catch (ClienteNoRegistradoException e) {
+            mostrarMensaje("Agencia", "Recuperar Contraseña", e.getMessage(), Alert.AlertType.WARNING);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

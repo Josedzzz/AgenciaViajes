@@ -5,9 +5,11 @@ import co.edu.uniquindio.agencia.utilities.EmailUtils;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.mail.internet.AddressException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,7 +53,7 @@ public class AgenciaViajes {
         Administrador administrador = Administrador.administradorBuilder()
                 .id("123")
                 .nombre("Jose")
-                .correo("Jose@")
+                .correo("josedavidamayar@gmail.com")
                 .telefono("123")
                 .residencia("Quimbaya")
                 .contrasenia("123")
@@ -814,6 +816,7 @@ public class AgenciaViajes {
     //FUNCIONES APARTE AL CRUD PARA EL MANEJO DE LA AGENCIA ----------------------------------
 
     //FUNCIONES PARA EL INICIO DE SESION ----------------------------------------------------
+
     /**
      * Valida que los campos no esten vacios
      * @param cedula del cliente o del administrador
@@ -871,6 +874,146 @@ public class AgenciaViajes {
             return cliente;
         } else {
             return iniciarSesionCliente(cedula, contrasenia, i + 1);
+        }
+    }
+
+    /**
+     * Valida que los campos no esten vacios
+     * @param cedula
+     * @param admin
+     * @param cliente
+     * @throws AtributosVaciosException
+     */
+    public void validarDatosRecuperarContrasenia(String cedula, boolean admin, boolean cliente) throws AtributosVaciosException {
+        if (cedula == null || cedula.isBlank()) {
+            throw new AtributosVaciosException("Por favor ingrese una cédula");
+        }
+        if (admin == false && cliente == false) {
+            throw new AtributosVaciosException("Por favor seleccione el tipo de usuario para recuperar su contraseña");
+        }
+    }
+
+    /**
+     * Busca el administrador al que le corresponde la cedula para recuperrar su contrasenia
+     * @param cedula
+     * @param i
+     * @return
+     * @throws AdminNoEncontradoException
+     */
+    public Administrador recuperarContraseniaAdmin(String cedula, int i) throws AdminNoEncontradoException {
+        if (i >= listaAdministradores.size()) {
+            throw new AdminNoEncontradoException("La cédula ingresada no corresponde a ningún administrador");
+        }
+        Administrador administrador = listaAdministradores.get(i);
+        if (administrador.getId().equals(cedula)) {
+            return administrador;
+        } else {
+            return recuperarContraseniaAdmin(cedula, i + 1);
+        }
+    }
+
+    /**
+     * Busca el cliente al que le corresponde la cedula para recuperar su contrasenia
+     * @param cedula
+     * @param i
+     * @return
+     * @throws ClienteNoRegistradoException
+     */
+    public Cliente recuperarContraseniaCliente(String cedula, int i) throws ClienteNoRegistradoException {
+        if (i >= listaClientes.size()) {
+            throw new ClienteNoRegistradoException("La cédula ingresada no corresponde a ningún cliente");
+        }
+        Cliente cliente = listaClientes.get(i);
+        if (cliente.getId().equals(cedula)) {
+            return cliente;
+        } else {
+            return recuperarContraseniaCliente(cedula, i + 1);
+        }
+    }
+
+    /**
+     * Genera el codigo que se le envia al correo al usuario para que este recupere su contrasenia
+     * @param longitud
+     * @return
+     */
+    public String generarCodigo(int longitud) {
+        if (longitud == 0) {
+            return "";
+        } else {
+            Random random = new Random();
+            int num = random.nextInt(10);
+            return num + generarCodigo(longitud - 1);
+        }
+    }
+
+    /**
+     * Envia el correo al administrador para que revise el codigo para el cambio de contrasenia
+     * @param administrador
+     * @param codigo
+     */
+    public void enviarCorreoContraseniaAdmin(Administrador administrador, String codigo) {
+        //Se pone en un hilo para que no bloque la ejecucion del programa mientras se manda el correo
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                EmailUtils.enviarEmail(administrador.getCorreo(), "Cambio de contraseña", "El código que debe ingresar es: " + codigo);
+            }
+        }).start();
+    }
+
+    /**
+     * Emvia el correo al cliente para que revise el codigo para el cambio de contrasenia
+     * @param cliente
+     * @param codigo
+     */
+    public void enviarCorreoContraseniaCliente(Cliente cliente, String codigo) {
+        //Se pone en un hilo para que no bloque la ejecucion del programa mientras se manda el correo
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                EmailUtils.enviarEmail(cliente.getCorreo(), "Cambio de contraseña", "El código que debe ingresar es: " + codigo);
+            }
+        }).start();
+    }
+
+    //FUNCIONES PARA LA VIEW DE RECUPER CONTRASENIAS -------------------------------------------------
+
+    /**
+     * Cambia la contrasenia del admin siempre y cuando el codigo sea correcto
+     * @param administradorSesion
+     * @param codigoCorrecto
+     * @param codigoIngresado
+     * @param nuevaContrasenia
+     * @throws AtributoIncorrectoException
+     */
+    public void hacerCambioContraseniaAdmin(Administrador administradorSesion, String codigoCorrecto, String codigoIngresado, String nuevaContrasenia) throws AtributoIncorrectoException, AtributosVaciosException {
+        if (codigoCorrecto.equals(codigoIngresado)) {
+            if (nuevaContrasenia.isBlank() || nuevaContrasenia.equals("")) {
+                throw new AtributosVaciosException("Tienes que llenar el campo indicando la nueva contraseña");
+            }
+            administradorSesion.setContrasenia(nuevaContrasenia);
+        } else {
+            throw new AtributoIncorrectoException("El código que ingresaste no es el que te hemos enviado");
+        }
+    }
+
+    /**
+     * Cambia la contrasenia del cliente siempre y cuando el codigo sea correcto
+     * @param clienteSesion
+     * @param codigoCorrecto
+     * @param codigoIngresado
+     * @param nuevaContrasenia
+     * @throws AtributoIncorrectoException
+     * @throws AtributosVaciosException
+     */
+    public void hacerCambioContraseniaCliente(Cliente clienteSesion, String codigoCorrecto, String codigoIngresado, String nuevaContrasenia) throws AtributoIncorrectoException, AtributosVaciosException {
+        if (codigoCorrecto.equals(codigoIngresado)) {
+            if (nuevaContrasenia.isBlank() || nuevaContrasenia.equals("")) {
+                throw new AtributosVaciosException("Tienes que llenar el campo indicando la nueva contraseña");
+            }
+            clienteSesion.setContrasenia(nuevaContrasenia);
+        } else {
+            throw new AtributoIncorrectoException("El código que ingresaste no es el que te hemos enviado");
         }
     }
 
@@ -1339,7 +1482,5 @@ public class AgenciaViajes {
             return guiaYaCalificado(clienteSesion, guiaSeleccion, i + 1);
         }
     }
-
-
 
 }
