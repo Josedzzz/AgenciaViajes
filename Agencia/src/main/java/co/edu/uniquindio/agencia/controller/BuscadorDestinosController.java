@@ -1,6 +1,7 @@
 package co.edu.uniquindio.agencia.controller;
 
 import co.edu.uniquindio.agencia.app.AgenciaApp;
+import co.edu.uniquindio.agencia.exceptions.ClienteNoRegistradoException;
 import co.edu.uniquindio.agencia.model.AgenciaViajes;
 import co.edu.uniquindio.agencia.model.Cliente;
 import co.edu.uniquindio.agencia.model.Destino;
@@ -80,6 +81,7 @@ public class BuscadorDestinosController implements Initializable {
 
     /**
      * Obtiene la lista de destinos
+     *
      * @return la lista de destinos como una observableList para la tableView
      */
     private ObservableList<Destino> getListaDestinos() {
@@ -90,6 +92,7 @@ public class BuscadorDestinosController implements Initializable {
 
     /**
      * Obtiene la lista de destinos de un tipo en especifico
+     *
      * @param tipoDestino
      * @return
      */
@@ -97,6 +100,20 @@ public class BuscadorDestinosController implements Initializable {
         listadoDestinos.clear();
         ArrayList<Destino> listaDestinosTipo = new ArrayList<>();
         listadoDestinos.addAll(agenciaViajes.obtenerDestinosTipo(tipoDestino, listaDestinosTipo, 0));
+        return listadoDestinos;
+    }
+
+    /**
+     * Obtiene la lista de destinos recomendados para un cliente
+     * @return
+     */
+    public ObservableList<Destino> getListadoDestinosRecomendados() {
+        try {
+            listadoDestinos.clear();
+            listadoDestinos.addAll(agenciaViajes.recomendarDestinosCLiente(clienteSesion, 0, 0, 0, 0, 0));
+        } catch (ClienteNoRegistradoException e) {
+            mostrarMensaje("Agencia", "Buscador de Destinos", e.getMessage(), Alert.AlertType.WARNING);
+        }
         return listadoDestinos;
     }
 
@@ -137,6 +154,7 @@ public class BuscadorDestinosController implements Initializable {
 
     /**
      * Filtra los destinos de tipo aventura para verlos en la tabla
+     *
      * @param event
      */
     @FXML
@@ -148,6 +166,7 @@ public class BuscadorDestinosController implements Initializable {
 
     /**
      * Filtra los destinos de tipo bosque para verlos en la tabla
+     *
      * @param event
      */
     @FXML
@@ -159,6 +178,7 @@ public class BuscadorDestinosController implements Initializable {
 
     /**
      * Filtra los destinos de tipo ciudad para verlos en la tabla
+     *
      * @param event
      */
     @FXML
@@ -170,6 +190,7 @@ public class BuscadorDestinosController implements Initializable {
 
     /**
      * Filtra los destinos de tipo playa para verlos en la tabla
+     *
      * @param event
      */
     @FXML
@@ -181,6 +202,7 @@ public class BuscadorDestinosController implements Initializable {
 
     /**
      * Muestra el destino seleccionado en la ventana de infoDestinos
+     *
      * @param event
      * @throws IOException
      */
@@ -206,6 +228,7 @@ public class BuscadorDestinosController implements Initializable {
 
     /**
      * Regresa a la ventana de inicio
+     *
      * @param event
      */
     @FXML
@@ -214,9 +237,14 @@ public class BuscadorDestinosController implements Initializable {
         inicioController.show();
     }
 
+    /**
+     * Muestra las recomendaciones de ddestinos para un cliente en especifico
+     * @param event
+     */
     @FXML
     void verRecomendaciones(ActionEvent event) {
-
+        tableViewDestinos.getItems().clear();
+        tableViewDestinos.setItems(getListadoDestinosRecomendados());
     }
 
     /**

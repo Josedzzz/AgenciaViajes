@@ -1515,6 +1515,93 @@ public class AgenciaViajes {
         }
     }
 
+    /**
+     * Da una lista de destinos recomendados a un cliente especifico dependiendo el tipo de destinos que mas visita
+     * Si no ha visitado ningun destino le muestra la lista de destinos en general
+     * @param cliente
+     * @param contPlaya
+     * @param contBosque
+     * @param contAventura
+     * @param contCiudad
+     * @param i
+     * @return
+     */
+    public ArrayList<Destino> recomendarDestinosCLiente(Cliente cliente, int contPlaya, int contBosque, int contAventura, int contCiudad, int i) throws ClienteNoRegistradoException {
+        if (cliente != null) {
+            if (i >= listaReservas.size()) {
+                if (contPlaya == 0 && contBosque == 0 && contAventura == 0 && contCiudad == 0) {
+                    return listaDestinos;
+                } else {
+                    TipoDestino tipoDestino = obtenerTipoDestinoMayor(contPlaya, contBosque, contAventura, contCiudad);
+                    ArrayList<Destino> listaDestinosRecomendado = new ArrayList<>();
+                    return obtenerDestinosTipo(tipoDestino, listaDestinosRecomendado, 0);
+                }
+            } else {
+                Reserva reserva = listaReservas.get(i);
+                Cliente clienteAsociado = listaReservas.get(i).getClienteInvolucrado();
+                if (clienteAsociado.getId().equals(cliente.getId())) {
+                    contPlaya = contPlaya + contarTipoDestino(reserva.getPaqueteTuristicoSeleccionado().getListaDestinos(), TipoDestino.PLAYA, 0, 0);
+                    contBosque = contBosque + contarTipoDestino(reserva.getPaqueteTuristicoSeleccionado().getListaDestinos(), TipoDestino.BOSQUE, 0, 0);
+                    contAventura = contAventura + contarTipoDestino(reserva.getPaqueteTuristicoSeleccionado().getListaDestinos(), TipoDestino.AVENTURA, 0, 0);
+                    contCiudad = contCiudad + contarTipoDestino(reserva.getPaqueteTuristicoSeleccionado().getListaDestinos(), TipoDestino.CIUDAD, 0, 0);
+                }
+                return recomendarDestinosCLiente(cliente, contPlaya, contBosque, contAventura, contCiudad, i + 1);
+            }
+        } else {
+            throw new ClienteNoRegistradoException("Por favor inicia sesión para que puedas ver nuestrar recomendaciones");
+        }
+    }
+
+    /**
+     * Me retorna el tipo de destino mayor
+     * @param contPlaya
+     * @param contBosque
+     * @param contAventura
+     * @param contCiudad
+     * @return
+     */
+    private TipoDestino obtenerTipoDestinoMayor(int contPlaya, int contBosque, int contAventura, int contCiudad) {
+        TipoDestino tipoDestinoMayor = null;
+        int contMayor = 0;
+        if (contPlaya > contMayor) {
+            tipoDestinoMayor = TipoDestino.PLAYA;
+            contMayor = contPlaya;
+        }
+        if (contBosque > contMayor) {
+            tipoDestinoMayor = TipoDestino.BOSQUE;
+            contMayor = contBosque;
+        }
+        if (contAventura > contMayor) {
+            tipoDestinoMayor = TipoDestino.AVENTURA;
+            contMayor = contAventura;
+        }
+        if (contCiudad > contMayor) {
+            tipoDestinoMayor = TipoDestino.CIUDAD;
+            contMayor = contCiudad;
+        }
+        return tipoDestinoMayor;
+    }
+
+    /**
+     * Cuenta cuantos destinos de un tipo hay en una lista de destinos pasada como parametro
+     * @param listaDestinosCliente
+     * @param tipoDestino
+     * @param cont
+     * @param i
+     * @return
+     */
+    private int contarTipoDestino(ArrayList<Destino> listaDestinosCliente, TipoDestino tipoDestino, int cont, int i) {
+        if (i >= listaDestinosCliente.size()) {
+            return cont;
+        } else {
+            Destino destino = listaDestinosCliente.get(i);
+            if (destino.getTipoDestino().equals(tipoDestino)) {
+                cont = cont + 1;
+            }
+            return contarTipoDestino(listaDestinosCliente, tipoDestino, cont, i + 1);
+        }
+    }
+
     //FUNCIONES PARA LA VIEW DE BUSCADOR DE PAQUETES -------------------------------------------------
 
     /**
