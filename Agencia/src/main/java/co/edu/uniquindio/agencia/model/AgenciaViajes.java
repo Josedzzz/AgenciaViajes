@@ -1638,7 +1638,46 @@ public class AgenciaViajes {
             if (destino.getTipoDestino().equals(tipoDestino)) {
                 return true;
             }
-        }return paqueteContieneTipo(paquete, tipoDestino, i + 1);
+        }
+        return paqueteContieneTipo(paquete, tipoDestino, i + 1);
+    }
+
+    /**
+     * Retorna una lista de paquetes recomendada dependiendo de el tipo de destinos que mas visita
+     * Es decir, se recomiendan paquetes que tengan el tipo de destino que mas le gusta al usuario
+     * @param cliente
+     * @param contPlaya
+     * @param contBosque
+     * @param contAventura
+     * @param contCiudad
+     * @param i
+     * @return
+     * @throws ClienteNoRegistradoException
+     */
+    public ArrayList<PaqueteTuristico> recomendarPaquetesCliente(Cliente cliente, int contPlaya, int contBosque, int contAventura, int contCiudad, int i) throws ClienteNoRegistradoException {
+        if (cliente != null) {
+            if (i >= listaReservas.size()) {
+                if (contPlaya == 0 && contBosque == 0 && contAventura == 0 && contCiudad == 0) {
+                    return listaPaquetesTuristicos;
+                } else {
+                    TipoDestino tipoDestino = obtenerTipoDestinoMayor(contPlaya, contBosque, contAventura, contCiudad);
+                    ArrayList<PaqueteTuristico> listaPaquetesRecomendado = new ArrayList<>();
+                    return obtenerPaquetesTipo(tipoDestino, listaPaquetesRecomendado, 0);
+                }
+            } else {
+                Reserva reserva = listaReservas.get(i);
+                Cliente clienteAsociado = listaReservas.get(i).getClienteInvolucrado();
+                if (clienteAsociado.getId().equals(cliente.getId())) {
+                    contPlaya = contPlaya + contarTipoDestino(reserva.getPaqueteTuristicoSeleccionado().getListaDestinos(), TipoDestino.PLAYA, 0, 0);
+                    contBosque = contBosque + contarTipoDestino(reserva.getPaqueteTuristicoSeleccionado().getListaDestinos(), TipoDestino.BOSQUE, 0, 0);
+                    contAventura = contAventura + contarTipoDestino(reserva.getPaqueteTuristicoSeleccionado().getListaDestinos(), TipoDestino.AVENTURA, 0, 0);
+                    contCiudad = contCiudad + contarTipoDestino(reserva.getPaqueteTuristicoSeleccionado().getListaDestinos(), TipoDestino.CIUDAD, 0, 0);
+                }
+                return recomendarPaquetesCliente(cliente, contPlaya, contBosque, contAventura, contCiudad, i + 1);
+            }
+        } else {
+            throw new ClienteNoRegistradoException("Por favor inicia sesión para que puedas ver nuestrar recomendaciones");
+        }
     }
 
 }

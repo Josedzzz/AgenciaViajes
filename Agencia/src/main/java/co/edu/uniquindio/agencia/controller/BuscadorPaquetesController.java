@@ -1,6 +1,7 @@
 package co.edu.uniquindio.agencia.controller;
 
 import co.edu.uniquindio.agencia.app.AgenciaApp;
+import co.edu.uniquindio.agencia.exceptions.ClienteNoRegistradoException;
 import co.edu.uniquindio.agencia.model.*;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -81,6 +82,7 @@ public class BuscadorPaquetesController implements Initializable {
 
     /**
      * Obtiene la lista de paquetes
+     *
      * @return lista de paquetes como un ObservableList para la tableView
      */
     private ObservableList<PaqueteTuristico> getListaPaquetes() {
@@ -89,10 +91,29 @@ public class BuscadorPaquetesController implements Initializable {
         return listadoPaquetes;
     }
 
+    /**
+     * Obtiene la lista de paquetes de un tipo en especifico
+     * @param tipoDestino
+     * @return
+     */
     private ObservableList<PaqueteTuristico> getLIstaPaquetesTipo(TipoDestino tipoDestino) {
         listadoPaquetes.clear();
         ArrayList<PaqueteTuristico> listaPaquetesTipo = new ArrayList<>();
         listadoPaquetes.addAll(agenciaViajes.obtenerPaquetesTipo(tipoDestino, listaPaquetesTipo, 0));
+        return listadoPaquetes;
+    }
+
+    /**
+     * Obtiene la lista de paquetes a recomendar para un cliente
+     * @return
+     */
+    private ObservableList<PaqueteTuristico> getListadoPaquetesRecomendados() {
+        try {
+            listadoPaquetes.clear();
+            listadoPaquetes.addAll(agenciaViajes.recomendarPaquetesCliente(clienteSesion, 0, 0, 0, 0, 0));
+        } catch (ClienteNoRegistradoException e) {
+            mostrarMensaje("Agencia", "Buscador de Paquetes", e.getMessage(), Alert.AlertType.WARNING);
+        }
         return listadoPaquetes;
     }
 
@@ -219,9 +240,14 @@ public class BuscadorPaquetesController implements Initializable {
         }
     }
 
+    /**
+     * Muestra las recomendaciones de paquetes para un cliente en especifico
+     * @param event
+     */
     @FXML
     void verRecomendaciones(ActionEvent event) {
-
+        tableViewPaquetes.getItems().clear();
+        tableViewPaquetes.setItems(getListadoPaquetesRecomendados());
     }
 
     /**
