@@ -17,6 +17,7 @@ public class Destino {
     private String descripcion;
     private ArrayList<String> listaImagenes;
     private TipoClima tipoClima;
+    private TipoDestino tipoDestino;
     private ArrayList<CalificacionDestino> calificaciones;
 
 }

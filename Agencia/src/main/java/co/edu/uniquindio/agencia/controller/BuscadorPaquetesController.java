@@ -1,9 +1,7 @@
 package co.edu.uniquindio.agencia.controller;
 
 import co.edu.uniquindio.agencia.app.AgenciaApp;
-import co.edu.uniquindio.agencia.model.AgenciaViajes;
-import co.edu.uniquindio.agencia.model.Cliente;
-import co.edu.uniquindio.agencia.model.PaqueteTuristico;
+import co.edu.uniquindio.agencia.model.*;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,12 +17,10 @@ import javafx.stage.Stage;
 import javax.imageio.stream.ImageOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class BuscadorPaquetesController implements Initializable {
-
-    @FXML
-    private Button btnRealizarFiltro;
 
     @FXML
     private Button btnRecomendaciones;
@@ -34,24 +30,6 @@ public class BuscadorPaquetesController implements Initializable {
 
     @FXML
     private Button btnVerPaquete;
-
-    @FXML
-    private ComboBox<?> cbNombrePaquete;
-
-    @FXML
-    private CheckBox checkBoxAlimentos;
-
-    @FXML
-    private CheckBox checkBoxBar;
-
-    @FXML
-    private CheckBox checkBoxRecreacion;
-
-    @FXML
-    private CheckBox checkBoxSeguros;
-
-    @FXML
-    private CheckBox checkBoxTransporte;
 
     @FXML
     private TableView<PaqueteTuristico> tableViewPaquetes;
@@ -72,16 +50,16 @@ public class BuscadorPaquetesController implements Initializable {
     private TableColumn<PaqueteTuristico, String> columnPrecio;
 
     @FXML
-    private DatePicker dpFechaFinal;
+    private RadioButton rbAventura;
 
     @FXML
-    private DatePicker dpFechaInicial;
+    private RadioButton rbBosque;
 
     @FXML
-    private TextField txtCupos;
+    private RadioButton rbCiudad;
 
     @FXML
-    private TextField txtPrecioMaximo;
+    private RadioButton rbPlaya;
 
     //Variables auxiliares
     private Stage stage;
@@ -108,6 +86,13 @@ public class BuscadorPaquetesController implements Initializable {
     private ObservableList<PaqueteTuristico> getListaPaquetes() {
         listadoPaquetes.clear();
         listadoPaquetes.addAll(agenciaViajes.getListaPaquetesTuristicos());
+        return listadoPaquetes;
+    }
+
+    private ObservableList<PaqueteTuristico> getLIstaPaquetesTipo(TipoDestino tipoDestino) {
+        listadoPaquetes.clear();
+        ArrayList<PaqueteTuristico> listaPaquetesTipo = new ArrayList<>();
+        listadoPaquetes.addAll(agenciaViajes.obtenerPaquetesTipo(tipoDestino, listaPaquetesTipo, 0));
         return listadoPaquetes;
     }
 
@@ -147,16 +132,56 @@ public class BuscadorPaquetesController implements Initializable {
                 paqueteSeleccion = tableViewPaquetes.getSelectionModel().getSelectedItem();
             }
         });
+        //Manejo de los radioButtoms
+        ToggleGroup group = new ToggleGroup();
+        rbAventura.setToggleGroup(group);
+        rbBosque.setToggleGroup(group);
+        rbPlaya.setToggleGroup(group);
+        rbCiudad.setToggleGroup(group);
     }
 
+    /**
+     * Filtra los paquetes que tengan destinos de avnetura
+     * @param event
+     */
     @FXML
-    void realizarFiltroRecomendaciones(ActionEvent event) {
-
+    void filtrarPaqueteAventura(ActionEvent event) {
+        tableViewPaquetes.getItems().clear();
+        tableViewPaquetes.setItems(getLIstaPaquetesTipo(TipoDestino.AVENTURA));
+        mostrarMensaje("Agencia", "Buscador de Paquetes", "En la tabla se observan los paquetes de Aventura", Alert.AlertType.INFORMATION);
     }
 
+    /**
+     * Filtra los paquetes que tengan destinos de bosque
+     * @param event
+     */
     @FXML
-    void realizarFiltroUsuario(ActionEvent event) {
+    void filtrarPaqueteBosque(ActionEvent event) {
+        tableViewPaquetes.getItems().clear();
+        tableViewPaquetes.setItems(getLIstaPaquetesTipo(TipoDestino.BOSQUE));
+        mostrarMensaje("Agencia", "Buscador de Paquetes", "En la tabla se observan los paquetes de Bosque", Alert.AlertType.INFORMATION);
+    }
 
+    /**
+     * Filtra los paquetes que tengan destino de playa
+     * @param event
+     */
+    @FXML
+    void filtrarPaquetePlaya(ActionEvent event) {
+        tableViewPaquetes.getItems().clear();
+        tableViewPaquetes.setItems(getLIstaPaquetesTipo(TipoDestino.PLAYA));
+        mostrarMensaje("Agencia", "Buscador de Paquetes", "En la tabla se observan los paquetes de Playa", Alert.AlertType.INFORMATION);
+    }
+
+    /**
+     * Filtra los paquetes que tengan un destino de ciudad
+     * @param event
+     */
+    @FXML
+    void filtrarPaqueteCiudad(ActionEvent event) {
+        tableViewPaquetes.getItems().clear();
+        tableViewPaquetes.setItems(getLIstaPaquetesTipo(TipoDestino.CIUDAD));
+        mostrarMensaje("Agencia", "Buscador de Paquetes", "En la tabla se observan los paquetes de Ciudad", Alert.AlertType.INFORMATION);
     }
 
     /**
@@ -192,6 +217,11 @@ public class BuscadorPaquetesController implements Initializable {
         } else {
             mostrarMensaje("Agencia", "Buscador de Paquetes", "Por favor seleccione un paquete", Alert.AlertType.WARNING);
         }
+    }
+
+    @FXML
+    void verRecomendaciones(ActionEvent event) {
+
     }
 
     /**

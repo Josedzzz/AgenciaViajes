@@ -59,6 +59,9 @@ public class InfoDestinoController implements Initializable {
     @FXML
     private TextField txtNombreDestino;
 
+    @FXML
+    private TextField txtTipoDestino;
+
     //Variables auxiliares
     private Stage stage;
     private AgenciaApp agenciaApp;
@@ -112,6 +115,7 @@ public class InfoDestinoController implements Initializable {
         txtNombreDestino.setText(destinoSeleccion.getNombre());
         txtCiudad.setText(destinoSeleccion.getCiudad());
         txtClima.setText(destinoSeleccion.getTipoClima().toString());
+        txtTipoDestino.setText(destinoSeleccion.getTipoDestino().toString());
         textAreaDescripcion.setText(destinoSeleccion.getDescripcion());
         //Cargo la primera imagen del destino
         try {
@@ -151,6 +155,7 @@ public class InfoDestinoController implements Initializable {
         txtNombreDestino.setDisable(true);
         txtCiudad.setDisable(true);
         txtClima.setDisable(true);
+        txtTipoDestino.setDisable(true);
     }
 
     /**

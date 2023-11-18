@@ -100,6 +100,7 @@ public class AgenciaViajes {
                 .descripcion("El Parque del Café es un parque temático colombiano situado en el corregimiento de Pueblo Tapao, del municipio de Montenegro en Quindío, Colombia.")
                 .listaImagenes(rutaImagenesDestino)
                 .tipoClima(TipoClima.CALIDO)
+                .tipoDestino(TipoDestino.BOSQUE)
                 .calificaciones(calificacionesDestino)
                 .build();
         listaDestinos.add(destino);
@@ -109,6 +110,7 @@ public class AgenciaViajes {
                 .descripcion("Algogooooo")
                 .listaImagenes(rutaImagenesDestino)
                 .tipoClima(TipoClima.CALIDO)
+                .tipoDestino(TipoDestino.AVENTURA)
                 .calificaciones(calificacionesDestino)
                 .build();
         listaDestinos.add(destino1);
@@ -119,6 +121,7 @@ public class AgenciaViajes {
         serviciosAdicionalesPaquete.add(ServicioAdicional.SEGUROS);
         ArrayList<Destino> destinosPaquete = new ArrayList<>();
         destinosPaquete.add(destino);
+        destinosPaquete.add(destino1);
         LocalDate fechaInicial = LocalDate.of(2023, 12, 1);
         LocalDate fechaFinal = LocalDate.of(2023, 10, 2);
         PaqueteTuristico paqueteTuristico = PaqueteTuristico.builder()
@@ -191,7 +194,7 @@ public class AgenciaViajes {
      * @param tipoClima clima del destino
      * @throws DestinoNoRegistradoException
      */
-    public void actualizarDestino(String nombre, String ciudad, String descripcion, TipoClima tipoClima) throws DestinoNoRegistradoException, CampoObligatorioDestinoException {
+    public void actualizarDestino(String nombre, String ciudad, String descripcion, TipoClima tipoClima, TipoDestino tipoDestino) throws DestinoNoRegistradoException, CampoObligatorioDestinoException {
         Destino destinoEncontrado = obtenerDestino(nombre, ciudad, 0);
         if (destinoEncontrado == null) {
             throw new DestinoNoRegistradoException("El destino que buscas actualizar no está registrado");
@@ -211,8 +214,12 @@ public class AgenciaViajes {
             if (tipoClima == null) {
                 throw new CampoObligatorioDestinoException("El clima del destino es obligatorio");
             }
+            if (tipoDestino == null) {
+                throw new CampoObligatorioDestinoException("El tipo de destino es obligatorio");
+            }
             destinoEncontrado.setDescripcion(descripcion);
             destinoEncontrado.setTipoClima(tipoClima);
+            destinoEncontrado.setTipoDestino(tipoDestino);
         }
     }
 
@@ -241,7 +248,7 @@ public class AgenciaViajes {
      * @throws CampoObligatorioDestinoException
      * @throws DestinoYaExistenteException
      */
-    public void crearDestino(String nombre, String ciudad, String descripcion, ArrayList<String> listaImagenes, TipoClima tipoClima, ArrayList<CalificacionDestino> listaCalificaciones) throws CampoObligatorioDestinoException, DestinoYaExistenteException {
+    public void crearDestino(String nombre, String ciudad, String descripcion, ArrayList<String> listaImagenes, TipoClima tipoClima, TipoDestino tipoDestino, ArrayList<CalificacionDestino> listaCalificaciones) throws CampoObligatorioDestinoException, DestinoYaExistenteException {
         Destino destinoEncontrado = obtenerDestino(nombre, ciudad, 0);
         if (destinoEncontrado != null) {
             throw new DestinoYaExistenteException("El destino que deseas registrar ya existe");
@@ -261,12 +268,16 @@ public class AgenciaViajes {
             if (tipoClima == null) {
                 throw new CampoObligatorioDestinoException("El clima del destino es obligatorio");
             }
+            if (tipoDestino == null) {
+                throw new CampoObligatorioDestinoException("El tipo de destino es obligatorio");
+            }
             Destino destino = Destino.builder()
                     .nombre(nombre)
                     .ciudad(ciudad)
                     .descripcion(descripcion)
                     .listaImagenes(listaImagenes)
                     .tipoClima(tipoClima)
+                    .tipoDestino(tipoDestino)
                     .calificaciones(listaCalificaciones)
                     .build();
             listaDestinos.add(destino);
@@ -1481,6 +1492,66 @@ public class AgenciaViajes {
             }
             return guiaYaCalificado(clienteSesion, guiaSeleccion, i + 1);
         }
+    }
+
+    //FUNCIONES PARA LA VIEW DE BUSCADOR DE DESTINOS ------------------------------------------------
+
+    /**
+     * Obtiene la lista de destinos de un tipo en especifico
+     * @param tipoDestino
+     * @param listaDestinosTipo
+     * @param i
+     * @return
+     */
+    public ArrayList<Destino> obtenerDestinosTipo(TipoDestino tipoDestino, ArrayList<Destino> listaDestinosTipo, int i) {
+        if (i >= listaDestinos.size()) {
+            return listaDestinosTipo;
+        } else {
+            Destino destino = listaDestinos.get(i);
+            if (destino.getTipoDestino().equals(tipoDestino)) {
+                listaDestinosTipo.add(destino);
+            }
+            return obtenerDestinosTipo(tipoDestino, listaDestinosTipo, i + 1);
+        }
+    }
+
+    //FUNCIONES PARA LA VIEW DE BUSCADOR DE PAQUETES -------------------------------------------------
+
+    /**
+     * Obtiene la lista de paquetes que contienen destinos de un tipo en especifico
+     * @param tipoDestino
+     * @param listaPaquetesTipo
+     * @param i
+     * @return
+     */
+    public ArrayList<PaqueteTuristico> obtenerPaquetesTipo(TipoDestino tipoDestino, ArrayList<PaqueteTuristico> listaPaquetesTipo, int i) {
+        if (i >= listaPaquetesTuristicos.size()) {
+            return listaPaquetesTipo;
+        } else {
+            PaqueteTuristico paquete = listaPaquetesTuristicos.get(i);
+            if (paqueteContieneTipo(paquete, tipoDestino, 0)) {
+                listaPaquetesTipo.add(paquete);
+            }
+            return obtenerPaquetesTipo(tipoDestino, listaPaquetesTipo, i + 1);
+        }
+    }
+
+    /**
+     * Verifica si un paquete tiene un destino de un tipo en especifico
+     * @param paquete
+     * @param tipoDestino
+     * @param i
+     * @return
+     */
+    private boolean paqueteContieneTipo(PaqueteTuristico paquete, TipoDestino tipoDestino, int i) {
+        if (i >= paquete.getListaDestinos().size()) {
+            return false;
+        } else {
+            Destino destino = paquete.getListaDestinos().get(i);
+            if (destino.getTipoDestino().equals(tipoDestino)) {
+                return true;
+            }
+        }return paqueteContieneTipo(paquete, tipoDestino, i + 1);
     }
 
 }

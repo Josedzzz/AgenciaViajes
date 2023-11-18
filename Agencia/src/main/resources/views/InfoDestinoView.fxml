@@ -34,7 +34,7 @@
                         <Font name="Ubuntu" size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="14.0" layoutY="156.0" text="Ciudad:" textFill="#5258cb">
+                  <Label layoutX="316.0" layoutY="94.0" text="Ciudad:" textFill="#5258cb">
                      <font>
                         <Font name="Ubuntu" size="18.0" />
                      </font>
@@ -65,22 +65,22 @@
                         </TableView>
                      </children>
                   </Pane>
-                  <TextField fx:id="txtNombreDestino" layoutX="187.0" layoutY="90.0" prefHeight="28.0" prefWidth="130.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
+                  <TextField fx:id="txtNombreDestino" layoutX="187.0" layoutY="90.0" prefHeight="28.0" prefWidth="115.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
                      <font>
                         <Font name="Ubuntu" size="14.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="txtCiudad" layoutX="79.0" layoutY="151.0" prefHeight="28.0" prefWidth="130.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
+                  <TextField fx:id="txtCiudad" layoutX="385.0" layoutY="90.0" prefHeight="28.0" prefWidth="138.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
                      <font>
                         <Font name="Ubuntu" size="14.0" />
                      </font>
                   </TextField>
-                  <Label layoutX="273.0" layoutY="156.0" text="Clima:" textFill="#5258cb">
+                  <Label layoutX="322.0" layoutY="156.0" text="Clima:" textFill="#5258cb">
                      <font>
                         <Font name="Ubuntu" size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtClima" layoutX="328.0" layoutY="151.0" prefHeight="28.0" prefWidth="130.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
+                  <TextField fx:id="txtClima" layoutX="389.0" layoutY="153.0" prefHeight="28.0" prefWidth="130.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
                      <font>
                         <Font name="Ubuntu" size="14.0" />
                      </font>
@@ -91,6 +91,16 @@
                      </font>
                   </Label>
                   <TextArea fx:id="textAreaDescripcion" layoutX="135.0" layoutY="214.0" prefHeight="100.0" prefWidth="376.0" />
+                  <Label layoutX="14.0" layoutY="156.0" text="Tipo de destino:" textFill="#5258cb">
+                     <font>
+                        <Font name="Ubuntu" size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtTipoDestino" layoutX="161.0" layoutY="153.0" prefHeight="28.0" prefWidth="112.0" style="-fx-background-color: transparent; -fx-border-color: #5258cb; -fx-border-width: 0px 0px 2px 0px;">
+                     <font>
+                        <Font name="Ubuntu" size="14.0" />
+                     </font>
+                  </TextField>
                </children>
             </AnchorPane>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #eef2f4;">

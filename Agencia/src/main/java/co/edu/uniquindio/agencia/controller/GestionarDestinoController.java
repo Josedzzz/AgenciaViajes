@@ -56,6 +56,9 @@ public class GestionarDestinoController implements Initializable {
     private ComboBox<TipoClima> cbClima;
 
     @FXML
+    private ComboBox<TipoDestino> cbTipoDestino;
+
+    @FXML
     private TableColumn<Destino, String> columnCiudad;
 
     @FXML
@@ -144,6 +147,8 @@ public class GestionarDestinoController implements Initializable {
         //Manejo del comboBox del clima
         txtImagen.setDisable(true);
         this.cbClima.getItems().addAll(TipoClima.values());
+        //Manejo del comboBox del tipo de destino
+        this.cbTipoDestino.getItems().addAll(TipoDestino.values());
     }
 
     /**
@@ -154,6 +159,7 @@ public class GestionarDestinoController implements Initializable {
             txtNombre.setText(destinoSeleccion.getNombre());
             txtCiudad.setText(destinoSeleccion.getCiudad());
             cbClima.getSelectionModel().select(destinoSeleccion.getTipoClima());
+            cbTipoDestino.getSelectionModel().select(destinoSeleccion.getTipoDestino());
             textAreaDescripcion.setText(destinoSeleccion.getDescripcion());
             //Cargo la primera imagen del destino
             String rutaImagen = agenciaViajes.obtenerImagenDestino(destinoSeleccion.getListaImagenes());
@@ -172,6 +178,7 @@ public class GestionarDestinoController implements Initializable {
         txtNombre.clear();
         txtCiudad.clear();
         cbClima.setValue(null);
+        cbTipoDestino.setValue(null);
         textAreaDescripcion.clear();
         txtImagen.clear();
         imageViewDestino.setImage(null);
@@ -188,7 +195,8 @@ public class GestionarDestinoController implements Initializable {
                     txtNombre.getText(),
                     txtCiudad.getText(),
                     textAreaDescripcion.getText(),
-                    cbClima.getValue()
+                    cbClima.getValue(),
+                    cbTipoDestino.getValue()
             );
             tableViewDestinos.getItems().clear();
             tableViewDestinos.setItems(getListaDestinos());
@@ -216,6 +224,7 @@ public class GestionarDestinoController implements Initializable {
                     textAreaDescripcion.getText(),
                     imagenesDestinos,
                     cbClima.getValue(),
+                    cbTipoDestino.getValue(),
                     calificaciones
             );
             //Se añade el destino creado a la tableView

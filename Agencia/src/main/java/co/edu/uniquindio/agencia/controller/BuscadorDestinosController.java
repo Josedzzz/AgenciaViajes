@@ -4,6 +4,7 @@ import co.edu.uniquindio.agencia.app.AgenciaApp;
 import co.edu.uniquindio.agencia.model.AgenciaViajes;
 import co.edu.uniquindio.agencia.model.Cliente;
 import co.edu.uniquindio.agencia.model.Destino;
+import co.edu.uniquindio.agencia.model.TipoDestino;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,12 +19,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class BuscadorDestinosController implements Initializable {
-
-    @FXML
-    private Button btnRealizarFIltro;
 
     @FXML
     private Button btnRecomendaciones;
@@ -35,16 +34,16 @@ public class BuscadorDestinosController implements Initializable {
     private Button btnVerDestino;
 
     @FXML
-    private ComboBox<?> cbCalificacion;
+    private RadioButton rbAventura;
 
     @FXML
-    private ComboBox<?> cbCiudad;
+    private RadioButton rbBosque;
 
     @FXML
-    private ComboBox<?> cbClima;
+    private RadioButton rbCiudad;
 
     @FXML
-    private ComboBox<?> cbNombreDestino;
+    private RadioButton rbPlaya;
 
     @FXML
     private TableColumn<Destino, String> columnCiudad;
@@ -89,6 +88,18 @@ public class BuscadorDestinosController implements Initializable {
         return listadoDestinos;
     }
 
+    /**
+     * Obtiene la lista de destinos de un tipo en especifico
+     * @param tipoDestino
+     * @return
+     */
+    private ObservableList<Destino> getListadoDestinosTipo(TipoDestino tipoDestino) {
+        listadoDestinos.clear();
+        ArrayList<Destino> listaDestinosTipo = new ArrayList<>();
+        listadoDestinos.addAll(agenciaViajes.obtenerDestinosTipo(tipoDestino, listaDestinosTipo, 0));
+        return listadoDestinos;
+    }
+
     public void init(Stage stage, InicioController inicioController, Cliente clienteSesion) {
         this.stage = stage;
         this.inicioController = inicioController;
@@ -116,6 +127,56 @@ public class BuscadorDestinosController implements Initializable {
                 destinoSeleccion = tableViewDestinos.getSelectionModel().getSelectedItem();
             }
         });
+        //Manejo de los radioButtoms
+        ToggleGroup group = new ToggleGroup();
+        rbAventura.setToggleGroup(group);
+        rbBosque.setToggleGroup(group);
+        rbPlaya.setToggleGroup(group);
+        rbCiudad.setToggleGroup(group);
+    }
+
+    /**
+     * Filtra los destinos de tipo aventura para verlos en la tabla
+     * @param event
+     */
+    @FXML
+    void filtrarDestinoAventura(ActionEvent event) {
+        tableViewDestinos.getItems().clear();
+        tableViewDestinos.setItems(getListadoDestinosTipo(TipoDestino.AVENTURA));
+        mostrarMensaje("Agencia", "Buscador de Destinos", "En la tabla se observan los destinos de tipo Aventura", Alert.AlertType.INFORMATION);
+    }
+
+    /**
+     * Filtra los destinos de tipo bosque para verlos en la tabla
+     * @param event
+     */
+    @FXML
+    void filtrarDestinoBosque(ActionEvent event) {
+        tableViewDestinos.getItems().clear();
+        tableViewDestinos.setItems(getListadoDestinosTipo(TipoDestino.BOSQUE));
+        mostrarMensaje("Agencia", "Buscador de Destinos", "En la tabla se observan los destinos de tipo Bosque", Alert.AlertType.INFORMATION);
+    }
+
+    /**
+     * Filtra los destinos de tipo ciudad para verlos en la tabla
+     * @param event
+     */
+    @FXML
+    void filtrarDestinoCiudad(ActionEvent event) {
+        tableViewDestinos.getItems().clear();
+        tableViewDestinos.setItems(getListadoDestinosTipo(TipoDestino.CIUDAD));
+        mostrarMensaje("Agencia", "Buscador de Destinos", "En la tabla se observan los destinos de tipo Ciudad", Alert.AlertType.INFORMATION);
+    }
+
+    /**
+     * Filtra los destinos de tipo playa para verlos en la tabla
+     * @param event
+     */
+    @FXML
+    void filtrarDestinoPlaya(ActionEvent event) {
+        tableViewDestinos.getItems().clear();
+        tableViewDestinos.setItems(getListadoDestinosTipo(TipoDestino.PLAYA));
+        mostrarMensaje("Agencia", "Buscador de Destinos", "En la tabla se observan los destinos de tipo Playa", Alert.AlertType.INFORMATION);
     }
 
     /**
@@ -143,16 +204,6 @@ public class BuscadorDestinosController implements Initializable {
         }
     }
 
-    @FXML
-    void realizarFiltroRecomendaciones(ActionEvent event) {
-
-    }
-
-    @FXML
-    void realizarFiltroUsuario(ActionEvent event) {
-
-    }
-
     /**
      * Regresa a la ventana de inicio
      * @param event
@@ -161,6 +212,11 @@ public class BuscadorDestinosController implements Initializable {
     void regresar(ActionEvent event) {
         this.stage.close();
         inicioController.show();
+    }
+
+    @FXML
+    void verRecomendaciones(ActionEvent event) {
+
     }
 
     /**
