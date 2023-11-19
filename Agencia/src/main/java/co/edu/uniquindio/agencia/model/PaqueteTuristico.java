@@ -2,6 +2,7 @@ package co.edu.uniquindio.agencia.model;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PaqueteTuristico {
+public class PaqueteTuristico implements Serializable {
 
     private String nombre;
     private LocalDate fechaInicial;

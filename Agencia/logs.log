@@ -628,3 +628,341 @@ Nov 18, 2023 5:15:02 PM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
 INFO: Se crea una nueva instancia de la empresa
 Nov 18, 2023 5:50:59 PM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
 INFO: Se crea una nueva instancia de la empresa
+Nov 19, 2023 2:50:16 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+INFO: Se crea una nueva instancia de la empresa
+Nov 19, 2023 4:41:43 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+INFO: Se crea una intancia de AgenciaViajes
+Nov 19, 2023 4:41:43 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerDestinos
+SEVERE: null
+Nov 19, 2023 4:41:43 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerPaquetes
+SEVERE: null
+Nov 19, 2023 4:41:43 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerReservas
+SEVERE: null
+Nov 19, 2023 4:41:43 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerGuias
+SEVERE: null
+Nov 19, 2023 4:41:43 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerClientes
+SEVERE: null
+Nov 19, 2023 4:42:16 AM co.edu.uniquindio.agencia.model.AgenciaViajes crearDestino
+INFO: Se creo correctamente el destino
+Nov 19, 2023 4:42:16 AM co.edu.uniquindio.agencia.model.AgenciaViajes escribirDestinos
+SEVERE: co.edu.uniquindio.agencia.model.Destino
+Nov 19, 2023 4:42:25 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+INFO: Se crea una intancia de AgenciaViajes
+Nov 19, 2023 4:42:25 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerDestinos
+SEVERE: writing aborted; java.io.NotSerializableException: co.edu.uniquindio.agencia.model.Destino
+Nov 19, 2023 4:42:25 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerPaquetes
+SEVERE: null
+Nov 19, 2023 4:42:25 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerReservas
+SEVERE: null
+Nov 19, 2023 4:42:25 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerGuias
+SEVERE: null
+Nov 19, 2023 4:42:25 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerClientes
+SEVERE: null
+Nov 19, 2023 4:46:41 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+INFO: Se crea una intancia de AgenciaViajes
+Nov 19, 2023 4:46:41 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerDestinos
+SEVERE: writing aborted; java.io.NotSerializableException: co.edu.uniquindio.agencia.model.Destino
+Nov 19, 2023 4:46:41 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerPaquetes
+SEVERE: null
+Nov 19, 2023 4:46:41 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerReservas
+SEVERE: null
+Nov 19, 2023 4:46:41 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerGuias
+SEVERE: null
+Nov 19, 2023 4:46:41 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerClientes
+SEVERE: null
+Nov 19, 2023 4:47:01 AM co.edu.uniquindio.agencia.model.AgenciaViajes crearDestino
+INFO: Se creo correctamente el destino
+Nov 19, 2023 4:47:01 AM co.edu.uniquindio.agencia.model.AgenciaViajes escribirDestinos
+SEVERE: co.edu.uniquindio.agencia.model.Destino
+Nov 19, 2023 4:47:12 AM co.edu.uniquindio.agencia.model.AgenciaViajes actualizarDestino
+INFO: Se actualizo un destino
+Nov 19, 2023 4:47:12 AM co.edu.uniquindio.agencia.model.AgenciaViajes escribirDestinos
+SEVERE: co.edu.uniquindio.agencia.model.Destino
+Nov 19, 2023 4:47:26 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+INFO: Se crea una intancia de AgenciaViajes
+Nov 19, 2023 4:47:26 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerDestinos
+SEVERE: writing aborted; java.io.NotSerializableException: co.edu.uniquindio.agencia.model.Destino
+Nov 19, 2023 4:47:26 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerPaquetes
+SEVERE: null
+Nov 19, 2023 4:47:26 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerReservas
+SEVERE: null
+Nov 19, 2023 4:47:26 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerGuias
+SEVERE: null
+Nov 19, 2023 4:47:26 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerClientes
+SEVERE: null
+Nov 19, 2023 4:49:16 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+INFO: Se crea una intancia de AgenciaViajes
+Nov 19, 2023 4:49:16 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerDestinos
+SEVERE: writing aborted; java.io.NotSerializableException: co.edu.uniquindio.agencia.model.Destino
+Nov 19, 2023 4:49:16 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerPaquetes
+SEVERE: null
+Nov 19, 2023 4:49:16 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerReservas
+SEVERE: null
+Nov 19, 2023 4:49:16 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerGuias
+SEVERE: null
+Nov 19, 2023 4:49:16 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerClientes
+SEVERE: null
+Nov 19, 2023 4:49:27 AM co.edu.uniquindio.agencia.model.AgenciaViajes crearDestino
+INFO: Se creo correctamente el destino
+Nov 19, 2023 4:49:27 AM co.edu.uniquindio.agencia.model.AgenciaViajes escribirDestinos
+SEVERE: co.edu.uniquindio.agencia.model.Destino
+Nov 19, 2023 4:49:33 AM co.edu.uniquindio.agencia.model.AgenciaViajes actualizarDestino
+INFO: Se actualizo un destino
+Nov 19, 2023 4:49:33 AM co.edu.uniquindio.agencia.model.AgenciaViajes escribirDestinos
+SEVERE: co.edu.uniquindio.agencia.model.Destino
+Nov 19, 2023 4:49:43 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+INFO: Se crea una intancia de AgenciaViajes
+Nov 19, 2023 4:49:43 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerDestinos
+SEVERE: writing aborted; java.io.NotSerializableException: co.edu.uniquindio.agencia.model.Destino
+Nov 19, 2023 4:49:43 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerPaquetes
+SEVERE: null
+Nov 19, 2023 4:49:43 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerReservas
+SEVERE: null
+Nov 19, 2023 4:49:43 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerGuias
+SEVERE: null
+Nov 19, 2023 4:49:43 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerClientes
+SEVERE: null
+Nov 19, 2023 4:50:38 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+INFO: Se crea una intancia de AgenciaViajes
+Nov 19, 2023 4:50:38 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerDestinos
+SEVERE: writing aborted; java.io.NotSerializableException: co.edu.uniquindio.agencia.model.Destino
+Nov 19, 2023 4:50:38 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerPaquetes
+SEVERE: null
+Nov 19, 2023 4:50:38 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerReservas
+SEVERE: null
+Nov 19, 2023 4:50:38 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerGuias
+SEVERE: null
+Nov 19, 2023 4:50:38 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerClientes
+SEVERE: null
+Nov 19, 2023 4:59:05 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+INFO: Se crea una intancia de AgenciaViajes
+Nov 19, 2023 4:59:05 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+WARNING: No se pudo cargar la lista de destinos serializada
+Nov 19, 2023 4:59:05 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+WARNING: No se pudo cargar la lista de paquetes serializada
+Nov 19, 2023 4:59:05 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+WARNING: No se puedo cargar la lista de reservas serializada
+Nov 19, 2023 4:59:05 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+WARNING: No se pudo cargar la lista de guias serializada
+Nov 19, 2023 4:59:05 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+WARNING: No se pudo cargar la lista de clientes serializada
+Nov 19, 2023 4:59:29 AM co.edu.uniquindio.agencia.model.AgenciaViajes crearDestino
+INFO: Se creo correctamente el destino
+Nov 19, 2023 4:59:29 AM co.edu.uniquindio.agencia.model.AgenciaViajes escribirDestinos
+SEVERE: co.edu.uniquindio.agencia.model.Destino
+Nov 19, 2023 4:59:33 AM co.edu.uniquindio.agencia.model.AgenciaViajes actualizarDestino
+INFO: Se actualizo un destino
+Nov 19, 2023 4:59:33 AM co.edu.uniquindio.agencia.model.AgenciaViajes escribirDestinos
+SEVERE: co.edu.uniquindio.agencia.model.Destino
+Nov 19, 2023 4:59:41 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+INFO: Se crea una intancia de AgenciaViajes
+Nov 19, 2023 4:59:41 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+WARNING: No se pudo cargar la lista de destinos serializada
+Nov 19, 2023 4:59:41 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+WARNING: No se pudo cargar la lista de paquetes serializada
+Nov 19, 2023 4:59:41 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+WARNING: No se puedo cargar la lista de reservas serializada
+Nov 19, 2023 4:59:41 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+WARNING: No se pudo cargar la lista de guias serializada
+Nov 19, 2023 4:59:41 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+WARNING: No se pudo cargar la lista de clientes serializada
+Nov 19, 2023 5:02:49 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+INFO: Se crea una intancia de AgenciaViajes
+Nov 19, 2023 5:02:49 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+WARNING: No se pudo cargar la lista de destinos serializada
+Nov 19, 2023 5:02:49 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+WARNING: No se pudo cargar la lista de paquetes serializada
+Nov 19, 2023 5:02:49 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+WARNING: No se puedo cargar la lista de reservas serializada
+Nov 19, 2023 5:02:49 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+WARNING: No se pudo cargar la lista de guias serializada
+Nov 19, 2023 5:02:49 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+WARNING: No se pudo cargar la lista de clientes serializada
+Nov 19, 2023 5:03:01 AM co.edu.uniquindio.agencia.model.AgenciaViajes crearDestino
+INFO: Se creo correctamente el destino
+Nov 19, 2023 5:03:01 AM co.edu.uniquindio.agencia.model.AgenciaViajes escribirDestinos
+SEVERE: co.edu.uniquindio.agencia.model.Destino
+Nov 19, 2023 5:03:21 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+INFO: Se crea una intancia de AgenciaViajes
+Nov 19, 2023 5:03:21 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+WARNING: No se pudo cargar la lista de destinos serializada
+Nov 19, 2023 5:03:21 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+WARNING: No se pudo cargar la lista de paquetes serializada
+Nov 19, 2023 5:03:21 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+WARNING: No se puedo cargar la lista de reservas serializada
+Nov 19, 2023 5:03:21 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+WARNING: No se pudo cargar la lista de guias serializada
+Nov 19, 2023 5:03:21 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+WARNING: No se pudo cargar la lista de clientes serializada
+Nov 19, 2023 5:04:19 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+INFO: Se crea una intancia de AgenciaViajes
+Nov 19, 2023 5:04:19 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+WARNING: No se pudo cargar la lista de destinos serializada
+Nov 19, 2023 5:04:19 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+WARNING: No se pudo cargar la lista de paquetes serializada
+Nov 19, 2023 5:04:19 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+WARNING: No se puedo cargar la lista de reservas serializada
+Nov 19, 2023 5:04:19 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+WARNING: No se pudo cargar la lista de guias serializada
+Nov 19, 2023 5:04:19 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+WARNING: No se pudo cargar la lista de clientes serializada
+Nov 19, 2023 5:04:32 AM co.edu.uniquindio.agencia.model.AgenciaViajes crearDestino
+INFO: Se creo correctamente el destino
+Nov 19, 2023 5:04:32 AM co.edu.uniquindio.agencia.model.AgenciaViajes escribirDestinos
+SEVERE: co.edu.uniquindio.agencia.model.Destino
+Nov 19, 2023 5:04:48 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+INFO: Se crea una intancia de AgenciaViajes
+Nov 19, 2023 5:04:49 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+WARNING: No se pudo cargar la lista de destinos serializada
+Nov 19, 2023 5:04:49 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+WARNING: No se pudo cargar la lista de paquetes serializada
+Nov 19, 2023 5:04:49 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+WARNING: No se puedo cargar la lista de reservas serializada
+Nov 19, 2023 5:04:49 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+WARNING: No se pudo cargar la lista de guias serializada
+Nov 19, 2023 5:04:49 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+WARNING: No se pudo cargar la lista de clientes serializada
+Nov 19, 2023 5:08:37 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+INFO: Se crea una intancia de AgenciaViajes
+Nov 19, 2023 5:08:37 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerDestinos
+SEVERE: null
+Nov 19, 2023 5:08:37 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerPaquetes
+SEVERE: null
+Nov 19, 2023 5:08:37 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerReservas
+SEVERE: null
+Nov 19, 2023 5:08:37 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerGuias
+SEVERE: null
+Nov 19, 2023 5:08:37 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerClientes
+SEVERE: null
+Nov 19, 2023 5:08:50 AM co.edu.uniquindio.agencia.model.AgenciaViajes crearDestino
+INFO: Se creo correctamente el destino
+Nov 19, 2023 5:08:50 AM co.edu.uniquindio.agencia.model.AgenciaViajes escribirDestinos
+SEVERE: co.edu.uniquindio.agencia.model.Destino
+Nov 19, 2023 5:08:54 AM co.edu.uniquindio.agencia.model.AgenciaViajes actualizarDestino
+INFO: Se actualizo un destino
+Nov 19, 2023 5:08:54 AM co.edu.uniquindio.agencia.model.AgenciaViajes escribirDestinos
+SEVERE: co.edu.uniquindio.agencia.model.Destino
+Nov 19, 2023 5:09:10 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+INFO: Se crea una intancia de AgenciaViajes
+Nov 19, 2023 5:09:10 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerDestinos
+SEVERE: writing aborted; java.io.NotSerializableException: co.edu.uniquindio.agencia.model.Destino
+Nov 19, 2023 5:09:10 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerPaquetes
+SEVERE: null
+Nov 19, 2023 5:09:10 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerReservas
+SEVERE: null
+Nov 19, 2023 5:09:10 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerGuias
+SEVERE: null
+Nov 19, 2023 5:09:10 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerClientes
+SEVERE: null
+Nov 19, 2023 5:10:10 AM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+INFO: Se crea una intancia de AgenciaViajes
+Nov 19, 2023 5:10:10 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerDestinos
+SEVERE: /src/main/resources/persistencia/destinos.data (No such file or directory)
+Nov 19, 2023 5:10:10 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerPaquetes
+SEVERE: /src/main/resources/persistencia/paquetes.ser (No such file or directory)
+Nov 19, 2023 5:10:10 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerReservas
+SEVERE: /src/main/resources/persistencia/reservas.ser (No such file or directory)
+Nov 19, 2023 5:10:10 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerGuias
+SEVERE: /src/main/resources/persistencia/guias.ser (No such file or directory)
+Nov 19, 2023 5:10:10 AM co.edu.uniquindio.agencia.model.AgenciaViajes leerClientes
+SEVERE: /src/main/resources/persistencia/clientes.ser (No such file or directory)
+Nov 19, 2023 5:10:30 AM co.edu.uniquindio.agencia.model.AgenciaViajes crearDestino
+INFO: Se creo correctamente el destino
+Nov 19, 2023 5:10:30 AM co.edu.uniquindio.agencia.model.AgenciaViajes escribirDestinos
+SEVERE: /src/main/resources/persistencia/destinos.data (No such file or directory)
+Nov 19, 2023 1:22:22 PM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+INFO: Se crea una intancia de AgenciaViajes
+Nov 19, 2023 1:22:22 PM co.edu.uniquindio.agencia.model.AgenciaViajes leerDestinos
+SEVERE: null
+Nov 19, 2023 1:22:22 PM co.edu.uniquindio.agencia.model.AgenciaViajes leerPaquetes
+SEVERE: null
+Nov 19, 2023 1:22:22 PM co.edu.uniquindio.agencia.model.AgenciaViajes leerReservas
+SEVERE: null
+Nov 19, 2023 1:22:22 PM co.edu.uniquindio.agencia.model.AgenciaViajes leerGuias
+SEVERE: null
+Nov 19, 2023 1:22:22 PM co.edu.uniquindio.agencia.model.AgenciaViajes leerClientes
+SEVERE: null
+Nov 19, 2023 1:23:55 PM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+INFO: Se crea una intancia de AgenciaViajes
+Nov 19, 2023 1:23:55 PM co.edu.uniquindio.agencia.model.AgenciaViajes leerDestinos
+SEVERE: null
+Nov 19, 2023 1:23:55 PM co.edu.uniquindio.agencia.model.AgenciaViajes leerPaquetes
+SEVERE: null
+Nov 19, 2023 1:23:55 PM co.edu.uniquindio.agencia.model.AgenciaViajes leerReservas
+SEVERE: null
+Nov 19, 2023 1:23:55 PM co.edu.uniquindio.agencia.model.AgenciaViajes leerGuias
+SEVERE: null
+Nov 19, 2023 1:23:55 PM co.edu.uniquindio.agencia.model.AgenciaViajes leerClientes
+SEVERE: null
+Nov 19, 2023 1:24:07 PM co.edu.uniquindio.agencia.model.AgenciaViajes crearDestino
+INFO: Se creo correctamente el destino
+Nov 19, 2023 1:24:14 PM co.edu.uniquindio.agencia.model.AgenciaViajes actualizarDestino
+INFO: Se actualizo un destino
+Nov 19, 2023 1:24:24 PM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+INFO: Se crea una intancia de AgenciaViajes
+Nov 19, 2023 1:24:24 PM co.edu.uniquindio.agencia.model.AgenciaViajes leerPaquetes
+SEVERE: null
+Nov 19, 2023 1:24:24 PM co.edu.uniquindio.agencia.model.AgenciaViajes leerReservas
+SEVERE: null
+Nov 19, 2023 1:24:24 PM co.edu.uniquindio.agencia.model.AgenciaViajes leerGuias
+SEVERE: null
+Nov 19, 2023 1:24:24 PM co.edu.uniquindio.agencia.model.AgenciaViajes leerClientes
+SEVERE: null
+Nov 19, 2023 2:59:09 PM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+INFO: Se crea una intancia de AgenciaViajes
+Nov 19, 2023 2:59:09 PM co.edu.uniquindio.agencia.model.AgenciaViajes leerPaquetes
+SEVERE: null
+Nov 19, 2023 2:59:09 PM co.edu.uniquindio.agencia.model.AgenciaViajes leerReservas
+SEVERE: null
+Nov 19, 2023 2:59:09 PM co.edu.uniquindio.agencia.model.AgenciaViajes leerGuias
+SEVERE: null
+Nov 19, 2023 2:59:09 PM co.edu.uniquindio.agencia.model.AgenciaViajes leerClientes
+SEVERE: null
+Nov 19, 2023 2:59:29 PM co.edu.uniquindio.agencia.model.AgenciaViajes crearCliente
+INFO: Se creo el cliente de manera correcta
+Nov 19, 2023 2:59:49 PM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+INFO: Se crea una intancia de AgenciaViajes
+Nov 19, 2023 2:59:49 PM co.edu.uniquindio.agencia.model.AgenciaViajes leerPaquetes
+SEVERE: null
+Nov 19, 2023 2:59:49 PM co.edu.uniquindio.agencia.model.AgenciaViajes leerReservas
+SEVERE: null
+Nov 19, 2023 2:59:49 PM co.edu.uniquindio.agencia.model.AgenciaViajes leerGuias
+SEVERE: null
+Nov 19, 2023 3:00:48 PM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+INFO: Se crea una intancia de AgenciaViajes
+Nov 19, 2023 3:00:48 PM co.edu.uniquindio.agencia.model.AgenciaViajes leerPaquetes
+SEVERE: null
+Nov 19, 2023 3:00:48 PM co.edu.uniquindio.agencia.model.AgenciaViajes leerReservas
+SEVERE: null
+Nov 19, 2023 3:00:48 PM co.edu.uniquindio.agencia.model.AgenciaViajes leerGuias
+SEVERE: null
+Nov 19, 2023 3:01:19 PM co.edu.uniquindio.agencia.model.AgenciaViajes crearPaqueteTuristico
+INFO: Se crea el paquete de manera correcta
+Nov 19, 2023 3:02:09 PM co.edu.uniquindio.agencia.model.AgenciaViajes crearGuia
+INFO: Se crea un guia de manera correcta
+Nov 19, 2023 3:02:19 PM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+INFO: Se crea una intancia de AgenciaViajes
+Nov 19, 2023 3:02:19 PM co.edu.uniquindio.agencia.model.AgenciaViajes leerReservas
+SEVERE: null
+Nov 19, 2023 3:04:19 PM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+INFO: Se crea una intancia de AgenciaViajes
+Nov 19, 2023 3:04:19 PM co.edu.uniquindio.agencia.model.AgenciaViajes leerReservas
+SEVERE: null
+Nov 19, 2023 3:05:07 PM co.edu.uniquindio.agencia.model.AgenciaViajes crearReserva
+INFO: Se crea una reserva de manera correcta
+Nov 19, 2023 3:05:21 PM co.edu.uniquindio.agencia.model.AgenciaViajes confirmarReserva
+INFO: Se confirmo la reserva de manera correcta
+Nov 19, 2023 3:05:32 PM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+INFO: Se crea una intancia de AgenciaViajes
+Nov 19, 2023 3:06:46 PM co.edu.uniquindio.agencia.model.AgenciaViajes <init>
+INFO: Se crea una intancia de AgenciaViajes
+Nov 19, 2023 3:06:46 PM co.edu.uniquindio.agencia.model.AgenciaViajes leerDestinos
+SEVERE: null
+Nov 19, 2023 3:06:46 PM co.edu.uniquindio.agencia.model.AgenciaViajes leerPaquetes
+SEVERE: null
+Nov 19, 2023 3:06:46 PM co.edu.uniquindio.agencia.model.AgenciaViajes leerReservas
+SEVERE: null
+Nov 19, 2023 3:06:46 PM co.edu.uniquindio.agencia.model.AgenciaViajes leerGuias
+SEVERE: null
+Nov 19, 2023 3:06:46 PM co.edu.uniquindio.agencia.model.AgenciaViajes leerClientes
+SEVERE: null

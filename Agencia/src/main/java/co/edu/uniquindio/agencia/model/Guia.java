@@ -5,13 +5,14 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"id"})
 @Builder(builderMethodName = "guiaBuilder")
-public class Guia extends Persona {
+public class Guia extends Persona implements Serializable {
 
     private String id;
     private String nombre;

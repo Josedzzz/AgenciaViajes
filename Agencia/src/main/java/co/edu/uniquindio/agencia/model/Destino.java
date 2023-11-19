@@ -2,6 +2,7 @@ package co.edu.uniquindio.agencia.model;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 @Getter
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Destino {
+public class Destino implements Serializable {
 
     private String nombre;
     private String ciudad;
